@@ -1,33 +1,36 @@
 # speaker-monoblock
 
-Активная колонка-моноблок: 1 × Wavecor WF168OM01 (6.5″) + 2 × Sica LP53x58.28 (1″), усилитель Wondom JAB4 (TPA3221 + ADAU1701), закрытый ящик ~5.9 л, локальное экранирование отсека электроники, питание 220–250 В через модуль C14.
+Активная колонка-моноблок: Wavecor WF168OM01 (6.5″) + 2 × Sica LP53x58.28 (1″), усилитель Wondom JAB4 (TPA3221 + ADAU1701), закрытый ящик ~5.9 л, экранированный отсек электроники, питание через модуль C14.
 
-Репозиторий — это **проектная документация как код**: числа лежат в YAML, пояснения — в Markdown, решения — в ADR, паспорта компонентов — в `components/`. Документ-монолит `проект колонки.md` (версия 8.0, 22.09.2026) разнесён по этим файлам, исходник сохранён в `archive/`.
-
-## Как читать (человеку)
-
-1. [`docs/concept.md`](docs/concept.md) — идея и принципиальные решения.
-2. [`docs/decisions/`](docs/decisions/) — почему выбрано именно так.
-3. [`modules/`](modules/) — подсистемы: конструкция, схема, сборка, проверки.
-4. [`assembly/`](assembly/) — порядок сборки по этапам.
-5. [`commissioning/`](commissioning/) — первый запуск и приёмка.
-6. [`docs/open-questions.md`](docs/open-questions.md) — что ещё не решено или противоречиво.
-
-## Как работать (агенту)
-
-Читай [`AGENTS.md`](AGENTS.md). Коротко: числа берём только из `params/` и `components/`, модули со статусом `frozen` не меняем без ADR, перед коммитом запускаем `make validate`.
-
-## Команды
-
-```bash
-make validate   # схемы, ссылки, битые ID
-make bom        # procurement/bom.generated.csv
-make cutlist    # procurement/cutlist.generated.csv
-make all
+## Структура
+```
+AGENTS.md            правила для агентов
+params.yaml          все числа (размеры, координаты, моменты, параметры DSP)
+components.yaml      компоненты, паспорта и спецификация
+docs/
+  project.md         идея, решения, карта документов
+  enclosure.md       конструкция корпуса
+  acoustics.md       ЗЯ и демпфирование
+  dsp.md             SigmaStudio и программирование
+  power-input.md     сетевой ввод
+  shielding.md       экранирование и заземление
+  electronics.md     усилитель, проводка, индикатор
+  techniques.md      приёмы монтажа T-001…T-008
+  assembly-order.md  порядок сборки
+  commissioning.md   первый запуск
+  open-questions.md  противоречия и нерешённое
+datasheets/ dsp/sigmastudio/   тяжёлые файлы (Git LFS)
+archive/             исходный монолит v8.0
 ```
 
-Нужен Python 3.10+ и `pip install pyyaml jsonschema`.
+## Команды
+```bash
+make validate   # ссылки, ID, числа в тексте против params.yaml
+make sync       # исправить числа в тексте по params.yaml
+make bom        # build/bom.csv
+make cutlist    # build/cutlist.csv
+```
+Нужен Python 3.10+ и `pip install pyyaml`.
 
-## Статус
-
-См. [`project.yaml`](project.yaml). Версии проекта — git-теги (`v8.0`, `v8.1`…), история изменений — [`CHANGELOG.md`](CHANGELOG.md).
+## Как это работает
+Число меняется один раз в `params.yaml`. В тексте оно стоит с невидимым маркером: `178<!--p:panels.front.woofer_x-->`. `make validate` покажет места, где текст разошёлся с данными; `make sync` исправит их.

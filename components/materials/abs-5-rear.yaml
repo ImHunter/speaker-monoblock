@@ -1,9 +1,0 @@
-id: CMP-abs-5-rear
-name: ABS-пластик 5 мм (задняя панель), 356×226 мм
-category: material.plastic
-status: selected
-source_bom_pos: 28
-params: {thickness_mm: 5, color: "чёрный глянцевый (OQ-001: в BOM v8.0 — белый)"}
-used_in: [modules/enclosure]
-sources:
-  - {vendor: Ozon, price_rub: "400–600"}

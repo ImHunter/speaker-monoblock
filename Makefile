@@ -1,17 +1,17 @@
 PY ?= python3
 
-.PHONY: all validate bom cutlist clean
+.PHONY: all validate sync bom cutlist
 
 all: validate bom cutlist
 
-validate:
+validate:        # проверка ссылок, ID и чисел в тексте
 	$(PY) scripts/validate.py
 
-bom:
-	$(PY) scripts/gen_bom.py
+sync:            # исправить числа в docs/*.md по params.yaml
+	$(PY) scripts/validate.py --fix
 
-cutlist:
-	$(PY) scripts/gen_cutlist.py
+bom:             # build/bom.csv из components.yaml
+	$(PY) scripts/gen.py bom
 
-clean:
-	rm -f procurement/*.generated.csv
+cutlist:         # build/cutlist.csv из params.yaml
+	$(PY) scripts/gen.py cutlist

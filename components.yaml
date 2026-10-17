@@ -1,0 +1,181 @@
+# Паспорта и спецификация компонентов. Один компонент — одна запись.
+# Обязательные поля: id, name, qty, module. Ключевые компоненты имеют params/constraints.
+# pos — номер позиции в исходной спецификации v8.0. status: candidate|selected|ordered|received|verified.
+# Цены — ориентиры (руб.). Даташиты: datasheets/<id>.pdf (Git LFS).
+
+components:
+  # ---------- Динамики ----------
+  - id: CMP-wavecor-wf168om01
+    name: Wavecor WF168OM01 (6.5″ НЧ/СЧ, 4 Ом)
+    module: acoustics
+    qty: 1
+    pos: 1
+    status: selected
+    price: "4658 Аудиомания"
+    params: {fs_hz: 39, qts: 0.45, vas_l: 29.5, sens_db: 88, cutout_mm: 143, flange_mm: 168, cone: "бумага с пропиткой"}
+    constraints:
+      - "DSP: PEQ на 95 Гц (горб от Qtc≈1.05), subsonic 60 Гц"
+      - "Прокладка фоамиран 1 мм под фланец"
+    rejected_alternatives: [Monacor SPH-170, Visaton W 170 S, Peerless SDS]
+
+  - id: CMP-sica-lp53x58-28-n20tw
+    name: Sica LP53x58.28/N20 TW (1″ твитер, 8 Ом)
+    module: acoustics
+    qty: 2
+    pos: 2
+    status: selected
+    price: "3534/шт Аудиомания"
+    params: {sens_db: 95.8, cutout_mm: 48.4, flange_mm: [58, 53], dome: "шёлк", rear_chamber: closed}
+    constraints:
+      - "DSP: HPF 2500 Гц, gain −8 дБ, лимитер"
+    rejected_alternatives: [Vifa BC25SC06-04, Peerless DX25TG59-04]
+
+  # ---------- Электроника ----------
+  - id: CMP-wondom-jab4
+    name: Wondom JAB4 (TPA3221 + ADAU1701, Bluetooth 5.0)
+    module: electronics
+    qty: 1
+    pos: 3
+    status: selected
+    price: "3699 AliExpress https://ali.click/5buij1c"
+    params: {board_mm: [92, 69], supply_v: 24, channels: "2.1 (4 канала)"}
+    constraints:
+      - "Питание только через RUEF400 + ферритовое кольцо"
+      - "Программатор не питает плату"
+      - "DC на выходах без нагрузки ≤10–30 мВ"
+    rejected_alternatives: ["JAB3+ (нет нативного 2.1)", "аналоговый кроссовер"]
+  - {id: CMP-icp3-programmer, name: "Программатор Wondom ICP3 / USBi", module: dsp, qty: 1, pos: 4, status: candidate, price: "1000–1500 AliExpress"}
+  - id: CMP-meanwell-lrs-100-24
+    name: Блок питания Mean Well LRS-100-24
+    module: power-input
+    qty: 1
+    pos: 5
+    status: selected
+    price: "1620 ChipDip https://www.chipdip.ru/product/lrs-100-24-blok-pitaniya-24v-4.5a-108vt-mean-well-9000334407"
+    params: {output_v: 24, output_a: 4.5, power_w: 108}
+    constraints:
+      - "Клеммник невыпадающий: только НШВИ, не НКИ; момент 0.4–0.6 Н·м"
+      - "FG — центр звезды заземления"
+  - {id: CMP-pot-10k-linear, name: "Потенциометр 10 кОм линейный", module: enclosure, qty: 1, pos: 6, status: candidate, price: "150–250"}
+  - {id: CMP-jack-3-5-panel, name: "Гнездо 3.5 мм стерео на панель", module: electronics, qty: 1, pos: 52, status: candidate, price: "100–150"}
+
+  # ---------- Силовой ввод ----------
+  - id: CMP-dl-1dz2kr
+    name: Модуль C14 DL-1DZ2KR (фильтр, выключатель, предохранитель)
+    module: power-input
+    qty: 1
+    pos: 7
+    status: selected
+    price: "1090 ChipDip https://www.chipdip.ru/product/dl-1dz2kr-1a-250v-setevoy-filtr-jianli-753401701"
+    params: {rated: "250 В / 1 А", terminals_mm: 6.3}
+    constraints:
+      - "Предохранитель T1A slow-blow"
+      - "PE идёт транзитом на FG БП, минуя WAGO"
+      - "Включать не чаще раза в 30 с (NTC)"
+  - {id: CMP-fuse-t1a-5x20, name: "Предохранитель 5×20 T1A/250V керамический slow-blow", module: power-input, qty: 2, pos: 8, status: selected, price: "30"}
+  - {id: CMP-holder-wago-asa, name: "Держатель клемм WAGO, печать FDM ASA", module: power-input, qty: 1, pos: 9, status: candidate, price: "заказная печать", note: "модель STEP — OQ-012"}
+  - {id: CMP-wago-221-413, name: "Клемма рычажная WAGO 221-413", module: power-input, qty: 3, pos: 10, status: selected, price: "70"}
+  - {id: CMP-clip-block-c14, name: "Блок для клипс (крепление к C14), набор 3 шт.", module: power-input, qty: 1, pos: 11, status: selected, price: "254 https://ozon.ru/t/fBqmE0G"}
+  - id: CMP-ntc-5d-15
+    name: NTC-термистор 5D-15 (5 Ом)
+    module: power-input
+    qty: 1
+    pos: 12
+    status: selected
+    price: "50–80"
+    params: {lead_pitch_mm: 7.5, diameter_mm: 15}
+    constraints: ["Последовательно в L после выключателя C14"]
+  - id: CMP-mov-10d471k
+    name: Варистор 10D471K
+    module: power-input
+    qty: 1
+    pos: 13
+    status: selected
+    price: "30–50"
+    params: {lead_pitch_mm: 7.5}
+    constraints: ["Между L после NTC и N", "Зазор между выводами ≥4 мм"]
+  - {id: CMP-crimp-female-6-3, name: "Клемма обжимная «мама» 6.3 изолированная", module: power-input, qty: 3, pos: 14, status: selected, price: "15"}
+  - {id: CMP-heatshrink-dual, name: "Термоусадка двустенная (персональная на фастоны)", module: power-input, qty: 1, pos: 15, status: candidate, price: "20/м", note: опция}
+  - {id: CMP-spiral-wrap, name: "Спиральная обмотка (альтернатива усадке)", module: power-input, qty: 1, pos: 16, status: candidate, price: "100/м"}
+  - {id: CMP-wire-pv3-0-75, name: "Провод ПВ3 1×0.75 (коричневый ×2, синий ×2, жёлто-зелёный ×1)", module: power-input, qty: 1, pos: 17, status: selected, price: "30/м"}
+  - {id: CMP-nshvi-0-75x8, name: "Наконечник НШВИ 0.75×8", module: power-input, qty: 4, pos: 18, status: selected, price: "5", note: "3 + резерв"}
+  - {id: CMP-cable-clip-7mm, name: "Клипса кабельная саморезная C-образная 7 мм", module: power-input, qty: 4, pos: 19, status: selected, price: "261 набор 20 шт. https://ozon.ru/t/wE5gM8y", note: "2 + 2 резерв"}
+  - {id: CMP-screw-holder-csk, name: "Саморезы потайные 3×12/3×16 (держатель)", module: power-input, qty: 2, pos: 20, status: candidate, price: "5"}
+  - {id: CMP-loctite-243, name: "Фиксатор резьбы Loctite 243", module: power-input, qty: 1, pos: 21, status: candidate, price: "500"}
+  - {id: CMP-silicone-sheet, name: "Лист силиконовый 200×200×1", module: power-input, qty: 1, pos: 22, status: candidate, price: "155 https://ozon.ru/t/l1pSzjs"}
+  - {id: CMP-ruef400, name: "Самовосстанавливающийся предохранитель RUEF400 (4 А), цепь 24 В", module: electronics, qty: 1, pos: 23, status: selected, price: "100–150"}
+  - {id: CMP-ferrite-clipon, name: "Ферритовое кольцо clip-on ∅5–7 (цепь 24 В)", module: electronics, qty: 2, pos: 26, status: selected, price: "50–80"}
+
+  # ---------- Акустика (маты) ----------
+  - {id: CMP-synthetic-batting, name: "Синтепон акустический 100–150 г/м² негорючий", module: acoustics, qty: 1, pos: [24, 80], status: selected, price: "150–200", note: "0.3 м² + резерв 0.2 м²"}
+  - {id: CMP-velcro-20, name: "Лента велкро 20 мм, петли и крючки (~2 м)", module: acoustics, qty: 1, pos: 76, status: selected, price: "150–250"}
+  - {id: CMP-spunbond, name: "Ткань спанбонд 60–80 г/м² (0.5 м²)", module: acoustics, qty: 1, pos: 77, status: selected, price: "100–150"}
+  - {id: CMP-thread, name: "Нитки полиэстеровые", module: acoustics, qty: 1, pos: 78, status: selected, price: "50–100"}
+  - {id: CMP-epoxy-2k, name: "Клей эпоксидный двухкомпонентный", module: enclosure, qty: 2, pos: [71, 79], status: selected, price: "100–300", note: "футорки, световод, крючки велкро"}
+
+  # ---------- Корпус ----------
+  - {id: CMP-mdf-16-laminated, name: "МДФ 16 ламинированный, распил комплекта", module: enclosure, qty: 1, pos: 27, status: selected, price: "2500–3500 мастерская", note: "цвет — OQ-008"}
+  - {id: CMP-abs-5-rear, name: "ABS 5 мм 356×226 (задняя панель)", module: enclosure, qty: 1, pos: 28, status: selected, price: "400–600", note: "цвет — OQ-001"}
+  - {id: CMP-abs-4-overlay, name: "ABS ~4 мм 356×226 (накладка)", module: enclosure, qty: 1, pos: 29, status: selected, price: "400–600"}
+  - {id: CMP-mdf-bars, name: "МДФ 16×20 бруски (~1 м)", module: enclosure, qty: 1, pos: 30, status: selected, price: "200–300"}
+  - {id: CMP-shumologia-hide-3, name: "Вспененная резина Шумология Hide 3, лист 100×65 см", module: enclosure, qty: 1, pos: 39, status: selected, price: "860 https://ozon.ru/t/ivSMKON"}
+  - {id: CMP-futorka-permo-d5, name: "Футорка Permo D5", module: enclosure, qty: 70, pos: 40, status: selected, price: "690/60 шт. https://ozon.ru/t/5DnoogF"}
+  - {id: CMP-insert-m4-brass, name: "Резьбовые втулки M4 латунь 10–12 мм", module: enclosure, qty: 18, pos: 41, status: selected, price: "150–200"}
+  - {id: CMP-angle-steel-15, name: "Уголки мебельные стальные 15×15", module: enclosure, qty: 18, pos: 42, status: selected, price: "300–400"}
+  - {id: CMP-screw-3-5x12, name: "Саморезы 3.5×12 с пресс-шайбой", module: enclosure, qty: 60, pos: 43, status: selected, price: "100–150"}
+  - {id: CMP-screw-m4x20-csk, name: "Винты M4×20 потай (передняя панель)", module: enclosure, qty: 12, pos: 44, status: selected, price: "100–150"}
+  - {id: CMP-screw-m4x12-csk, name: "Винты M4×12/16 потай (задняя панель)", module: enclosure, qty: 6, pos: 45, status: selected, price: "50–80"}
+  - {id: CMP-feet-silicone, name: "Силиконовые ножки, 4 шт.", module: enclosure, qty: 1, pos: 51, status: selected, price: "100–150"}
+  - {id: CMP-edge-profile, name: "Полукруглый профиль ПВХ/ABS R8–12 (~1 м)", module: enclosure, qty: 1, pos: 75, status: candidate, price: "200–300", note: опция}
+  - {id: CMP-stikoseal, name: "Пластилин Stik-o-Seal", module: enclosure, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-masking-tape, name: "Малярный скотч", module: enclosure, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-fiberglass-mesh, name: "Стеклосетка для вентиляции задней панели", module: enclosure, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+
+  # ---------- Экранирование ----------
+  - {id: CMP-emi-gasket, name: "Токопроводящая EMI-прокладка 0.5 м", module: shielding, qty: 1, pos: 25, status: candidate, price: "300–400"}
+  - {id: CMP-copper-tape, name: "Медная самоклеящаяся лента 20–30 мм, рулон", module: shielding, qty: 1, pos: 31, status: selected, price: "400–700"}
+  - {id: CMP-copper-braid-pml, name: "Медная плетёнка ПМЛ 2×4 мм² (~1 м)", module: shielding, qty: 1, pos: 32, status: selected, price: "200–300"}
+  - {id: CMP-copper-foil, name: "Неклеевая медная фольга 0.1 мм (~1 м)", module: shielding, qty: 1, pos: 33, status: selected, price: "200–300"}
+  - {id: CMP-ring-lug-m4, name: "Кольцевые клеммы под M4", module: shielding, qty: 10, pos: 34, status: selected, price: "50–80"}
+  - {id: CMP-washer-din9021-m4, name: "Шайбы кузовные DIN 9021 M4", module: shielding, qty: 10, pos: 35, status: selected, price: "50–80"}
+  - {id: CMP-washer-din125-m4, name: "Шайбы плоские DIN 125 M4", module: shielding, qty: 10, pos: 36, status: selected, price: "30–50"}
+  - {id: CMP-dowel-fischer-sx4, name: "Нейлоновые дюбели Fischer SX ∅4", module: shielding, qty: 10, pos: 37, status: selected, price: "100–150"}
+  - {id: CMP-tape-tesa-51608, name: "Тканевая ворсистая изолента Tesa 51608 (~1 м)", module: shielding, qty: 1, pos: 38, status: selected, price: "150–200"}
+
+  # ---------- Усилитель, рамка ----------
+  - {id: CMP-polycarbonate-4, name: "Поликарбонат монолитный 4 мм 120×150 (рамка JAB4)", module: electronics, qty: 1, pos: 72, status: selected, price: "309 https://ozon.ru/t/bTO5cUS"}
+  - {id: CMP-angle-alu-15, name: "Уголок алюминиевый 15×15×1.5, 500 мм", module: electronics, qty: 1, pos: 73, status: selected, price: "209 https://ozon.ru/t/1fBvwG4"}
+  - {id: CMP-grommet-7, name: "Втулка резиновая проходная ∅7/∅4", module: electronics, qty: 10, pos: 74, status: selected, price: "350 https://ozon.ru/t/v0ZYuTu"}
+  - {id: CMP-screw-m3x10, name: "Винты M3×10 полукруглая головка", module: electronics, qty: 12, pos: 46, status: selected, price: "50"}
+  - {id: CMP-nut-m3-brass, name: "Гайки M3 латунные", module: electronics, qty: 4, pos: 47, status: selected}
+  - {id: CMP-nut-m3-nylon, name: "Гайки M3 нейлоновые", module: electronics, qty: 4, pos: 48, status: selected}
+  - {id: CMP-washer-m3-nylon, name: "Шайбы нейлоновые M3", module: electronics, qty: 4, pos: 49, status: selected}
+  - {id: CMP-standoff-nylon-set, name: "Набор нейлоновых проставок (200 шт.)", module: electronics, qty: 1, pos: 50, status: selected, price: "328 https://ozon.ru/t/GAXvuY8"}
+
+  # ---------- Проводка ----------
+  - id: CMP-wire-mgshv
+    name: "Провод МГШВ: 1.5 мм² красный/чёрный (НЧ), 1.0 мм² жёлтый/синий/чёрный×2 (твитеры), 0.5 мм² оранжевый/чёрный (LED)"
+    module: electronics
+    qty: 1
+    pos: [53, 54, 55, 56, 57, 58, 59, 60]
+    status: selected
+    price: "10–20/м"
+    note: "длины: НЧ 0.5 м, L+ 0.5, L− 0.6, R+ 0.6, R− 0.6, LED 0.5 м"
+  - {id: CMP-tb-2504, name: "Клеммная колодка ТВ-2504 (4 к., M4) — НЧ", module: electronics, qty: 1, pos: 61, status: candidate, price: "50–80"}
+  - {id: CMP-tb-1504, name: "Клеммная колодка ТВ-1504 (4 к., M3) — ВЧ и сигналы", module: electronics, qty: 3, pos: 62, status: candidate, price: "30–50", note: "по плану нужно 2 — OQ-007"}
+  - {id: CMP-lug-nvi-2-4, name: "Наконечник вилочный НВИ 2-4 (НЧ)", module: electronics, qty: 2, pos: 63, status: selected, price: "5"}
+  - {id: CMP-lug-nvi-1-25-3, name: "Наконечник вилочный НВИ 1.25-3 (ВЧ, сигналы)", module: electronics, qty: 10, pos: 64, status: selected, price: "3"}
+  - {id: CMP-heatshrink-glue, name: "Термоусадка с клеевым слоем ∅10–12 (0.1 м)", module: electronics, qty: 1, pos: 65, status: selected, price: "50/м"}
+  - {id: CMP-heatshrink-thin, name: "Термоусадка тонкая ∅1.5–2 (0.1 м)", module: electronics, qty: 1, pos: 66, status: selected, price: "20/м"}
+  - {id: CMP-pu40, name: "Полиуретановый герметик PU-40", module: electronics, qty: 1, pos: 67, status: selected, price: "300–500"}
+  - {id: CMP-zip-ties, name: "Стяжки пластиковые 2.5×100", module: electronics, qty: 10, pos: 68, status: selected, price: "50–80"}
+  - {id: CMP-zip-pads, name: "Самоклеящиеся площадки под стяжки", module: electronics, qty: 6, pos: 69, status: selected, price: "50–80"}
+  - {id: CMP-polyswitch-0-1a, name: "PolySwitch 0.1 А (в разрыв GND входа 3.5 мм)", module: electronics, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-mic-cable, name: "Экранированный микрофонный кабель", module: electronics, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+
+  # ---------- Индикатор ----------
+  - {id: CMP-abs-plate-2, name: "ABS-пластина 1.5–2 мм ~40×20 (основание держателя LED)", module: indicator, qty: 1, pos: 70, status: candidate, note: изготовить}
+  - {id: CMP-led-lightguide, name: "Световод жёсткий 3 мм BIVAR PLP2-750", module: indicator, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-led-holder, name: "Держатель светодиода 3 мм Arlight 3CCI", module: indicator, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-led-3mm, name: "Светодиод 3 мм плоская линза OPTOSUPPLY OSB5SA3NE4A", module: indicator, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}
+  - {id: CMP-resistor-2k7, name: "Резистор 2.7 кОм (LED от +24 В)", module: indicator, qty: 1, status: candidate, note: "нет в BOM v8.0, OQ-009"}

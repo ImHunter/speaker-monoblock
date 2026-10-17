@@ -1,3 +1,0 @@
-module: dsp
-items:
-  - {ref: CMP-icp3-programmer, qty: 1}

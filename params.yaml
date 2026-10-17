@@ -1,0 +1,191 @@
+# Единственный источник чисел проекта (мм, л, Н·м, Гц, дБ).
+# В docs/*.md значения помечаются как `178<!--p:panels.front.woofer_x-->`;
+# scripts/validate.py проверяет совпадение, `make sync` исправляет текст по этому файлу.
+# Источник: archive/проект-колонки-v8.0.md
+
+global:
+  external_width: 356
+  external_height: 236
+  external_depth: 209
+  mass_kg: 7.5
+  mdf: 16
+  rear_abs: 5
+  overlay_abs: 4
+  feet: 10                 # боковины ниже дна
+  inner_width: 322
+  inner_height: 194
+  internal_depth: 184      # между внутренними поверхностями передней и задней панелей
+  electronics_depth: 58
+  acoustic_depth: 110
+  baffle: 16
+  v_geom_l: 6.87
+  v_eff_l: 5.9
+  v_bars_l: 0.30
+  v_driver_l: 0.50
+  v_wires_l: 0.15
+  mains_v: "220-250"
+  dc_bus_v: 24.0
+  max_consumption_w: 100
+
+acoustics:
+  woofer_fs_hz: 39
+  woofer_qts: 0.45
+  woofer_vas_l: 29.5
+  woofer_sens_db: 88
+  tweeter_sens_db: 95.8
+  qtc: 1.05
+  fc_hz: 95
+  f3_without_dsp_min: 70
+  f3_without_dsp_max: 75
+  f3_with_dsp_min: 60
+  f3_with_dsp_max: 65
+  tweeter_spacing: 256
+  mat_thickness_baffle_min: 15
+  mat_thickness_baffle_max: 20
+  mat_thickness_walls_min: 10
+  mat_thickness_walls_max: 15
+
+dsp:
+  crossover_hz: 2500
+  tweeter_gain_db: -8.0
+  subsonic_hz: 60
+  peq_hz: 95
+  peq_gain_db: -4.0
+  peq_q: 1.2
+  shelf_hz: 300
+  shelf_gain_db: 3.0
+  shelf_q: 0.7
+  limiter_tweeter_threshold_db: -3.0
+  limiter_tweeter_release_ms: 50
+  limiter_bass_threshold_db: -3.0
+  limiter_bass_release_ms: 150
+  slope_db_oct: 24
+
+panels:
+  front:
+    width: 356
+    height: 226
+    woofer_hole: 143
+    woofer_x: 178
+    woofer_y: 118
+    woofer_y_geometric_center: 113
+    woofer_shift_up: 5
+    tweeter_hole: 48.4
+    tweeter_y: 113
+    tweeter_left_x: 50
+    tweeter_right_x: 306
+    mount_screws: 12
+    overlay_woofer_hole: 168
+    overlay_woofer_clearance: 0.5
+    overlay_tweeter_w: 58
+    overlay_tweeter_h: 53
+    lightguide_hole: 3
+  rear:
+    width: 356
+    height: 226
+    jack_hole: 6
+    jack_x: 175
+    jack_y: 80
+    vent_holes_min: 15
+    vent_holes_max: 20
+    mount_screws: 6
+    sma_hole: 6.5
+    sma_x: 175
+    sma_y: 100
+    bridge_cable: 160
+    bridge_x: 170
+    bridge_y: 30
+  top:
+    width: 356
+    depth: 182
+    volume_pocket_d: 30
+    volume_pocket_depth: 11
+    volume_hole_d: 7
+    volume_x: 110
+    volume_y: 170
+    bt_window: 50
+    bt_window_x: 175
+    bt_window_y: 143
+  bottom:
+    width: 322
+    depth: 182
+    vent_holes: 8
+    vent_hole_d: 8
+    dowel_hole_d: 5
+    gp_baffle_x: 30
+    gp_baffle_y: 20
+    gp_psu_x: 80
+    gp_psu_y: 25
+    gp_drain_x: 30
+    gp_drain_y: 25
+  baffle:
+    width: 322
+    height: 194
+    feedthrough_power_d: 12
+    feedthrough_signal_d_min: 8
+    feedthrough_signal_d_max: 10
+    feedthrough_height_min: 30
+    feedthrough_height_max: 40
+    psu_x_min: 60
+    psu_x_max: 157
+    psu_y_min: 40
+    psu_y_max: 169
+    amp_x_min: 170
+    amp_x_max: 260
+  side:
+    depth: 182
+    height: 219
+    c14_flange_bottom: 54
+
+parts:    # деталировка для make cutlist; перед распилом решить OQ-004
+  - {id: P-SIDE-L,  name: "Боковая левая",  material: "МДФ 16 ламинированный", w: 182, h: 219, qty: 1, note: "выступает на 10 мм ниже дна"}
+  - {id: P-SIDE-R,  name: "Боковая правая", material: "МДФ 16 ламинированный", w: 182, h: 219, qty: 1, note: "вырез под модуль C14"}
+  - {id: P-BOTTOM,  name: "Дно",            material: "МДФ 16 ламинированный", w: 322, h: 182, qty: 1, note: "между боковин"}
+  - {id: P-TOP,     name: "Верхняя панель", material: "МДФ 16 ламинированный", w: 356, h: 182, qty: 1, note: "накладная, карман под регулятор"}
+  - {id: P-FRONT,   name: "Передняя панель", material: "МДФ 16, ламинат внутри", w: 356, h: 226, qty: 1, note: "снаружи без ламината"}
+  - {id: P-BAFFLE,  name: "Перегородка",    material: "МДФ 16 ламинированный", w: 322, h: 194, qty: 1}
+  - {id: P-REAR,    name: "Задняя панель",  material: "ABS 5", w: 356, h: 226, qty: 1, note: "цвет — OQ-001"}
+  - {id: P-OVERLAY, name: "Накладка передней панели", material: "ABS ~4", w: 356, h: 226, qty: 1}
+  - {id: P-BARS,    name: "Бруски герметизации 16×20", material: "МДФ", w: 16, h: 20, total_length: 930, qty: 8, note: "запил в ус, разрывы под динамики"}
+
+power:
+  torque_psu_min: 0.4
+  torque_psu_max: 0.6
+  slack_wago_min: 3
+  slack_wago_max: 5
+  slack_psu_min: 5
+  slack_psu_max: 8
+  pe_extra_cm_min: 2
+  pe_extra_cm_max: 3
+  fuse_a: 1
+  wire_mm2: 0.75
+  bundle_mm: 5.6
+  clip_nominal_mm: 7
+  clip_offset_from_arc_min: 15
+  clip_offset_from_arc_max: 20
+  clip1_y_min: 15
+  clip1_y_max: 20
+  holder_footprint: 34
+  holder_top_min: 44
+  holder_top_max: 46
+  holder_bottom_min: 10
+  holder_bottom_max: 12
+  holder_protrusion: 20
+  holder_corridor_right_min: 13
+  gap_to_holder_min: 3
+  gap_to_foil_min: 15
+  mov_lead_gap_min: 4
+  lead_bend_min: 3
+  ntc_tilt_min: 30
+  ntc_tilt_max: 45
+  ntc_rotation: 45
+  lead_pitch: 7.5
+  thermal_terminals_max: 70
+  thermal_asa_max: 45
+  burn_in_min_min: 30
+  burn_in_min_max: 60
+  power_cycle_s: 30
+  recheck_hours_min: 24
+  recheck_hours_max: 48
+  isolation_mohm: 1
+  psu_voltage_set: 24.0

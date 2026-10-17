@@ -1,9 +1,0 @@
-id: CMP-polycarbonate-4
-name: Поликарбонат монолитный 4 мм, 120×150 мм (рамка JAB4)
-category: material.plastic
-status: selected
-source_bom_pos: 72
-params: {thickness_mm: 4, sheet_mm: [120, 150]}
-used_in: [modules/amplifier-mount]
-sources:
-  - {vendor: Ozon, url: "https://ozon.ru/t/bTO5cUS", price_rub: 309}

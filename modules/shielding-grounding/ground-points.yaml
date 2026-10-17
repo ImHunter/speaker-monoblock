@@ -1,8 +1,0 @@
-# Шлейфы заземления. Источник: v8.0 §9.2, §5.5. Координаты дна — params/panels/bottom.yaml.
-star_center: {terminal: FG, device: CMP-meanwell-lrs-100-24}
-loops:
-  - {id: GL-BAFFLE, from: "перегородка (X=30, Y=20 от левого нижнего угла)", to: "дно GP-baffle (X=30, Y=20)", length_mm: 50}
-  - {id: GL-REAR,   from: "задняя панель: кабельный мост (нейлоновый винт)", to: "дно GP-rear (X=170, Y=30)", length_mm: 160}
-  - {id: GL-PSU,    from: "винт PE на корпусе БП", to: "дно GP-psu (X=80, Y=25)", length_mm: 120}
-  - {id: GL-DRAIN,  from: "дно GP-drain (X=30, Y=25)", to: "клемма FG БП (две кольцевые клеммы: корпус БП + минус JAB4)", length_mm: 100}
-pe_transit: "лепесток C14 → FG БП независимо (modules/power-input)"

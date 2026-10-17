@@ -1,8 +1,0 @@
-# Цветовая маркировка проводов. Источник: v8.0 §11.
-mains: {L: коричневый, N: синий, PE: жёлто-зелёный}
-dc_24v: {plus: красный, minus: чёрный}
-aux: {left: белый, right: красный, ground: оплётка}
-potentiometer: {"+3.3V": красный, adc: белый, gnd: оплётка}
-woofer: {plus: красный, minus: чёрный}
-tweeters: {left_plus: жёлтый, right_plus: синий, left_minus: "чёрный с меткой L−", right_minus: "чёрный с меткой R−"}
-led: {plus: "оранжевый (после резистора)", minus: "чёрный с меткой LED−"}
