@@ -1,0 +1,29 @@
+id: CMP-wondom-jab4
+name: Wondom JAB4 (TPA3221 + ADAU1701, Bluetooth 5.0)
+category: electronics.amp-dsp
+manufacturer: Wondom
+mpn: JAB4
+status: selected
+source_bom_pos: 3
+params:
+  amp_chip: TPA3221
+  dsp_chip: ADAU1701
+  channels: "4 (2.1: стерео + мостовой сабвуфер)"
+  supply_v: 24
+  bluetooth: "5.0, внутренняя антенна + U.FL под внешнюю SMA"
+  dsp_tool: "SigmaStudio 4.6/4.7"
+mechanical:
+  board_mm: [92, 69]
+  mounting: "рамка из поликарбоната 120×120, окно 96×73, 4 ушка Ø3.2"
+  standoff_mm: 7
+  orientation: "вертикально, горячая сторона к задней панели, антенна вверх, питание влево, сигнал вправо"
+constraints:
+  - "Питание только через RUEF400 + ферритовое кольцо"
+  - "Программатор не питает плату — нужен БП колонки"
+  - "DC на выходах без нагрузки ≤10–30 мВ (первый запуск)"
+used_in: [modules/amplifier-mount, modules/dsp, modules/wiring]
+alternatives_rejected: [JAB3+ (нет нативного 2.1), аналоговый кроссовер (SMD, негибкость)]
+datasheet: datasheets/CMP-wondom-jab4.pdf
+sources:
+  - {vendor: AliExpress, url: "https://ali.click/5buij1c", price_rub: 3699, checked: 2026-09-22}
+verified_by_measurement: false

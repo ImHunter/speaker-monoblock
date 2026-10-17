@@ -1,0 +1,65 @@
+# Параметры силовой части. Источник: §4.4, §5.1–5.2, §7, §10.
+id: PARAMS-power
+
+mains: {voltage_v: "220-250", frequency_hz: 50}
+dc_bus_v: 24.0
+psu_ref: CMP-meanwell-lrs-100-24
+
+fuse:
+  ref: CMP-fuse-t1a-5x20
+  rating_a: 1
+  type: slow-blow (T)
+  voltage_v: 250
+
+protection:
+  ntc_ref: CMP-ntc-5d-15
+  mov_ref: CMP-mov-10d471k
+  polyfuse_24v_ref: CMP-ruef400
+  ntc_position: "L, последовательно, после выключателя C14"
+  mov_position: "между L после NTC и N"
+
+wire:
+  mains_conductors: ПВ3 1x0.75 мм²
+  colors: {L: коричневый, N: синий, PE: жёлто-зелёный}
+  pe_length_extra_cm: [2, 3]          # «последним отключается»
+
+slack_mm:
+  wago: [3, 5]
+  psu_terminal: [5, 8]
+
+torque_nm:
+  psu_terminal: [0.4, 0.6]
+
+clearances_mm:
+  ntc_mov_to_holder_min: 3
+  ntc_mov_to_foil_min: 15
+  mov_lead_gap_min: 4
+  lead_bend_min_from_body: 3
+  clip_offset_from_arc_min: [15, 20]
+  holder_corridor_right_min: 13
+
+clips:
+  - {id: CLIP-1, location: "правая стенка, y≈15–20 мм", bundle_mm: 5.6, nominal_mm: 7}
+  - {id: CLIP-2, location: "пол, середина прямого участка", bundle_mm: 5.6, nominal_mm: 7}
+clip_nominal_rule: "номинал = измеренный пакет + 0…0.7 мм"
+
+thermal_limits_c:
+  terminals_max: [60, 70]
+  asa_holder_max: [40, 45]
+  burn_in_min: [30, 60]
+
+procedures:
+  power_cycle_min_interval_s: 30      # остывание NTC
+  recheck_screws_after_h: [24, 48]
+  isolation_min_mohm: 1
+
+c14_module:
+  ref: CMP-dl-1dz2kr
+  flange_bottom_from_floor_mm: 54
+holder:
+  ref: CMP-holder-wago-asa
+  footprint_mm: [34, 34]
+  top_edge_mm: [44, 46]
+  bottom_edge_mm: [10, 12]
+  protrusion_x_mm: 20
+  fasteners: "потайные саморезы 3×12/3×16, без шайб, Loctite 243"

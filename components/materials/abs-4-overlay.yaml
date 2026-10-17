@@ -1,0 +1,11 @@
+id: CMP-abs-4-overlay
+name: ABS-пластик ~4 мм (накладка передней панели), 356×226 мм
+category: material.plastic
+status: selected
+source_bom_pos: 29
+params: {thickness_mm: 4}
+constraints:
+  - "Выравнивает фланцы динамиков; приклеивается непрерывным клеевым слоем"
+used_in: [modules/enclosure]
+sources:
+  - {vendor: Ozon, price_rub: "400–600"}

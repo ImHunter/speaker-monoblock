@@ -1,0 +1,11 @@
+# Верхняя панель. Источник: §4.1, §4.2. Начало: левый (X) и передний (Y) края панели.
+id: PANEL-top
+material: MDF-16-laminated
+size_mm: [356, 182]
+holes:
+  - {id: volume_pocket, type: forstner_pocket, diameter_mm: 30, depth_mm: 11, floor_mm: 5, x: 110, y: 170,
+     through_hole_diameter_mm: 7, for: CMP-pot-10k-linear}
+bluetooth_window:
+  type: unshielded_copper_gap
+  size_mm: [50, 50]
+  center: {x: 175, y: 143}

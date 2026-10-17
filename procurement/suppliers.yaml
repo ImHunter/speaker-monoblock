@@ -1,0 +1,10 @@
+suppliers:
+  - {id: audiomania, name: Аудиомания, items: [drivers]}
+  - {id: aliexpress, name: AliExpress, items: [jab4, icp3]}
+  - {id: chipdip, name: ChipDip, items: [psu, c14-module]}
+  - {id: ozon, name: Ozon, items: [wago, ntc, mov, fasteners, materials, abs, polycarbonate, clips]}
+  - {id: radiomagazin, name: "Радиомагазин (локальный)", items: [fuse, polyfuse, terminals, wire]}
+  - {id: stroymarket, name: Строймаркет, items: [screws, Loctite, angles]}
+  - {id: sewing, name: "Швейный магазин", items: [batting, spunbond, velcro, thread]}
+  - {id: workshop, name: "Местная мастерская", items: [mdf-cutting]}
+  - {id: print-service, name: "Заказная печать FDM", items: [holder-wago-asa]}

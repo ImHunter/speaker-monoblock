@@ -1,0 +1,19 @@
+# Передняя панель. Источник: §4.1, §4.6, §4.11. Начало координат: левый нижний угол внешней стороны панели (см. docs/conventions.md).
+id: PANEL-front
+material: MDF-16-laminated-inside
+size_mm: [356, 226]
+laminated_side: inside        # снаружи без ламината под клей накладки
+overlay:
+  material: ABS ~4 мм
+  size_mm: [356, 226]
+  cutouts:
+    - {for: tweeter, shape: rect, size_mm: [58, 53], clearance_mm: [0.2, 0.3]}
+    - {for: woofer, shape: circle, diameter_mm: 168, clearance_mm: 0.5}
+holes:
+  - {id: woofer, for: CMP-wavecor-wf168om01, type: circle, diameter_mm: 143, x: 178, y: 118,
+     note: "смещён вверх на 5 мм от центра (Y=113→118) для разноса дифракционных отражений"}
+  - {id: tweeter_left, for: CMP-sica-lp53x58-28-n20tw, type: circle, diameter_mm: 48.4, x: 50, y: 113}
+  - {id: tweeter_right, for: CMP-sica-lp53x58-28-n20tw, type: circle, diameter_mm: 48.4, x: 306, y: 113}
+  - {id: mount_screws, type: countersunk, qty: 12, diameter_mm: 4.2, screw: "M4×20", position: "по периметру, в резьбовые втулки торцов панелей"}
+  - {id: led_lightguide, type: circle, diameter_mm: 3, position: "по месту, обычно справа внизу", module: indicator}
+optional_edge_profile: {radius_mm: [8, 12], priority: [sides, top, bottom]}

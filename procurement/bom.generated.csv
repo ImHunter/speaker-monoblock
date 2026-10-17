@@ -1,0 +1,81 @@
+module,component_id,name,qty,price_rub_hint,vendor,url,status,note
+acoustics,CMP-wavecor-wf168om01,Wavecor WF168OM01 (6.5″ НЧ/СЧ),1,4658,Аудиомания,,selected,
+acoustics,CMP-sica-lp53x58-28-n20tw,Sica LP53x58.28/N20 TW (1″ твитер),2,3534,Аудиомания,,selected,
+acoustics,CMP-synthetic-batting,"Акустический синтепон 100–150 г/м², негорючий",1,150–200,Швейный магазин / Ozon,,selected,0.3 м² + резерв 0.2 м²
+acoustics,,"Лента велкро 20 мм, петли и крючки отдельно (~2 м)",1,150–250,,,no-passport,
+acoustics,,Ткань спанбонд 60–80 г/м² (0.5 м²),1,100–150,,,no-passport,
+acoustics,,Нитки полиэстеровые,1,50–100,,,no-passport,
+acoustics,,Клей эпоксидный двухкомпонентный (для крючков велкро),1,150–300,,,no-passport,
+amplifier-mount,CMP-wondom-jab4,"Wondom JAB4 (TPA3221 + ADAU1701, Bluetooth 5.0)",1,3699,AliExpress,https://ali.click/5buij1c,selected,
+amplifier-mount,CMP-polycarbonate-4,"Поликарбонат монолитный 4 мм, 120×150 мм (рамка JAB4)",1,309,Ozon,https://ozon.ru/t/bTO5cUS,selected,
+amplifier-mount,,"Уголок алюминиевый 15×15×1.5, 500 мм",1,209,,https://ozon.ru/t/1fBvwG4,no-passport,
+amplifier-mount,,Втулка резиновая проходная ∅7.0/∅4 мм,10,350,,https://ozon.ru/t/v0ZYuTu,no-passport,
+amplifier-mount,,Винты M3×10 полукруглая головка,12,50,,,no-passport,
+amplifier-mount,,Гайки M3 латунные,4,,,,no-passport,
+amplifier-mount,,Гайки M3 нейлоновые,4,,,,no-passport,
+amplifier-mount,,Шайбы нейлоновые M3,4,,,,no-passport,
+amplifier-mount,,Набор нейлоновых проставок (200 шт.),1,328,,https://ozon.ru/t/GAXvuY8,no-passport,
+dsp,CMP-icp3-programmer,Программатор Wondom ICP3 / USBi,1,1000–1500,AliExpress,,candidate,
+enclosure,CMP-mdf-16-laminated,МДФ 16 мм ламинированный,1,2500–3500,Местная мастерская,,selected,комплект распила по parts.yaml
+enclosure,CMP-abs-5-rear,"ABS-пластик 5 мм (задняя панель), 356×226 мм",1,400–600,Ozon,,selected,
+enclosure,CMP-abs-4-overlay,"ABS-пластик ~4 мм (накладка передней панели), 356×226 мм",1,400–600,Ozon,,selected,
+enclosure,,МДФ 16×20 мм бруски (~1 м),1,200–300,,,no-passport,
+enclosure,CMP-shumologia-hide-3,Вспененная резина Шумология Hide 3 (лист 100×65 см),1,860,Ozon,https://ozon.ru/t/ivSMKON,selected,
+enclosure,,Футорка Permo D5,70,690 за 60 шт.,,https://ozon.ru/t/5DnoogF,no-passport,
+enclosure,,"Резьбовые втулки M4 (латунь, 10–12 мм)",18,150–200 уп.,,,no-passport,
+enclosure,,Уголки мебельные 15×15 стальные,18,300–400 уп.,,,no-passport,
+enclosure,,Саморезы 3.5×12 (пресс-шайба),60,100–150 уп.,,,no-passport,
+enclosure,,Винты M4×20 потай,12,100–150 уп.,,,no-passport,передняя панель
+enclosure,,Винты M4×12/M4×16 потай,6,50–80 уп.,,,no-passport,задняя панель
+enclosure,,Силиконовые ножки (4 шт.),1,100–150,,,no-passport,
+enclosure,,Эпоксидный клей,1,100–150,,,no-passport,"футорки, световод"
+enclosure,,Полукруглый профиль ПВХ/ABS R8–12 (~1 м),1,200–300,,,no-passport,
+enclosure,CMP-pot-10k-linear,Потенциометр 10 кОм линейный (регулятор громкости),1,150–250,Радиомагазин / Ozon,,candidate,
+enclosure,,Пластилин Stik-o-Seal,1,,,,no-passport,"нет в BOM v8.0, OQ-009"
+enclosure,,Малярный скотч,1,,,,no-passport,"нет в BOM v8.0, OQ-009"
+indicator,,Световод жёсткий 3 мм BIVAR PLP2-750,1,,,,no-passport,нет в BOM v8.0
+indicator,,Держатель светодиода 3 мм Arlight 3CCI,1,,,,no-passport,нет в BOM v8.0
+indicator,,Светодиод 3 мм плоская линза OPTOSUPPLY OSB5SA3NE4A,1,,,,no-passport,нет в BOM v8.0
+indicator,,Резистор 2.7 кОм,1,,,,no-passport,нет в BOM v8.0
+indicator,,ABS-пластина 1.5–2 мм ~40×20,1,,,,no-passport,изготовить
+indicator,,Термоусадочная трубка тонкая ∅1.5–2 мм (0.1 м),1,~20/м,,,no-passport,
+power-input,CMP-dl-1dz2kr,"Модуль C14 DL-1DZ2KR с EMI-фильтром, выключателем и держателем предохранителя",1,1090,ChipDip,https://www.chipdip.ru/product/dl-1dz2kr-1a-250v-setevoy-filtr-jianli-753401701,selected,
+power-input,CMP-fuse-t1a-5x20,"Предохранитель 5×20 мм T1A/250V, керамический (slow-blow)",2,30,Радиомагазин / Ozon,,selected,1 + 1 запас
+power-input,CMP-holder-wago-asa,"Держатель клемм WAGO, печать FDM из ASA",1,индивидуально,заказная печать,,candidate,
+power-input,CMP-wago-221-413,Клемма рычажная WAGO 221-413 (3 проводника),3,70,Ozon,,selected,
+power-input,CMP-clip-block-c14,Блок для клипс (аксессуар крепления к модулю C14),1,254,Ozon,https://ozon.ru/t/fBqmE0G,selected,набор 3 шт.
+power-input,CMP-ntc-5d-15,NTC-термистор 5D-15,1,50–80,Радиомагазин / Ozon,,selected,
+power-input,CMP-mov-10d471k,Варистор 10D471K,1,30–50,Радиомагазин / Ozon,,selected,
+power-input,CMP-crimp-female-6-3,"Клемма обжимная «мама» 6.3 мм, полностью изолированная",3,15,Радиомагазин / Ozon,,selected,
+power-input,,Термоусадка двустенная (персональная на фастоны),опция,~20/м,,,no-passport,
+power-input,,Спиральная обмотка (альтернатива усадке),запас,~100/м,,,no-passport,
+power-input,CMP-wire-pv3-0-75,Провод ПВ3 1×0.75 мм² (силовой ввод),по месту,30,Радиомагазин / Ozon,,selected,"коричневый ×2, синий ×2, ж-з ×1"
+power-input,CMP-nshvi-0-75x8,Наконечник втулочный изолированный НШВИ 0.75×8 мм,4,5,Радиомагазин / Ozon,,selected,3 + резерв
+power-input,CMP-cable-clip-7mm,Клипса кабельная саморезная C-образная 7 мм (основание 13×25 мм),4,261,Ozon,https://ozon.ru/t/wE5gM8y,selected,2 + 2 запас
+power-input,,Саморезы потайные держателя 3×12/3×16,2,5,,,no-passport,
+power-input,,Фиксатор резьбы Loctite 243,1,500,,,no-passport,
+power-input,,Лист силиконовый 200×200×1 мм (лайнеры),1,155,,https://ozon.ru/t/l1pSzjs,no-passport,
+power-input,CMP-meanwell-lrs-100-24,Mean Well LRS-100-24,1,1620,ChipDip,https://www.chipdip.ru/product/lrs-100-24-blok-pitaniya-24v-4.5a-108vt-mean-well-9000334407,selected,
+shielding-grounding,,Токопроводящая EMI-прокладка (0.5 м),1,300–400,,,no-passport,
+shielding-grounding,,Медная самоклеящаяся лента 20–30 мм,1,400–700,,,no-passport,рулон
+shielding-grounding,,Медная плетёнка ПМЛ 2×4 мм² (~1 м),1,200–300,,,no-passport,
+shielding-grounding,,Неклеевая медная фольга 0.1 мм (~1 м),1,200–300,,,no-passport,
+shielding-grounding,,Кольцевые клеммы под винт M4,10,50–80 уп.,,,no-passport,
+shielding-grounding,,Шайбы кузовные DIN 9021 M4,10,50–80 уп.,,,no-passport,
+shielding-grounding,,Шайбы плоские DIN 125 M4,10,30–50 уп.,,,no-passport,
+shielding-grounding,,Нейлоновые дюбели Fischer SX ∅4,10,100–150 уп.,,,no-passport,
+shielding-grounding,,Тканевая ворсистая изолента Tesa 51608 (~1 м),1,150–200,,,no-passport,
+wiring,CMP-ruef400,Самовосстанавливающийся предохранитель RUEF400 (4 А),1,100–150,Радиомагазин / Ozon,,selected,
+wiring,,Ферритовое кольцо clip-on ∅5–7 мм,2,50–80,,,no-passport,
+wiring,CMP-jack-3-5-panel,Гнездо 3.5 мм стерео на панель,1,100–150,Радиомагазин / Ozon,,candidate,
+wiring,CMP-wire-mgshv,Провод МГШВ (акустика и сигнал LED),1,10–20,Радиомагазин / Ozon,,selected,8 отрезков по таблице variants
+wiring,CMP-tb-2504,"Клеммная колодка ТВ-2504 (4 контакта, M4)",1,50–80,Радиомагазин / Ozon,,candidate,
+wiring,CMP-tb-1504,"Клеммная колодка ТВ-1504 (4 контакта, M3)",3,30–50,Радиомагазин / Ozon,,candidate,по плану 2 — OQ-007
+wiring,,Наконечник вилочный НВИ 2-4 (синий),2,5,,,no-passport,
+wiring,,Наконечник вилочный НВИ 1.25-3 (красный),10,3,,,no-passport,
+wiring,,Термоусадка с клеевым слоем ∅10–12 мм (0.1 м),1,~50/м,,,no-passport,
+wiring,,Полиуретановый герметик PU-40,1,300–500,,,no-passport,
+wiring,,Пластиковые стяжки 2.5×100,10,50–80 уп.,,,no-passport,
+wiring,,Самоклеящиеся площадки под стяжки,6,50–80 уп.,,,no-passport,
+wiring,,PolySwitch 0.1 А,1,,,,no-passport,"нет в BOM v8.0, OQ-009"
+wiring,,Экранированный микрофонный кабель,1,,,,no-passport,"нет в BOM v8.0, OQ-009"

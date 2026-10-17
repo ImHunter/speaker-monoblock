@@ -1,0 +1,14 @@
+# Правая боковина. Источник: §4.1, §4.4.3, §4.8. Начало: задний нижний угол боковины.
+id: PANEL-side-right
+material: MDF-16-laminated
+size_mm: [182, 219]       # OQ-004: проверить 182 vs внутренняя глубина 184
+feet_protrusion_mm: 10
+cutouts:
+  - {id: c14_module, for: CMP-dl-1dz2kr, flange_bottom_from_floor_mm: 54, drawing: "монтажный чертёж DL-1DZ2KR"}
+holes:
+  - {id: holder_screws, qty: 2, screw: "3×12/3×16 потай", position: "по месту, после разметки зенкованных ушек"}
+  - {id: clip_1, y_mm: [15, 20], note: "правее нижнего угла держателя"}
+  - {id: clip_2, note: "пол, середина прямого участка (на полу, не на боковине)"}
+angle_points:
+  - {angle: 2, points: [[20, 30], [20, 50]]}
+  - {angle: 4, points: [[20, 164], [20, 184]]}

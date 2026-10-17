@@ -1,0 +1,15 @@
+# Дно. Источник: §4.1, §6 (этап 1), §9.2. Начало: задний левый угол дна.
+id: PANEL-bottom
+material: MDF-16-laminated
+size_mm: [322, 182]
+holes:
+  - {id: ventilation, qty: 8, diameter_mm: 8}
+  - {id: ground_dowel_points, type: blind, diameter_mm: 5, depth_mm: 11, note: "под нейлоновые дюбели, см. modules/shielding-grounding"}
+ground_points:
+  - {id: GP-baffle,  x: 30,  y: 20, purpose: "шлейф перегородки → дно"}
+  - {id: GP-rear,    x: 170, y: 30, purpose: "кабельный мост задней панели"}
+  - {id: GP-psu,     x: 80,  y: 25, purpose: "шлейф корпуса БП"}
+  - {id: GP-drain,   x: 30,  y: 25, purpose: "центральная точка слива на FG БП"}
+angle_points:       # стальные уголки электронного отсека (дно)
+  - {angle: 1, points: [[7.5, 30], [7.5, 50]]}
+  - {angle: 2, points: [[314.5, 30], [314.5, 50]]}

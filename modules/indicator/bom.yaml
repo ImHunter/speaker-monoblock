@@ -1,0 +1,9 @@
+# Позиции модуля в BOM v8.0 присутствуют только частично (OQ-009).
+module: indicator
+items:
+  - {name: "Световод жёсткий 3 мм BIVAR PLP2-750", qty: 1, note: "нет в BOM v8.0"}
+  - {name: "Держатель светодиода 3 мм Arlight 3CCI", qty: 1, note: "нет в BOM v8.0"}
+  - {name: "Светодиод 3 мм плоская линза OPTOSUPPLY OSB5SA3NE4A", qty: 1, note: "нет в BOM v8.0"}
+  - {name: "Резистор 2.7 кОм", qty: 1, note: "нет в BOM v8.0"}
+  - {name: "ABS-пластина 1.5–2 мм ~40×20", qty: 1, note: "изготовить", source_bom_pos: 70}
+  - {name: "Термоусадочная трубка тонкая ∅1.5–2 мм (0.1 м)", qty: 1, price_rub: "~20/м", source_bom_pos: 66}

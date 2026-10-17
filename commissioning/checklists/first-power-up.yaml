@@ -1,0 +1,41 @@
+id: CHECKLIST-first-power-up
+source: v8.0 §7
+steps:
+  - id: TEST-COM-01
+    title: "L–N на C14, OFF"
+    expected: "∞"
+  - id: TEST-COM-02
+    title: "L–N на C14, ON"
+    expected: "≈5–8 Ом, без КЗ"
+    open_question: OQ-011
+  - id: TEST-COM-03
+    title: "PE: C14 → FG БП"
+    expected: "сплошная цепь"
+  - id: TEST-COM-04
+    title: "Изоляция экранов; корпус потенциометра на экране, контакты нет"
+    expected: "по условию"
+  - id: TEST-COM-05
+    title: "Полярность 24 В"
+    expected: "V+ → +JAB4, V− → GND"
+  - id: TEST-COM-06
+    title: "Первое включение БП без нагрузки"
+    expected: "зелёный светодиод, нет треска"
+  - id: TEST-COM-07
+    title: "Напряжение БП"
+    expected: "24.0 В"
+    params_ref: params/power.yaml
+  - id: TEST-COM-08
+    title: "JAB4 без динамиков, 2–3 мин"
+    expected: "радиатор и ADAU1701 едва тёплые"
+  - id: TEST-COM-09
+    title: "DC на 4 выходах"
+    expected: "≤10–30 мВ (≥1 В — отказ)"
+  - id: TEST-COM-10
+    title: "Тишина с динамиками, индикатор светится"
+    expected: "едва заметное шипение у твитера допустимо"
+  - id: TEST-COM-11
+    title: "Звук по Bluetooth и AUX, регулятор громкости"
+    expected: "работает, каналы разделены"
+  - id: TEST-COM-12
+    title: "Интервал включений"
+    expected: "не чаще 1 раза в 30 с"

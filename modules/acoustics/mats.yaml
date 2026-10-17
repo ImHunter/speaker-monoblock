@@ -1,0 +1,14 @@
+# Демпфирующие маты. Источник: v8.0 §4.12. Размеры — Ш×В, мм.
+batting_ref: CMP-synthetic-batting
+shell: "спанбонд 60–80 г/м²"
+velcro: {width_mm: 20, loops: "на мате по периметру", hooks: "20×20 мм на стенках, эпоксид каплями по углам"}
+mats:
+  - {id: MAT-BAFFLE, surface: "перегородка", size: [322, 194], thickness_mm: [15, 20], hooks: 6,
+     cutouts: ["прямоуг. ~100×60 (ТВ-2504 и ТВ-1504)", "прямоуг. ~60×60 (ТВ-1504 сигнальная)", "круглые под жгуты по необходимости"]}
+  - {id: MAT-LEFT,   surface: "левая боковина",  size: [110, 194], thickness_mm: [10, 15], hooks: 4, cutouts: []}
+  - {id: MAT-RIGHT,  surface: "правая боковина", size: [110, 194], thickness_mm: [10, 15], hooks: 4, cutouts: []}
+  - {id: MAT-TOP,    surface: "верх",  size: [322, 110], thickness_mm: [10, 15], hooks: 4, cutouts: []}
+  - {id: MAT-BOTTOM, surface: "низ",   size: [322, 110], thickness_mm: [10, 15], hooks: 4, cutouts: [], note: "укладывается поверх проводов"}
+hook_layout:
+  baffle: "по углам + 2 в центре верх/низ"
+  others: "по углам"

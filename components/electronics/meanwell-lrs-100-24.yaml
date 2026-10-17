@@ -1,0 +1,24 @@
+id: CMP-meanwell-lrs-100-24
+name: Mean Well LRS-100-24
+category: electronics.psu
+manufacturer: Mean Well
+mpn: LRS-100-24
+status: selected
+source_bom_pos: 5
+params:
+  output_v: 24.0
+  output_a: 4.5
+  power_w: 108
+  adjust: "подстроечный резистор +V ADJ (выставить 24.0 В)"
+  terminals: [L, N, FG, "+V", "-V"]
+mechanical:
+  mount: "на перегородке со стороны электроники, X=60…157, Y=40…169"
+  hardware: "футорки Permo D5, саморезы 3.5×12 через стальные и резиновые шайбы, фоамиран 3 мм"
+constraints:
+  - "Клеммник винтовой невыпадающий: только НШВИ 0.75×8, кольцевые НКИ не применять"
+  - "Момент затяжки 0.4–0.6 Н·м"
+  - "FG — центр звезды заземления"
+used_in: [modules/power-input, modules/shielding-grounding, modules/wiring]
+sources:
+  - {vendor: ChipDip, url: "https://www.chipdip.ru/product/lrs-100-24-blok-pitaniya-24v-4.5a-108vt-mean-well-9000334407", price_rub: 1620, checked: 2026-09-22}
+verified_by_measurement: false

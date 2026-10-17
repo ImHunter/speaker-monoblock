@@ -1,0 +1,8 @@
+# Левая боковина. Источник: §4.1, §4.8. Начало: задний нижний угол боковины.
+id: PANEL-side-left
+material: MDF-16-laminated
+size_mm: [182, 219]       # OQ-004
+feet_protrusion_mm: 10
+angle_points:
+  - {angle: 1, points: [[20, 30], [20, 50]]}
+  - {angle: 3, points: [[20, 164], [20, 184]]}

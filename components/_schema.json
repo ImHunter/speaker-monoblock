@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Паспорт компонента",
+  "type": "object",
+  "required": ["id", "name", "category", "status"],
+  "additionalProperties": true,
+  "properties": {
+    "id": {"type": "string", "pattern": "^CMP-[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string"},
+    "category": {"type": "string", "description": "например driver.woofer, electronics.amp, protection.ntc, connector.terminal"},
+    "manufacturer": {"type": "string"},
+    "mpn": {"type": "string"},
+    "status": {"enum": ["candidate", "selected", "ordered", "received", "verified", "rejected"]},
+    "params": {"type": "object", "description": "справочные электрические/акустические параметры"},
+    "mechanical": {"type": "object", "description": "габариты, вырезы, шаги выводов, pinout"},
+    "constraints": {"type": "array", "items": {"type": "string"}, "description": "ограничения применения"},
+    "used_in": {"type": "array", "items": {"type": "string"}, "description": "пути модулей, например modules/dsp"},
+    "alternatives_rejected": {"type": "array", "items": {"type": "string"}},
+    "datasheet": {"type": "string", "description": "путь относительно components/ (PDF в Git LFS)"},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vendor"],
+        "properties": {
+          "vendor": {"type": "string"},
+          "url": {"type": "string"},
+          "price_rub": {"type": ["number", "string"]},
+          "checked": {"type": "string"},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "source_bom_pos": {"type": ["integer", "array"], "description": "номер позиции в исходной спецификации v8.0"},
+    "verified_by_measurement": {"type": "boolean"},
+    "notes": {"type": "string"}
+  }
+}

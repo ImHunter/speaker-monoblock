@@ -1,0 +1,9 @@
+module: acoustics
+items:
+  - {ref: CMP-wavecor-wf168om01, qty: 1}
+  - {ref: CMP-sica-lp53x58-28-n20tw, qty: 2}
+  - {ref: CMP-synthetic-batting, qty: 1, note: "0.3 м² + резерв 0.2 м²"}
+  - {name: "Лента велкро 20 мм, петли и крючки отдельно (~2 м)", qty: 1, price_rub: "150–250", source_bom_pos: 76}
+  - {name: "Ткань спанбонд 60–80 г/м² (0.5 м²)", qty: 1, price_rub: "100–150", source_bom_pos: 77}
+  - {name: "Нитки полиэстеровые", qty: 1, price_rub: "50–100", source_bom_pos: 78}
+  - {name: "Клей эпоксидный двухкомпонентный (для крючков велкро)", qty: 1, price_rub: "150–300", source_bom_pos: 79}

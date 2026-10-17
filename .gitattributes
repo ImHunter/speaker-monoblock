@@ -1,0 +1,5 @@
+components/datasheets/** filter=lfs diff=lfs merge=lfs -text
+modules/dsp/sigmastudio/*.dspproj filter=lfs diff=lfs merge=lfs -text
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.step filter=lfs diff=lfs merge=lfs -text
+* text=auto eol=lf

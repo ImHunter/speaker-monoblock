@@ -1,0 +1,28 @@
+# Перегородка. Источник: §3, §4.5, §9.2. Начало: левый нижний угол со стороны акустического отсека (уточнить: docs/conventions.md).
+id: PANEL-baffle
+material: MDF-16-laminated
+size_mm: [322, 194]
+thickness_mm: 16
+feedthroughs:
+  - {id: FT-power, side: left,  diameter_mm: 12,     harness: [woofer 1.5 мм², tweeters 1.0 мм²], height_above_terminals_mm: [30, 40]}
+  - {id: FT-signal, side: right, diameter_mm: [8, 10], harness: [LED 0.5 мм², reserve], height_above_terminals_mm: [30, 40]}
+feedthrough_coordinates: "определяются по месту после установки уголков и колодок"
+terminal_blocks:
+  - {id: TB-bass,   for: CMP-tb-2504, corner: left-bottom,  purpose: woofer, thread: M4}
+  - {id: TB-treble, for: CMP-tb-1504, corner: left-bottom,  purpose: tweeters, thread: M3}
+  - {id: TB-signal, for: CMP-tb-1504, corner: right-bottom, purpose: LED + reserve, thread: M3}
+terminal_block_mount: "футорки Permo D5 (эпоксид), фоамиран 1 мм"
+psu:
+  mount_side: electronics
+  x_mm: [60, 157]
+  y_mm: [40, 169]
+  clean_window_no_copper: true
+  foam_mm: 3
+  holes: "4 × ∅5 под футорки Permo D5"
+amp_frame_footprint_x_mm: [170, 260]     # рамка JAB4 на перегородке не крепится
+grounding_loop: {x: 30, y: 20}
+angles_acoustic:
+  bottom_baffle: {ids: [5, 6, 7], heights_mm: [30, 50]}
+  top_baffle: {ids: [8, 9, 10], heights_mm: [150, 170]}
+  left: {ids: [11, 12], heights_mm: [30, 150]}
+  right: {ids: [13, 14], heights_mm: [30, 150]}

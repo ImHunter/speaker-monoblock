@@ -1,0 +1,30 @@
+id: CMP-wavecor-wf168om01
+name: Wavecor WF168OM01 (6.5″ НЧ/СЧ)
+category: driver.woofer
+manufacturer: Wavecor
+mpn: WF168OM01
+status: selected
+source_bom_pos: 1
+params:
+  diameter_in: 6.5
+  impedance_ohm: 4
+  sensitivity_db: 88
+  fs_hz: 39
+  qts: 0.45
+  vas_l: 29.5
+  cone: "бумажный диффузор с пропиткой"
+mechanical:
+  cutout_mm: 143
+  flange_mm: 168
+  overlay_cutout_mm: 168
+  overlay_clearance_mm: 0.5
+constraints:
+  - "Подавить горб на 95 Гц в DSP (Qtc≈1.05)"
+  - "Subsonic HPF 60 Гц, 24 дБ/окт — защита от перегрузки ниже резонанса"
+  - "Прокладка из фоамирана 1 мм под фланец"
+used_in: [modules/enclosure, modules/acoustics, modules/dsp, modules/wiring]
+alternatives_rejected: [Monacor SPH-170 (исчез из продажи), Visaton W 170 S (труднодоступен), Peerless SDS (периодически пропадает)]
+datasheet: datasheets/CMP-wavecor-wf168om01.pdf
+sources:
+  - {vendor: Аудиомания, price_rub: 4658, checked: 2026-09-22}
+verified_by_measurement: false

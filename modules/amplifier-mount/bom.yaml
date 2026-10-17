@@ -1,0 +1,11 @@
+module: amplifier-mount
+items:
+  - {ref: CMP-wondom-jab4, qty: 1}
+  - {ref: CMP-polycarbonate-4, qty: 1}
+  - {name: "Уголок алюминиевый 15×15×1.5, 500 мм", qty: 1, price_rub: 209, source_bom_pos: 73, url: "https://ozon.ru/t/1fBvwG4"}
+  - {name: "Втулка резиновая проходная ∅7.0/∅4 мм", qty: 10, price_rub: 350, source_bom_pos: 74, url: "https://ozon.ru/t/v0ZYuTu"}
+  - {name: "Винты M3×10 полукруглая головка", qty: 12, price_rub: 50, source_bom_pos: 46}
+  - {name: "Гайки M3 латунные", qty: 4, source_bom_pos: 47}
+  - {name: "Гайки M3 нейлоновые", qty: 4, source_bom_pos: 48}
+  - {name: "Шайбы нейлоновые M3", qty: 4, source_bom_pos: 49}
+  - {name: "Набор нейлоновых проставок (200 шт.)", qty: 1, price_rub: 328, source_bom_pos: 50, url: "https://ozon.ru/t/GAXvuY8"}

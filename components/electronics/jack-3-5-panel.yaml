@@ -1,0 +1,14 @@
+id: CMP-jack-3-5-panel
+name: Гнездо 3.5 мм стерео на панель
+category: connector.audio-jack
+status: candidate
+source_bom_pos: 52
+mechanical:
+  hole_mm: 6
+  position: "задняя панель X=175, Y=80"
+constraints:
+  - "Путь сигнала: PolySwitch 0.1 А (в разрыв GND) → экранированный кабель → AUX JAB4"
+  - "Корпус разъёма не должен касаться медного экрана (особенно SMA-вариант)"
+used_in: [modules/wiring, modules/enclosure]
+sources:
+  - {vendor: "Радиомагазин / Ozon", price_rub: "100–150"}

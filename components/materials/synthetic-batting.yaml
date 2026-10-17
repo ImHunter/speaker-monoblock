@@ -1,0 +1,11 @@
+id: CMP-synthetic-batting
+name: Акустический синтепон 100–150 г/м², негорючий
+category: material.damping
+status: selected
+source_bom_pos: [24, 80]
+params: {density_gsm: [100, 150], area_m2: 0.3, reserve_m2: 0.2}
+constraints:
+  - "Слой сложить до 10–20 мм, обернуть спанбондом 60–80 г/м²"
+used_in: [modules/acoustics]
+sources:
+  - {vendor: "Швейный магазин / Ozon", price_rub: "150–200"}
