@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Проверка репозитория.
 
-1. params.yaml и components.yaml парсятся; ID компонентов уникальны, обязательные поля на месте.
-2. Числа с маркером `178<!--p:panels.front.woofer_x-->` в docs/*.md совпадают с params.yaml
-   (`--fix` исправляет текст по params.yaml).
-3. Ссылки CMP-*, OQ-*, T-* ведут на существующие записи.
-4. Относительные ссылки Markdown и якоря существуют.
-5. Позиции исходной спецификации 1..80 покрыты в components.yaml (предупреждение).
+1. components.yaml: поля, уникальные ID, позиции исходной спецификации 1..80 ровно по одному разу.
+2. Числа с маркером `178<!--p:panels.front.woofer_x-->` в docs/*.md совпадают с params.yaml;
+   параметры params.yaml без маркера в тексте — предупреждение.
+3. Ссылки CMP-*, OQ-* ведут на существующие записи.
+4. Ссылки Markdown и якоря существуют.
+5. Все разделы исходника (по номерам заголовков архива) присутствуют в docs/*.md,
+   ссылки «см. N.N» ведут на существующие разделы (известные битые — предупреждение, см. open-questions).
+6. Таблица «Карта документов» в docs/project.md актуальна.
 
-Код возврата 1 при ошибках.
+`--fix` исправляет числа по params.yaml и перегенерирует карту разделов. Код возврата 1 при ошибках.
 """
 import re
 import sys
@@ -19,6 +21,7 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 FIX = "--fix" in sys.argv
 errors, warnings = [], []
+err, warn = errors.append, warnings.append
 
 
 def load(name):
@@ -27,35 +30,34 @@ def load(name):
 
 
 def rel(p):
-    return str(p.relative_to(ROOT))
+    return str(Path(p).relative_to(ROOT))
 
 
 params = load("params.yaml")
 comps = load("components.yaml")["components"]
+docs = sorted((ROOT / "docs").glob("*.md")) + [ROOT / "README.md", ROOT / "AGENTS.md"]
+doc_text = {p: p.read_text(encoding="utf-8") for p in docs}
 
-# --- 1. components.yaml
-ids = {}
-covered = set()
+# ------------------------------------------------------------------ 1. components.yaml
+ids, positions = {}, []
 for c in comps:
     for key in ("id", "name", "qty", "module"):
         if key not in c:
-            errors.append(f"components.yaml: у записи {c.get('id', c)} нет поля {key}")
+            err(f"components.yaml: у {c.get('id', c)} нет поля {key}")
     cid = c.get("id", "")
     if not re.fullmatch(r"CMP-[a-z0-9]+(?:-[a-z0-9]+)*", cid):
-        errors.append(f"components.yaml: некорректный ID {cid}")
+        err(f"components.yaml: некорректный ID {cid}")
     if cid in ids:
-        errors.append(f"components.yaml: дубликат {cid}")
+        err(f"components.yaml: дубликат {cid}")
     ids[cid] = c
-    pos = c.get("pos")
-    covered.update(pos if isinstance(pos, list) else [pos] if pos else [])
-missing = sorted(set(range(1, 81)) - covered)
-if missing:
-    warnings.append(f"позиции исходной спецификации без записи: {missing}")
+    if c.get("pos"):
+        positions.append(c["pos"])
+if sorted(positions) != list(range(1, 81)):
+    err(f"components.yaml: позиции спецификации не 1..80 ровно по разу: "
+        f"пропущены {sorted(set(range(1, 81)) - set(positions))}, "
+        f"повторы {sorted({p for p in positions if positions.count(p) > 1})}")
 
-# --- Markdown-файлы
-md_files = [p for p in ROOT.rglob("*.md") if "archive" not in p.relative_to(ROOT).parts]
-
-
+# ------------------------------------------------------------------ 2. маркеры параметров
 def lookup(path):
     node = params
     for part in path.split("."):
@@ -65,70 +67,77 @@ def lookup(path):
     return node
 
 
+def leaf_paths(node, prefix=""):
+    for k, v in node.items():
+        p = f"{prefix}{k}"
+        if isinstance(v, dict):
+            yield from leaf_paths(v, p + ".")
+        else:
+            yield p
+
+
 def fmt(v):
-    return str(v).replace("-", "−")    # YAML-значение как есть, минус типографский
+    return str(v).replace("-", "−")
 
 
-marker = re.compile(r"(−?\d+(?:\.\d+)?)<!--p:([\w.\-]+)-->")
-n_markers = 0
-for p in md_files:
-    text = p.read_text(encoding="utf-8")
+SIGN = "-−–"
+marker = re.compile(rf"((?<![\w>])[{SIGN}]?\d+(?:\.\d+)?)<!--p:([\w.]+)-->")
+used, n_markers = set(), 0
+for p in docs:
+    text = doc_text[p]
 
     def repl(m):
         global n_markers
         n_markers += 1
+        used.add(m.group(2))
         val = lookup(m.group(2))
         if val is None or isinstance(val, (dict, list)):
-            errors.append(f"{rel(p)}: параметр {m.group(2)} не найден в params.yaml")
+            err(f"{rel(p)}: параметр {m.group(2)} не найден в params.yaml")
             return m.group(0)
-        try:
-            same = float(m.group(1).replace("−", "-")) == float(val)
-        except (TypeError, ValueError):
-            errors.append(f"{rel(p)}: параметр {m.group(2)} не число")
-            return m.group(0)
-        if same:
+        shown = float(re.sub(f"[{SIGN}]", "-", m.group(1)))
+        if shown == float(val):
             return m.group(0)
         if FIX:
             print(f"fix  {rel(p)}: {m.group(1)} → {fmt(val)} ({m.group(2)})")
             return f"{fmt(val)}<!--p:{m.group(2)}-->"
-        errors.append(f"{rel(p)}: {m.group(1)} ≠ params.{m.group(2)} = {val}")
+        err(f"{rel(p)}: {m.group(1)} ≠ params.{m.group(2)} = {val}")
         return m.group(0)
 
     new = marker.sub(repl, text)
     if FIX and new != text:
         p.write_text(new, encoding="utf-8")
-        text = new
+        doc_text[p] = new
+for path in leaf_paths(params):
+    if path not in used:
+        warn(f"params.yaml: {path} не привязан ни к одному числу в тексте")
 
-    # --- 3. ссылки CMP / OQ / T
-    for m in set(re.findall(r"CMP-[a-z0-9]+(?:-[a-z0-9]+)*", text)):
-        if m not in ids:
-            errors.append(f"{rel(p)}: неизвестный компонент {m}")
-
+# ------------------------------------------------------------------ 3. CMP / OQ
 oq_text = (ROOT / "docs/open-questions.md").read_text(encoding="utf-8")
 oq_ids = set(re.findall(r"^\| (OQ-\d+) \|", oq_text, re.M))
-tech_text = (ROOT / "docs/techniques.md").read_text(encoding="utf-8")
-t_ids = set(re.findall(r"^## (T-\d+)", tech_text, re.M))
-for p in md_files:
-    text = p.read_text(encoding="utf-8")
-    for m in set(re.findall(r"OQ-\d+", text)):
+for p, text in doc_text.items():
+    for m in set(re.findall(r"CMP-[a-z0-9]+(?:-[a-z0-9]+)*", text)):
+        if m not in ids:
+            err(f"{rel(p)}: неизвестный компонент {m}")
+    if p.name != "open-questions.md":
+        for m in set(re.findall(r"OQ-\d+", text)):
+            if m not in oq_ids:
+                err(f"{rel(p)}: неизвестный вопрос {m}")
+for p in ROOT.glob("components.yaml"):
+    for m in set(re.findall(r"OQ-\d+", p.read_text(encoding="utf-8"))):
         if m not in oq_ids:
-            errors.append(f"{rel(p)}: неизвестный вопрос {m}")
-    for m in set(re.findall(r"(?<![A-Za-z0-9-])T-\d{3}", text)):
-        if m not in t_ids:
-            errors.append(f"{rel(p)}: неизвестный приём {m}")
+            err(f"components.yaml: неизвестный вопрос {m}")
 
 
-# --- 4. ссылки и якоря
+# ------------------------------------------------------------------ 4. ссылки и якоря
 def slug(h):
-    h = h.strip().lower()
+    h = re.sub(r"<!--.*?-->", "", h).strip().lower()
     h = re.sub(r"[^\w\s-]", "", h)
     return re.sub(r"\s", "-", h)
 
 
-def anchors(path):
-    res = set()
-    in_code = False
-    for line in path.read_text(encoding="utf-8").splitlines():
+def anchors(text):
+    res, in_code = set(), False
+    for line in text.splitlines():
         if line.startswith("```"):
             in_code = not in_code
         if not in_code:
@@ -139,19 +148,102 @@ def anchors(path):
 
 
 link = re.compile(r"\]\((?!https?://|mailto:)([^)\s]*)\)")
-for p in md_files:
-    for target in link.findall(p.read_text(encoding="utf-8")):
+for p, text in doc_text.items():
+    for target in link.findall(text):
         path_part, _, anchor = target.partition("#")
         dest = p if not path_part else (p.parent / path_part).resolve()
         if not dest.exists():
-            errors.append(f"{rel(p)}: битая ссылка {target}")
-        elif anchor and dest.suffix == ".md" and anchor not in anchors(dest):
-            errors.append(f"{rel(p)}: нет якоря #{anchor} в {rel(dest)}")
+            err(f"{rel(p)}: битая ссылка {target}")
+        elif anchor and dest.suffix == ".md":
+            dt = doc_text.get(dest) or dest.read_text(encoding="utf-8")
+            if anchor not in anchors(dt):
+                err(f"{rel(p)}: нет якоря #{anchor} в {rel(dest)}")
 
+# ------------------------------------------------------------------ 5. разделы исходника
+src = (ROOT / "archive/проект-колонки-v8.0.md").read_text(encoding="utf-8").replace("\r", "")
+src_sections = []
+for line in src.split("\n"):
+    m = re.match(r"#{2,4} (\d+(?:\.\d+)*)\.", line)
+    if m:
+        src_sections.append(m.group(1))
+doc_heads = {}   # номер -> [файлы]
+for p, text in doc_text.items():
+    if p.parent.name != "docs":
+        continue
+    in_code = False
+    for line in text.split("\n"):
+        if line.startswith("```"):
+            in_code = not in_code
+        m = None if in_code else re.match(r"#{2,4} (\d+(?:\.\d+)*)\.", line)
+        if m:
+            doc_heads.setdefault(m.group(1), []).append(p.name)
+for n in src_sections:
+    if n not in doc_heads and n != "5":      # §5 — это components.yaml
+        err(f"раздел {n} исходника не найден в docs/")
+# Этапы сборки (6.x) нумеруются словами «Этап N» — проверка ниже по числу этапов
+if len(re.findall(r"^### Этап \d", doc_text[ROOT / "docs/assembly.md"], re.M)) != 8:
+    err("docs/assembly.md: должно быть 8 этапов сборки")
+
+KNOWN_BAD = {  # (файл, ссылка): OQ — заведомо битые ссылки исходника
+    ("enclosure.md", "8.2"): "OQ-002", ("assembly.md", "5.3"): "OQ-002", ("assembly.md", "6.4"): "OQ-016",
+    ("enclosure.md", "6.4"): "OQ-016",
+}
+ref_re = re.compile(r"(?:см\.|раздел[а-я]*|п\.|таблиц[аеыи]|разделу)\s+(\d+(?:\.\d+)+|\d+)\b")
+for p, text in doc_text.items():
+    if p.parent.name != "docs" or p.name in ("open-questions.md", "glossary.md"):
+        continue
+    for m in ref_re.finditer(text):
+        n = m.group(1)
+        if n in doc_heads or n in {str(i) for i in range(1, 13)} and n in {h.split(".")[0] for h in doc_heads}:
+            continue
+        issue = KNOWN_BAD.get((p.name, n))
+        if issue:
+            warn(f"{rel(p)}: ссылка «{m.group(0)}» ведёт в никуда (известно: {issue})")
+        else:
+            err(f"{rel(p)}: ссылка «{m.group(0)}» не найдена среди разделов")
+
+# ------------------------------------------------------------------ 6. карта документов
+TITLES = {
+    "project": "Идея, динамики, усилитель, характеристики, заключение",
+    "enclosure": "Конструкция корпуса: размеры, детали, панели, уголки, бруски",
+    "acoustics": "Закрытый ящик, демпфирующие маты",
+    "power-input": "Сетевой ввод C14 → WAGO → БП",
+    "shielding": "Экранирование и заземление",
+    "electronics": "Рамка JAB4, индикатор, проводка 24 В и сигналов, цвета проводов",
+    "dsp": "SigmaStudio и программирование JAB4",
+    "techniques": "Приёмы монтажа",
+    "assembly": "Пошаговая сборка (этапы 1–8; 5.1–5.5 вынесены к узлам)",
+    "commissioning": "Первый запуск и проверка",
+}
+
+
+def num_key(s):
+    return [int(x) for x in s.split(".")]
+
+
+rows = []
+for name, title in TITLES.items():
+    nums = sorted({n for n, files in doc_heads.items() if f"{name}.md" in files}, key=num_key)
+    rows.append(f"| [{name}.md]({name}.md) | {title} | {', '.join(nums)} |")
+rows.append("| [../components.yaml](../components.yaml) | Спецификация и паспорта компонентов (80 позиций + недостающие) | 5 |")
+index = "\n".join(rows)
+pj = ROOT / "docs/project.md"
+txt = doc_text[pj]
+m = re.search(r"<!--index-->\n?(.*?)\n?<!--/index-->", txt, re.S)
+if not m:
+    err("docs/project.md: нет маркеров <!--index--> … <!--/index-->")
+elif m.group(1).strip() != index.strip():
+    if FIX:
+        pj.write_text(txt[:m.start()] + "<!--index-->\n" + index + "\n<!--/index-->" + txt[m.end():], encoding="utf-8")
+        print("fix  docs/project.md: карта документов обновлена")
+    else:
+        err("docs/project.md: карта документов устарела (make sync)")
+
+# ------------------------------------------------------------------ итог
 for w in warnings:
     print("WARN ", w)
 for e in errors:
     print("ERROR", e)
-print(f"\nкомпонентов: {len(ids)}, документов: {len(md_files)}, маркеров параметров: {n_markers}; "
+print(f"\nкомпонентов: {len(ids)}, документов: {len(docs)}, маркеров: {n_markers}; "
       f"ошибок: {len(errors)}, предупреждений: {len(warnings)}")
 sys.exit(1 if errors else 0)

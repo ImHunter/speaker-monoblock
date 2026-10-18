@@ -9,4 +9,4 @@ jobs:
         with: {python-version: "3.11"}
       - run: pip install pyyaml
       - run: make validate
-      - run: make bom cutlist
+      - run: make audit bom cutlist
