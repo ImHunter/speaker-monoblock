@@ -9,6 +9,7 @@
 5. Все разделы исходника (по номерам заголовков архива) присутствуют в docs/*.md,
    ссылки «см. N.N» ведут на существующие разделы (известные битые — предупреждение, см. open-questions).
 6. Таблица «Карта документов» в docs/project.md актуальна.
+7. components.yaml: у каждого компонента есть `see` — номера разделов исходника, и они существуют в docs/.
 
 `--fix` исправляет числа по params.yaml и перегенерирует карту разделов. Код возврата 1 при ошибках.
 """
@@ -202,6 +203,29 @@ for p, text in doc_text.items():
         else:
             err(f"{rel(p)}: ссылка «{m.group(0)}» не найдена среди разделов")
 
+# ------------------------------------------------------------------ 5b. ссылки see в components.yaml
+valid_sections = set(doc_heads)
+for name_file, pat, pref in (("assembly.md", r"^### Этап (\d+)\.", "6/Этап "), ("commissioning.md", r"^### Шаг (\d+)\.", "7/Шаг ")):
+    for n in re.findall(pat, doc_text[ROOT / "docs" / name_file], re.M):
+        valid_sections.add(f"{pref}{n}")
+NOT_IN_TEXT = {25: "OQ-020", 48: "OQ-020"}      # позиции спецификации, которых нет в тексте проекта
+n_see = 0
+for c in comps:
+    see = c.get("see")
+    if not isinstance(see, list):
+        err(f"components.yaml: у {c['id']} нет списка see")
+        continue
+    if not see:
+        issue = NOT_IN_TEXT.get(c.get("pos"))
+        if issue:
+            warn(f"components.yaml: {c['id']} (поз. {c['pos']}) нигде не упомянут в тексте (известно: {issue})")
+        else:
+            err(f"components.yaml: у {c['id']} пустой see — укажите раздел исходника")
+    for s in see:
+        n_see += 1
+        if s not in valid_sections:
+            err(f"components.yaml: {c['id']}: раздел «{s}» из see не найден в docs/")
+
 # ------------------------------------------------------------------ 6. карта документов
 TITLES = {
     "project": "Идея, динамики, усилитель, характеристики, заключение",
@@ -244,6 +268,6 @@ for w in warnings:
     print("WARN ", w)
 for e in errors:
     print("ERROR", e)
-print(f"\nкомпонентов: {len(ids)}, документов: {len(docs)}, маркеров: {n_markers}; "
+print(f"\nкомпонентов: {len(ids)}, ссылок see: {n_see}, документов: {len(docs)}, маркеров: {n_markers}; "
       f"ошибок: {len(errors)}, предупреждений: {len(warnings)}")
 sys.exit(1 if errors else 0)

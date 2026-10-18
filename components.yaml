@@ -4,7 +4,10 @@
 # Строки с pos 1..80 — дословно из таблицы §5 исходника v8.0 (колонки: pos, name, qty, note, source, price;
 # менять без причины не нужно; цены — ориентиры, руб.).
 # Строки с pos: null — компоненты, упомянутые в тексте, но отсутствующие в §5 (OQ-009).
-# Поля id, module, status, params, constraints, rejected_alternatives — паспортные (добавлены при реорганизации).
+# Поля id, module, status, see, params, constraints, rejected_alternatives — паспортные (добавлены при реорганизации).
+# see — номера разделов исходника, где компонент описан или заданы требования к нему (проверяется validate.py);
+#       пустой список — компонент есть в спецификации, но в тексте не упоминается (OQ-020).
+# params/constraints — только факты из текста проекта; в скобках раздел исходника. Строки с pos: null — OQ-009, OQ-019.
 # status: candidate | selected | ordered | received | verified. Даташиты: datasheets/<id>.pdf (Git LFS).
 
 components:
@@ -16,8 +19,20 @@ components:
   source: Аудиомания
   price: 4 658 ₽
   status: selected
-  params: {fs_hz: 39, qts: 0.45, vas_l: 29.5, sens_db: 88, cutout_mm: 143, flange_mm: 168, cone: бумага с пропиткой}
-  constraints: ['DSP: PEQ на 95 Гц (горб от Qtc≈1.05), subsonic 60 Гц', Прокладка фоамиран 1 мм под фланец]
+  see: ['1.2', '1.4', '4.6', '4.9', 6/Этап 1, 6/Этап 7, '8.2']
+  params:
+    fs_hz: 39
+    qts: 0.45
+    vas_l: 29.5
+    sens_db: 88
+    cutout_mm: 143
+    flange_mm: 168
+    cone: бумага с пропиткой
+    impedance_ohm: 4
+    position_mm: {x: 178, y: 118}
+    overlay_cutout_mm: 168
+    overlay_gap_mm: 0.5
+  constraints: ['DSP: PEQ на 95 Гц (горб от Qtc≈1.05), subsonic 60 Гц', Прокладка фоамиран 1 мм под фланец, 'Центр смещён вверх на 5 мм (Y 113→118): разнос дифракционных отражений от верхнего и нижнего краёв панели (4.6)', 'Установка через отверстия в накладке и передней панели, кольцо из фоамирана 1 мм, штатные винты (6, Этап 7 п. 6–7)', 'Бруски герметизации: разрыв под вуфер, внутренние края скошены по окружности фланца (4.9)']
   rejected_alternatives: [Monacor SPH-170, Visaton W 170 S, Peerless SDS]
 - id: CMP-sica-lp53x58-28-n20tw
   pos: 2
@@ -27,13 +42,20 @@ components:
   source: Аудиомания
   price: 3 534 ₽/шт.
   status: selected
+  see: ['1.2', '4.6', '4.9', '4.10', 6/Этап 7, '8.2']
   params:
     sens_db: 95.8
     cutout_mm: 48.4
     flange_mm: [58, 53]
     dome: шёлк
     rear_chamber: closed
-  constraints: ['DSP: HPF 2500 Гц, gain −8 дБ, лимитер']
+    impedance_ohm: 8
+    position_left_mm: {x: 50, y: 113}
+    position_right_mm: {x: 306, y: 113}
+    overlay_cutout_mm: [58, 53]
+    overlay_gap_mm: [0.2, 0.3]
+    magnet: неодим с ферромагнитной жидкостью
+  constraints: ['DSP: HPF 2500 Гц, gain −8 дБ, лимитер', 'Установка через отверстия в накладке и передней панели, штатные прокладки, штатные винты (6, Этап 7 п. 6–7)', 'Выходы DSP: левый — DAC0, правый — DAC1 (8.2)']
   rejected_alternatives: [Vifa BC25SC06-04, Peerless DX25TG59-04]
 - id: CMP-wondom-jab4
   pos: 3
@@ -43,13 +65,30 @@ components:
   source: '[ali.click](https://ali.click/5buij1c)'
   price: 3 699 ₽
   status: selected
+  see: ['1.3', '4.7', '5.2', '5.4', 6/Этап 4, 7/Шаг 3, 7/Шаг 4, '8.1', '8.2', '8.5']
   params:
     board_mm: [92, 69]
     supply_v: 24
     channels: 2.1 (4 канала)
-  constraints: [Питание только через RUEF400 + ферритовое кольцо, Программатор не питает плату, DC на выходах без нагрузки ≤10–30 мВ]
+    chips: TPA3221 + ADAU1701
+    bluetooth: '5.0'
+    frame_window_mm: [96, 73]
+    standoff_mm: 7
+    gap_to_baffle_mm: 12
+    front_plane_from_rear_panel_mm: [44, 45]
+  constraints: [Питание только через RUEF400 + ферритовое кольцо, Программатор не питает плату, DC на выходах без нагрузки ≤10–30 мВ, 'Ориентация: вертикально; горячая сторона (TPA3221, ADAU1701, дроссели, радиатор) к задней панели; антенна вверх к радиопрозрачному окну; питание влево, сигнал вправо (4.7)', 'Крепление: винты М3×10 через нейлоновые проставки 7 мм, нейлоновые шайбы со стороны платы, латунные гайки с обратной стороны ушка (4.7)', 'Питание: +V БП → RUEF400 + ферритовое кольцо → вход (+); −V БП → GND (5.2)', 'Выходы: DAC0 левый твитер, DAC1 правый твитер, DAC2/DAC3 бас (мост, DAC3 через Invert) (8.2)', 'Первое включение без динамиков; ≥1 В постоянного на выходе — плата неисправна (7, Шаг 3–4)', 'Программирование: разъём PROGRAM, запись в EEPROM (8.1, 8.3); внешняя антенна — разъём ANT или U.FL (8.5)']
   rejected_alternatives: [JAB3+ (нет нативного 2.1), аналоговый кроссовер]
-- {id: CMP-icp3-programmer, pos: 4, module: dsp, name: Программатор ICP3 / USBi, qty: '1', source: AliExpress, price: ~1 000–1 500 ₽, status: candidate}
+- id: CMP-icp3-programmer
+  pos: 4
+  module: dsp
+  name: Программатор ICP3 / USBi
+  qty: '1'
+  source: AliExpress
+  price: ~1 000–1 500 ₽
+  status: candidate
+  see: ['8.1', '8.3', '8.4']
+  params: {interface: USB (Micro-USB), cable: 6-пиновый шлейф из комплекта, target_connector: PROGRAM на JAB4}
+  constraints: ['DIP-переключатель №1 (I2C/SPI) в положение I2C, обычно ON (8.1)', 'Плата JAB4 должна быть запитана от своего БП: программатор её не питает (8.1)', Нужны ПК с Windows и SigmaStudio 4.6 или 4.7 (8.1)]
 - id: CMP-meanwell-lrs-100-24
   pos: 5
   module: power-input
@@ -58,9 +97,31 @@ components:
   source: '[Chipdip](https://www.chipdip.ru/product/lrs-100-24-blok-pitaniya-24v-4.5a-108vt-mean-well-9000334407)'
   price: 1 620 ₽
   status: selected
-  params: {output_v: 24, output_a: 4.5, power_w: 108}
-  constraints: ['Клеммник невыпадающий: только НШВИ, не НКИ; момент 0.4–0.6 Н·м', FG — центр звезды заземления]
-- {id: CMP-pot-10k-linear, pos: 6, module: enclosure, name: Потенциометр 10 кОм линейный, qty: '1', source: Радиомагазин / Ozon, price: ~150–250 ₽, status: candidate}
+  see: [4.4.1, 4.4.7, '5.1', 6/Этап 3, 7/Шаг 2, '9.1', '9.2', '10.2']
+  params:
+    output_v: 24
+    output_a: 4.5
+    power_w: 108
+    position_x_mm: [60, 157]
+    position_y_mm: [40, 169]
+    foam_mm: 3
+  constraints: ['Клеммник невыпадающий: только НШВИ, не НКИ; момент 0.4–0.6 Н·м', FG — центр звезды заземления, 'Крепление на перегородке со стороны электроники: 4 футорки Permo D5, саморезы 3.5×12 через стальные и резиновые шайбы и фоамиран 3 мм (три слоя по 1 мм); затяжка крест-накрест, фоамиран сжат на треть (6, Этап 3)', 'Под БП на перегородке чистое окно без меди (6, Этап 1 п. 7)', 'Выход выставляется подстроечным резистором +V ADJ ровно на 24.0 В (7, Шаг 2)', 'Провода L (коричневый), N (синий), FG (жёлто-зелёный) — НШВИ 0.75×8; слабина 5–8 мм (10.2)']
+- id: CMP-pot-10k-linear
+  pos: 6
+  module: enclosure
+  name: Потенциометр 10 кОм линейный
+  qty: '1'
+  source: Радиомагазин / Ozon
+  price: ~150–250 ₽
+  status: candidate
+  see: ['4.2', '5.3', 6/Этап 1, 7/Шаг 1, '8.2']
+  params:
+    resistance_kohm: 10
+    taper: линейный
+    pocket_mm: {diameter: 30, depth: 11, floor: 5}
+    through_hole_mm: 7
+    position_mm: {x: 110, y: 170}
+  constraints: ['Устанавливается в карман верхней панели с распайкой проводов до сборки каркаса (6, Этап 1 п. 4; Этап 2 п. 4)', 'Подключение экранированным кабелем: ADC0, +3.3 В, GND; корпус заземлить отдельно (5.3)', 'Корпус звонится на экран корпуса, контакты — нет (7, Шаг 1)']
 - id: CMP-dl-1dz2kr
   pos: 7
   module: power-input
@@ -70,14 +131,65 @@ components:
   source: '[chipdip.ru](https://www.chipdip.ru/product/dl-1dz2kr-1a-250v-setevoy-filtr-jianli-753401701)'
   price: 1 090 ₽
   status: selected
-  params: {rated: 250 В / 1 А, terminals_mm: 6.3}
-  constraints: [Предохранитель T1A slow-blow, 'PE идёт транзитом на FG БП, минуя WAGO', Включать не чаще раза в 30 с (NTC)]
-- {id: CMP-fuse-t1a-5x20, pos: 8, module: power-input, name: 'Предохранитель T1A/250V (5×20 мм) slow-blow, керамический', qty: 1 + 1 запас, note: Для модуля C14, source: Радиомагазин / Ozon, price: ~30
-    ₽, status: selected}
-- {id: CMP-holder-wago-asa, pos: 9, module: power-input, name: 'Держатель клемм, печать FDM ASA', qty: '1', note: 'Под 3×WAGO 221-413, спецканал снизу', source: Заказная печать, price: индивид., status: candidate}
-- {id: CMP-wago-221-413, pos: 10, module: power-input, name: Клемма рычажная WAGO 221-413, qty: '3', source: Ozon, price: ~70 ₽/шт., status: selected}
-- {id: CMP-clip-block-c14, pos: 11, module: power-input, name: Блок для клипс (крепление к C14), qty: 1 набор, note: 'Аксессуар для клеммы, 3 шт.', source: '[ozon.ru](https://ozon.ru/t/fBqmE0G)', price: 254
-    ₽, status: selected}
+  see: [4.4.1, 4.4.3, 4.4.6, 4.4.7, '5.1', 6/Этап 1, 7/Шаг 1]
+  params: {rated: 250 В / 1 А, terminals_mm: 6.3, flange_bottom_from_floor_mm: 54}
+  constraints: [Предохранитель T1A slow-blow, 'PE идёт транзитом на FG БП, минуя WAGO', Включать не чаще раза в 30 с (NTC), Штыри L/N и лепесток PE смотрят внутрь корпуса (вдоль X) (4.4.3), 'Вырез в правой боковине по монтажному чертежу DL-1DZ2KR; чертежа в репозитории нет (6, Этап 1 п. 4; OQ-012)', Клеммы «мама» 6.3 мм полностью изолированные; блок для клипс крепится к корпусу модуля (4.4.6)]
+- id: CMP-fuse-t1a-5x20
+  pos: 8
+  module: power-input
+  name: Предохранитель T1A/250V (5×20 мм) slow-blow, керамический
+  qty: 1 + 1 запас
+  note: Для модуля C14
+  source: Радиомагазин / Ozon
+  price: ~30 ₽
+  status: selected
+  see: [4.4.2, 4.4.8, '5.1', '12']
+  params:
+    rating: T1A
+    voltage_v: 250
+    size_mm: [5, 20]
+    type: slow-blow
+    body: керамический
+  constraints: [Соответствует номиналу модуля C14 — 1 А (12), 'Вставляется после затяжки НШВИ у БП (4.4.8 п. 9)']
+- id: CMP-holder-wago-asa
+  pos: 9
+  module: power-input
+  name: Держатель клемм, печать FDM ASA
+  qty: '1'
+  note: Под 3×WAGO 221-413, спецканал снизу
+  source: Заказная печать
+  price: индивид.
+  status: candidate
+  see: [4.4.1, 4.4.2, 4.4.3, 4.4.5, 4.4.8, '10.5', 6/Этап 8]
+  params:
+    material: ASA
+    process: FDM
+    footprint_mm: [34, 34]
+    protrusion_x_mm: 20
+    top_edge_mm: [44, 46]
+    bottom_edge_mm: [10, 12]
+  constraints: ['Под 3×WAGO 221-413, спецканал снизу (4.4.2)', 'Потайные саморезы в зенкованные ушки, без шайб и подкладок; фиксатор резьбы; подтяжка через 24–48 ч; посадка жёсткая (10.5)', 'Коридор справа ≥13 мм; при нехватке сдвинуть на 3–4 мм к задней стенке (4.4.3, 4.4.8)', ASA-угол после прогона ≤40–45 °C (4.4.5), Модели (STEP/STL) в репозитории нет (OQ-012)]
+- id: CMP-wago-221-413
+  pos: 10
+  module: power-input
+  name: Клемма рычажная WAGO 221-413
+  qty: '3'
+  source: Ozon
+  price: ~70 ₽/шт.
+  status: selected
+  see: [4.4.1, 4.4.4, 4.4.11, '10.2', '10.3']
+  constraints: ['Нумерация: клемма 1 — левая колонка (1a низ → 1c верх), клемма 2 — верхний ряд, клемма 3 — правая колонка; рычаг 1a закрыт (резерв) (4.4.4)', Слабина провода у WAGO 3–5 мм (10.3), 'НШВИ на стороне WAGO запрещены (10.2, 4.4.11)', Заход 11 мм (4.4.5 п. 4)]
+- id: CMP-clip-block-c14
+  pos: 11
+  module: power-input
+  name: Блок для клипс (крепление к C14)
+  qty: 1 набор
+  note: Аксессуар для клеммы, 3 шт.
+  source: '[ozon.ru](https://ozon.ru/t/fBqmE0G)'
+  price: 254 ₽
+  status: selected
+  see: [4.4.6, 4.4.7, 4.4.8]
+  constraints: ['Аксессуар к модулю C14, 3 шт. в комплекте; крепится к корпусу модуля, предпочтительно механически (4.4.6)', Фиксирует пучок до точки разгрузки (клипса №1); спуск по правой стороне без провисания (4.4.6)]
 - id: CMP-ntc-5d-15
   pos: 12
   module: power-input
@@ -87,8 +199,9 @@ components:
   source: Радиомагазин / Ozon
   price: ~50–80 ₽
   status: selected
-  params: {lead_pitch_mm: 7.5, diameter_mm: 15}
-  constraints: [Последовательно в L после выключателя C14]
+  see: [4.4.4, 4.4.5, 4.4.8, '10.6', 7/Шаг 1, 7/Шаг 5]
+  params: {lead_pitch_mm: 7.5, diameter_mm: 15, resistance_ohm: 5}
+  constraints: [Последовательно в L после выключателя C14, Диск повёрнут на +45° вокруг оси выводов; тело наклонено вверх-наружу на 30–45° (4.4.5), 'Зазоры: до держателя ≥3 мм, до фольги ≥15 мм; изгибы выводов ближе 3 мм к корпусу запрещены (4.4.5, 10.6)', Выводы в клеммы 1c и 2a (4.4.8), 'Не включать выключатель C14 чаще раза в 30 с: остывание NTC (7, Шаг 5)']
 - id: CMP-mov-10d471k
   pos: 13
   module: power-input
@@ -97,90 +210,896 @@ components:
   source: Радиомагазин / Ozon
   price: ~30–50 ₽
   status: selected
+  see: [4.4.4, 4.4.5, 4.4.8, 4.4.11, '10.6']
   params: {lead_pitch_mm: 7.5}
-  constraints: [Между L после NTC и N, Зазор между выводами ≥4 мм]
-- {id: CMP-crimp-female-6-3, pos: 14, module: power-input, name: Клемма обжимная «мама» изолированная, qty: '3', note: '6.3мм, двойной обжим', source: Радиомагазин / Ozon, price: ~15 ₽/шт., status: selected}
-- {id: CMP-heatshrink-dual, pos: 15, module: power-input, name: Термоусадка двухстенная, qty: опция, note: 'Персонально на фастоны, 10–15мм на провод', source: Радиомагазин / Ozon, price: ~20 ₽/м, status: candidate}
-- {id: CMP-spiral-wrap, pos: 16, module: power-input, name: Спиральная обмотка, qty: запас, note: Альтернатива усадке, source: Радиомагазин / Ozon, price: ~100 ₽/м, status: candidate}
-- {id: CMP-wire-pv3-0-75, pos: 17, module: power-input, name: Провод ПВ3 1×0.75мм², qty: по месту, note: 'Коричневый ×2, синий ×2, ж-з ×1', source: Радиомагазин / Ozon, price: ~30 ₽/м, status: selected}
-- {id: CMP-nshvi-0-75x8, pos: 18, module: power-input, name: Наконечник НШВИ 0.75×8мм, qty: 3 + рез., note: У БП, source: Радиомагазин / Ozon, price: ~5 ₽/шт., status: selected}
-- {id: CMP-cable-clip-7mm, pos: 19, module: power-input, name: 'Клипса кабельная саморезная C-обр., 7мм', qty: 2 + 2 рез., note: Основание 13×25мм, source: '[ozon.ru](https://ozon.ru/t/wE5gM8y) (набор 20шт)',
-  price: 261 ₽/набор, status: selected}
-- {id: CMP-screw-holder-csk, pos: 20, module: power-input, name: Саморезы потайные держателя 3×12/3×16мм, qty: '2', note: Зенкованные ушки, source: Строймаркет, price: ~5 ₽/шт., status: candidate}
-- {id: CMP-loctite-243, pos: 21, module: power-input, name: Фиксатор резьбы Loctite 243, qty: '1', note: Или аналог, source: Строймаркет / Ozon, price: ~500 ₽, status: candidate}
-- {id: CMP-silicone-sheet, pos: 22, module: power-input, name: Лист силиконовый 200×200×1мм, qty: '1', note: Резерв на лайнеры, source: '[ozon.ru](https://ozon.ru/t/l1pSzjs)', price: 155 ₽, status: candidate}
-- {id: CMP-ruef400, pos: 23, module: electronics, name: Самовосстанавливающийся предохранитель RUEF400 (4 А), qty: '1', note: В цепи +24 В на JAB4 (вне узла силового ввода), source: Радиомагазин / Ozon,
-  price: ~100–150 ₽, status: selected}
-- {id: CMP-synthetic-batting, pos: 24, module: acoustics, name: Акустический синтепон 100–150 г/м² (негорючий), qty: 0.3 м², note: Для демпфирующих матов, source: Швейный магазин / Ozon, price: ~150–200
-    ₽, status: selected}
-- {id: CMP-emi-gasket, pos: 25, module: shielding, name: Токопроводящая EMI‑прокладка, qty: 0.5 м, source: Радиомагазин / Ozon, price: ~300–400 ₽, status: candidate}
-- {id: CMP-ferrite-clipon, pos: 26, module: electronics, name: Ферритовое кольцо clip‑on (∅5–7 мм), qty: '2', note: Для цепи 24 В, source: Радиомагазин / Ozon, price: ~50–80 ₽/шт., status: selected}
-- {id: CMP-mdf-16-laminated, pos: 27, module: enclosure, name: 'МДФ 16 мм ламинированный, распил', qty: 1 компл., note: Детали по таблице 4.1, source: Местная мастерская, price: ~2 500–3 500 ₽, status: selected}
-- {id: CMP-abs-5-rear, pos: 28, module: enclosure, name: 'ABS‑пластик 5 мм белый глянцевый, 356×226 мм', qty: '1', note: Задняя панель, source: Ozon, price: ~400–600 ₽, status: selected}
-- {id: CMP-abs-4-overlay, pos: 29, module: enclosure, name: 'ABS‑пластик ~4 мм, 356×226 мм', qty: '1', note: Накладка передней панели, source: Ozon, price: ~400–600 ₽, status: selected}
-- {id: CMP-mdf-bars, pos: 30, module: enclosure, name: МДФ 16×20 мм бруски, qty: ~1 м, note: 8 брусков суммарной длиной ~930 мм, source: Местная мастерская, price: ~200–300 ₽, status: selected}
-- {id: CMP-copper-tape, pos: 31, module: shielding, name: Медная самоклеящаяся лента 20–30 мм, qty: 1 рулон, source: Радиомагазин / Ozon, price: ~400–700 ₽, status: selected}
-- {id: CMP-copper-braid-pml, pos: 32, module: shielding, name: Медная плетёнка ПМЛ 2×4 мм², qty: ~1 м, source: Радиомагазин / Ozon, price: ~200–300 ₽, status: selected}
-- {id: CMP-copper-foil, pos: 33, module: shielding, name: Неклеевая медная фольга 0.1 мм, qty: ~1 м, source: Радиомагазин / Ozon, price: ~200–300 ₽, status: selected}
-- {id: CMP-ring-lug-m4, pos: 34, module: shielding, name: Кольцевые клеммы под винт М4, qty: 10 шт., source: Радиомагазин / Ozon, price: ~50–80 ₽/упак., status: selected}
-- {id: CMP-washer-din9021-m4, pos: 35, module: shielding, name: 'Шайбы кузовные DIN 9021, М4', qty: 10 шт., source: Строймаркет / Ozon, price: ~50–80 ₽/упак., status: selected}
-- {id: CMP-washer-din125-m4, pos: 36, module: shielding, name: 'Шайбы плоские DIN 125, М4', qty: 10 шт., source: Строймаркет / Ozon, price: ~30–50 ₽/упак., status: selected}
-- {id: CMP-dowel-fischer-sx4, pos: 37, module: shielding, name: Нейлоновые дюбели Fischer SX ∅4 мм, qty: 10 шт., source: Строймаркет / Ozon, price: ~100–150 ₽/упак., status: selected}
-- {id: CMP-tape-tesa-51608, pos: 38, module: shielding, name: Тканевая ворсистая изолента (Tesa 51608), qty: ~1 м, source: Автомагазин / Ozon, price: ~150–200 ₽, status: selected}
-- {id: CMP-shumologia-hide-3, pos: 39, module: enclosure, name: Вспененная резина Шумология Hide 3, qty: 1 лист 100×65 см, note: Уплотнители, source: '[Ozon](https://ozon.ru/t/ivSMKON)', price: 860 ₽, status: selected}
-- {id: CMP-futorka-permo-d5, pos: 40, module: enclosure, name: Футорка Permo D5, qty: 70 шт., note: 'Для уголков, БП, пластин, колодок', source: '[Ozon](https://ozon.ru/t/5DnoogF)', price: 690 ₽ (за 60
-    шт.), status: selected}
-- {id: CMP-insert-m4-brass, pos: 41, module: enclosure, name: 'Резьбовые втулки М4 (латунь, длина 10–12 мм)', qty: 18 шт., note: В торцы панелей, source: Строймаркет / Ozon, price: ~150–200 ₽/упак., status: selected}
-- {id: CMP-angle-steel-15, pos: 42, module: enclosure, name: 'Уголки мебельные 15×15 мм, стальные', qty: 18 шт., note: Каркас короба, source: Строймаркет / Ozon, price: ~300–400 ₽/упак., status: selected}
-- {id: CMP-screw-3-5x12, pos: 43, module: enclosure, name: Саморезы 3.5×12 мм (пресс‑шайба), qty: 60 шт., note: 'Уголки, БП, пластины, колодки', source: Строймаркет / Ozon, price: ~100–150 ₽/упак., status: selected}
-- {id: CMP-screw-m4x20-csk, pos: 44, module: enclosure, name: Винты М4×20 с потайной головкой, qty: 12 шт., note: Передняя панель, source: Строймаркет / Ozon, price: ~100–150 ₽/упак., status: selected}
-- {id: CMP-screw-m4x12-csk, pos: 45, module: enclosure, name: Винты М4×12 или М4×16 с потайной головкой, qty: 6 шт., note: Задняя панель, source: Строймаркет / Ozon, price: ~50–80 ₽/упак., status: selected}
-- {id: CMP-screw-m3x10, pos: 46, module: electronics, name: Винты М3×10 мм с полукруглой головкой, qty: 12 шт., note: Крепление рамки JAB4, source: Радиомагазин / Ozon, price: ~50 ₽, status: selected}
-- {id: CMP-nut-m3-brass, pos: 47, module: electronics, name: Гайки М3 латунные, qty: 4 шт., source: Радиомагазин / Ozon, price: копейки, status: selected}
-- {id: CMP-nut-m3-nylon, pos: 48, module: electronics, name: Гайки М3 нейлоновые, qty: 4 шт., source: Радиомагазин / Ozon, price: копейки, status: selected}
-- {id: CMP-washer-m3-nylon, pos: 49, module: electronics, name: Шайбы нейлоновые М3, qty: 4 шт., source: Радиомагазин / Ozon, price: копейки, status: selected}
-- {id: CMP-standoff-nylon-set, pos: 50, module: electronics, name: Набор нейлоновых проставок (200 шт.), qty: '1', source: '[Ozon](https://ozon.ru/t/GAXvuY8)', price: 328 ₽, status: selected}
-- {id: CMP-feet-silicone, pos: 51, module: enclosure, name: Силиконовые ножки (4 шт.), qty: 1 компл., source: Строймаркет / Ozon, price: ~100–150 ₽, status: selected}
-- {id: CMP-jack-3-5-panel, pos: 52, module: electronics, name: Гнездо 3.5 мм стерео на панель, qty: '1', source: Радиомагазин / Ozon, price: ~100–150 ₽, status: candidate}
-- {id: CMP-wire-mgshv-1-5-red, pos: 53, module: electronics, name: Провод МГШВ 1.5 мм² красный, qty: 0.5 м, note: НЧ (+), source: Радиомагазин / Ozon, price: ~20 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-1-5-black, pos: 54, module: electronics, name: Провод МГШВ 1.5 мм² чёрный, qty: 0.5 м, note: НЧ (−), source: Радиомагазин / Ozon, price: ~20 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-1-0-yellow, pos: 55, module: electronics, name: Провод МГШВ 1.0 мм² жёлтый, qty: 0.5 м, note: Левый твитер (+), source: Радиомагазин / Ozon, price: ~15 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-1-0-black-l, pos: 56, module: electronics, name: Провод МГШВ 1.0 мм² чёрный, qty: 0.6 м, note: Левый твитер (−) с биркой L−, source: Радиомагазин / Ozon, price: ~15 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-1-0-blue, pos: 57, module: electronics, name: Провод МГШВ 1.0 мм² синий, qty: 0.6 м, note: Правый твитер (+), source: Радиомагазин / Ozon, price: ~15 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-1-0-black-r, pos: 58, module: electronics, name: Провод МГШВ 1.0 мм² чёрный, qty: 0.6 м, note: Правый твитер (−) с биркой R−, source: Радиомагазин / Ozon, price: ~15 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-0-5-orange, pos: 59, module: electronics, name: Провод МГШВ 0.5 мм² оранжевый, qty: 0.5 м, note: LED (+), source: Радиомагазин / Ozon, price: ~10 ₽/м, status: selected}
-- {id: CMP-wire-mgshv-0-5-black, pos: 60, module: electronics, name: Провод МГШВ 0.5 мм² чёрный, qty: 0.5 м, note: LED (−), source: Радиомагазин / Ozon, price: ~10 ₽/м, status: selected}
-- {id: CMP-tb-2504, pos: 61, module: electronics, name: 'Клеммная колодка ТВ-2504 (4 контакта, М4)', qty: 1 шт., note: Для НЧ, source: Радиомагазин / Ozon, price: ~50–80 ₽, status: candidate}
-- {id: CMP-tb-1504, pos: 62, module: electronics, name: 'Клеммная колодка ТВ-1504 (4 контакта, М3)', qty: 3 шт., note: Для ВЧ и сигналов, source: Радиомагазин / Ozon, price: ~30–50 ₽/шт., status: candidate}
-- {id: CMP-lug-nvi-2-4, pos: 63, module: electronics, name: Наконечник вилочный НВИ 2-4 (синий), qty: 2 шт., note: НЧ 1.5 мм², source: Радиомагазин / Ozon, price: ~5 ₽/шт., status: selected}
-- {id: CMP-lug-nvi-1-25-3, pos: 64, module: electronics, name: Наконечник вилочный НВИ 1.25-3 (красный), qty: 10 шт., note: ВЧ и сигналы, source: Радиомагазин / Ozon, price: ~3 ₽/шт., status: selected}
-- {id: CMP-heatshrink-glue, pos: 65, module: electronics, name: Термоусадочная трубка с клеевым слоем ∅10–12 мм, qty: 0.1 м, note: Герметизация жгутов, source: Радиомагазин / Ozon, price: ~50 ₽/м, status: selected}
-- {id: CMP-heatshrink-thin, pos: 66, module: electronics, name: Термоусадочная трубка тонкая ∅1.5–2 мм, qty: 0.1 м, note: Изоляция ножек светодиода, source: Радиомагазин / Ozon, price: ~20 ₽/м, status: selected}
-- {id: CMP-pu40, pos: 67, module: electronics, name: Полиуретановый герметик PU-40, qty: 1 туба, note: Герметизация переходных отверстий, source: Строймаркет / Ozon, price: ~300–500 ₽, status: selected}
-- {id: CMP-zip-ties, pos: 68, module: electronics, name: Пластиковые стяжки 2.5×100 мм, qty: 10 шт., note: Фиксация жгутов, source: Строймаркет / Ozon, price: ~50–80 ₽/упак., status: selected}
-- {id: CMP-zip-pads, pos: 69, module: electronics, name: Самоклеящиеся площадки под стяжки, qty: 6 шт., note: Крепление жгутов, source: Строймаркет / Ozon, price: ~50–80 ₽/упак., status: selected}
-- {id: CMP-abs-plate-2, pos: 70, module: indicator, name: ABS-пластина 1.5–2 мм, qty: ~40×20 мм, note: Основание для держателя светодиода, source: Изготовить, price: —, status: candidate}
-- {id: CMP-epoxy-2k, pos: 71, module: enclosure, name: Эпоксидный клей, qty: 1 уп., note: 'Вклеивание футорок, световода', source: Строймаркет / Ozon, price: ~100–150 ₽, status: selected}
-- {id: CMP-polycarbonate-4, pos: 72, module: electronics, name: 'Поликарбонат монолитный 4 мм, 120×150 мм', qty: '1', note: Рамка JAB4, source: '[Ozon](https://ozon.ru/t/bTO5cUS)', price: 309 ₽, status: selected}
-- {id: CMP-angle-alu-15, pos: 73, module: electronics, name: 'Уголок алюминиевый 15×15×1.5 мм, 500 мм', qty: '1', source: '[Ozon](https://ozon.ru/t/1fBvwG4)', price: 209 ₽, status: selected}
-- {id: CMP-grommet-7, pos: 74, module: electronics, name: Втулка резиновая проходная ∅7.0/∅4 мм, qty: 10 шт., source: '[Ozon](https://ozon.ru/t/v0ZYuTu)', price: 350 ₽, status: selected}
-- {id: CMP-edge-profile, pos: 75, module: enclosure, name: Полукруглый профиль ПВХ/ABS радиус 8–12 мм, qty: ~1 м, note: Опционально, source: Строймаркет / Ozon, price: ~200–300 ₽, status: candidate}
-- {id: CMP-velcro-20, pos: 76, module: acoustics, name: 'Лента велкро (липучка) шириной 20 мм, петли и крючки отдельно', qty: ~2 м, note: Для крепления демпфирующих матов, source: Швейный магазин / Ozon,
-  price: ~150–250 ₽, status: selected}
-- {id: CMP-spunbond, pos: 77, module: acoustics, name: Ткань спанбонд плотностью 60–80 г/м², qty: 0.5 м², note: Оболочка демпфирующих матов, source: Швейный магазин / Ozon, price: ~100–150 ₽, status: selected}
-- {id: CMP-thread, pos: 78, module: acoustics, name: Нитки полиэстеровые, qty: 1 катушка, note: Для сшивания матов, source: Швейный магазин, price: ~50–100 ₽, status: selected}
-- {id: CMP-epoxy-2k-velcro, pos: 79, module: enclosure, name: Клей эпоксидный двухкомпонентный (доп.), qty: 1 тюбик, note: Для приклеивания крючков велкро, source: Строймаркет / Ozon, price: ~150–300 ₽,
-  status: selected}
-- {id: CMP-synthetic-batting-reserve, pos: 80, module: acoustics, name: Синтепон плотностью 100–150 г/м² (доп. запас), qty: 0.2 м², note: Резерв, source: —, price: —, status: selected}
-- {id: CMP-stikoseal, pos: null, module: enclosure, name: Пластилин Stik-o-Seal, qty: '1', source: 'нет в спецификации §5; упомянуто в §1.4 (принципы), §6 Этап 6', price: —, status: candidate, note: OQ-009}
-- {id: CMP-masking-tape, pos: null, module: enclosure, name: Малярный скотч, qty: '1', source: 'нет в спецификации §5; упомянуто в §6 Этап 6, п. 3', price: —, status: candidate, note: OQ-009}
-- {id: CMP-fiberglass-mesh, pos: null, module: enclosure, name: Стеклосетка для вентиляции задней панели, qty: '1', source: нет в спецификации §5; упомянуто в §4.3 (вентиляция задней панели), price: —,
-  status: candidate, note: OQ-009}
-- {id: CMP-polyswitch-0-1a, pos: null, module: electronics, name: PolySwitch 0.1 А (в разрыв GND входа 3.5 мм), qty: '1', source: нет в спецификации §5; упомянуто в §5.3 (вход 3.5 мм), price: —, status: candidate,
-  note: OQ-009}
-- {id: CMP-mic-cable, pos: null, module: electronics, name: Экранированный микрофонный кабель, qty: '1', source: нет в спецификации §5; упомянуто в §5.3 (экранированный микрофонный кабель), price: —, status: candidate,
-  note: OQ-009}
-- {id: CMP-led-lightguide, pos: null, module: indicator, name: Световод жёсткий 3 мм BIVAR PLP2-750, qty: '1', source: нет в спецификации §5; упомянуто в §4.11, price: —, status: candidate, note: OQ-009}
-- {id: CMP-led-holder, pos: null, module: indicator, name: Держатель светодиода 3 мм Arlight 3CCI, qty: '1', source: нет в спецификации §5; упомянуто в §4.11, price: —, status: candidate, note: OQ-009}
-- {id: CMP-led-3mm, pos: null, module: indicator, name: Светодиод 3 мм плоская линза OPTOSUPPLY OSB5SA3NE4A, qty: '1', source: нет в спецификации §5; упомянуто в §4.11, price: —, status: candidate, note: OQ-009}
-- {id: CMP-resistor-2k7, pos: null, module: indicator, name: Резистор 2.7 кОм (LED от +24 В), qty: '1', source: нет в спецификации §5; упомянуто в §4.11 (п. 5 монтажа), price: —, status: candidate, note: OQ-009}
+  constraints: [Между L после NTC и N, Зазор между выводами ≥4 мм, 'Диск повёрнут на −45° вокруг оси выводов, без наклона (4.4.5)', Выводы в клеммы 2c и 3a (4.4.8), 'Зазоры: до держателя ≥3 мм, до фольги ≥15 мм (4.4.5)']
+- id: CMP-crimp-female-6-3
+  pos: 14
+  module: power-input
+  name: Клемма обжимная «мама» изолированная
+  qty: '3'
+  note: 6.3мм, двойной обжим
+  source: Радиомагазин / Ozon
+  price: ~15 ₽/шт.
+  status: selected
+  see: [4.4.6, 4.4.7, '10.1']
+  params: {blade_mm: 6.3, insulation: полная}
+  constraints: ['Двойной обжим по жиле и изоляции клещами с профилем под клеммы 6.3 мм (ПК-16, HT-213), один ход (10.1)', 'Зачистка: глубина обжима + 1 мм (обычно 6–7 мм); тест на отрыв (10.1)', 'Разгрузка изгиба: персональная двустенная усадка 10–15 мм или спираль; усадка поверх всего пучка запрещена (10.1)']
+- id: CMP-heatshrink-dual
+  pos: 15
+  module: power-input
+  name: Термоусадка двухстенная
+  qty: опция
+  note: Персонально на фастоны, 10–15мм на провод
+  source: Радиомагазин / Ozon
+  price: ~20 ₽/м
+  status: candidate
+  see: [4.4.2, '10.1']
+  constraints: ['Персонально на фастоны, 10–15 мм на провод, перекрывает клемму и провод; поверх всего пучка запрещена (10.1)']
+- id: CMP-spiral-wrap
+  pos: 16
+  module: power-input
+  name: Спиральная обмотка
+  qty: запас
+  note: Альтернатива усадке
+  source: Радиомагазин / Ozon
+  price: ~100 ₽/м
+  status: candidate
+  see: [4.4.2, '10.1']
+  constraints: ['Многоразовая; альтернатива усадке и ремкомплект (4.4.2, 10.1)']
+- id: CMP-wire-pv3-0-75
+  pos: 17
+  module: power-input
+  name: Провод ПВ3 1×0.75мм²
+  qty: по месту
+  note: Коричневый ×2, синий ×2, ж-з ×1
+  source: Радиомагазин / Ozon
+  price: ~30 ₽/м
+  status: selected
+  see: [4.4.1, 4.4.2, 4.4.7, '10.3', '11']
+  params:
+    section_mm2: 0.75
+    colors: {L: коричневый, N: синий, PE: жёлто-зелёный}
+  constraints: ['Три одиночных провода без муфт, стыков и паек (4.4.1)', PE длиннее L/N на 2–3 см (10.3), Трилистник 3×ПВ3 0.75 ≈5.6 мм в клипсе 7 мм (4.4.7)]
+- id: CMP-nshvi-0-75x8
+  pos: 18
+  module: power-input
+  name: Наконечник НШВИ 0.75×8мм
+  qty: 3 + рез.
+  note: У БП
+  source: Радиомагазин / Ozon
+  price: ~5 ₽/шт.
+  status: selected
+  see: [4.4.7, 4.4.11, '10.2']
+  params: {section_mm2: 0.75, length_mm: 8}
+  constraints: ['Только у БП; на стороне WAGO и кольцевые НКИ запрещены (10.2, 4.4.11)', 'Зачистка: длина втулки + 1 мм (≈9 мм); клещи с квадратным или трапециевидным профилем, один ход; тест на отрыв (10.2)', Затяжка винта клеммника БП 0.4–0.6 Н·м; слабина 5–8 мм (10.2)]
+- id: CMP-cable-clip-7mm
+  pos: 19
+  module: power-input
+  name: Клипса кабельная саморезная C-обр., 7мм
+  qty: 2 + 2 рез.
+  note: Основание 13×25мм
+  source: '[ozon.ru](https://ozon.ru/t/wE5gM8y) (набор 20шт)'
+  price: 261 ₽/набор
+  status: selected
+  see: [4.4.3, 4.4.7, '10.4']
+  params:
+    nominal_mm: 7
+    base_mm: [13, 25]
+  constraints: [Только на саморез 3.5–4 мм через фольгу; липучка и скотч запрещены (10.4), 'Только на прямых участках, отступ от дуг ≥15–20 мм (10.4)', Номинал = измеренный пакет + 0…0.7 мм (10.4), 'В узле две клипсы: №1 правая стенка y≈15–20 мм, №2 пол, середина прямого участка (4.4.7)']
+- id: CMP-screw-holder-csk
+  pos: 20
+  module: power-input
+  name: Саморезы потайные держателя 3×12/3×16мм
+  qty: '2'
+  note: Зенкованные ушки
+  source: Строймаркет
+  price: ~5 ₽/шт.
+  status: candidate
+  see: [4.4.3, '10.5', 6/Этап 1, 6/Этап 8]
+  constraints: ['Потайные, в зенкованные ушки держателя, без шайб и подкладок (10.5)', 'Отверстия по месту, после разметки зенкованных ушек (6, Этап 1 п. 4)']
+- id: CMP-loctite-243
+  pos: 21
+  module: power-input
+  name: Фиксатор резьбы Loctite 243
+  qty: '1'
+  note: Или аналог
+  source: Строймаркет / Ozon
+  price: ~500 ₽
+  status: candidate
+  see: [4.4.8, '10.5']
+  constraints: [Фиксатор резьбы на саморезах держателя; подтяжка через 24–48 ч (10.5)]
+- id: CMP-silicone-sheet
+  pos: 22
+  module: power-input
+  name: Лист силиконовый 200×200×1мм
+  qty: '1'
+  note: Резерв на лайнеры
+  source: '[ozon.ru](https://ozon.ru/t/l1pSzjs)'
+  price: 155 ₽
+  status: candidate
+  see: [4.4.1, 4.4.2, 4.4.7]
+  constraints: ['Резерв на лайнеры клипс: лайнер 1 мм при необходимости (4.4.7)', Силикон допустим только по ASA-держателю и только опционально (4.4.1)]
+- id: CMP-ruef400
+  pos: 23
+  module: electronics
+  name: Самовосстанавливающийся предохранитель RUEF400 (4 А)
+  qty: '1'
+  note: В цепи +24 В на JAB4 (вне узла силового ввода)
+  source: Радиомагазин / Ozon
+  price: ~100–150 ₽
+  status: selected
+  see: ['5.2']
+  params: {hold_current_a: 4}
+  constraints: [В цепи +V БП → JAB4 совместно с ферритовым кольцом; вне узла силового ввода (5.2)]
+- id: CMP-synthetic-batting
+  pos: 24
+  module: acoustics
+  name: Акустический синтепон 100–150 г/м² (негорючий)
+  qty: 0.3 м²
+  note: Для демпфирующих матов
+  source: Швейный магазин / Ozon
+  price: ~150–200 ₽
+  status: selected
+  see: ['4.12', 6/Этап 1]
+  params:
+    density_gsm: [100, 150]
+    folded_thickness_mm: [10, 20]
+  constraints: ['В оболочке из спанбонда 60–80 г/м², простёжка по периметру и поперечными строчками (4.12)']
+- id: CMP-emi-gasket
+  pos: 25
+  module: shielding
+  name: Токопроводящая EMI‑прокладка
+  qty: 0.5 м
+  source: Радиомагазин / Ozon
+  price: ~300–400 ₽
+  status: candidate
+  see: []
+- id: CMP-ferrite-clipon
+  pos: 26
+  module: electronics
+  name: Ферритовое кольцо clip‑on (∅5–7 мм)
+  qty: '2'
+  note: Для цепи 24 В
+  source: Радиомагазин / Ozon
+  price: ~50–80 ₽/шт.
+  status: selected
+  see: ['5.2', '1.5']
+  constraints: ['Только в цепи 24 В; на высоковольтной части ферритовые кольца не используются (5.2, 1.5)']
+- id: CMP-mdf-16-laminated
+  pos: 27
+  module: enclosure
+  name: МДФ 16 мм ламинированный, распил
+  qty: 1 компл.
+  note: Детали по таблице 4.1
+  source: Местная мастерская
+  price: ~2 500–3 500 ₽
+  status: selected
+  see: ['1.4', '4.1', '4.2', '4.5', '4.6']
+  params: {thickness_mm: 16}
+  constraints: ['Цвет по выбору, не выбран (OQ-008)', 'Передняя панель ламинирована только с внутренней стороны (4.1, 4.6)']
+- id: CMP-abs-5-rear
+  pos: 28
+  module: enclosure
+  name: ABS‑пластик 5 мм белый глянцевый, 356×226 мм
+  qty: '1'
+  note: Задняя панель
+  source: Ozon
+  price: ~400–600 ₽
+  status: selected
+  see: ['1.4', '4.1', '4.3']
+  params:
+    thickness_mm: 5
+    size_mm: [356, 226]
+  constraints: ['Цвет: чёрный глянцевый в 1.4 и 4.1, белый глянцевый в спецификации (OQ-001)']
+- id: CMP-abs-4-overlay
+  pos: 29
+  module: enclosure
+  name: ABS‑пластик ~4 мм, 356×226 мм
+  qty: '1'
+  note: Накладка передней панели
+  source: Ozon
+  price: ~400–600 ₽
+  status: selected
+  see: ['1.4', '4.1', '4.6', 6/Этап 7]
+  params:
+    thickness_mm: 4
+    size_mm: [356, 226]
+  constraints: ['Приклеивается к наружной (неламинированной) стороне передней панели непрерывным слоем, особенно вокруг отверстий (6, Этап 7 п. 5)', 'Вырезы: твитеры 58×53 + зазор 0.2–0.3 мм, вуфер ∅168 + зазор 0.5 мм (4.6)']
+- id: CMP-mdf-bars
+  pos: 30
+  module: enclosure
+  name: МДФ 16×20 мм бруски
+  qty: ~1 м
+  note: 8 брусков суммарной длиной ~930 мм
+  source: Местная мастерская
+  price: ~200–300 ₽
+  status: selected
+  see: ['4.1', '4.9', 6/Этап 1, 6/Этап 2]
+  constraints: ['8 брусков, лежат широкой стороной 20 мм, выступают вперёд на 16 мм; в углах запил в ус 45° (4.9)', 'Крепление: клей/герметик + саморезы с засверливанием; футорки не применяются; несъёмные (4.9)']
+- id: CMP-copper-tape
+  pos: 31
+  module: shielding
+  name: Медная самоклеящаяся лента 20–30 мм
+  qty: 1 рулон
+  source: Радиомагазин / Ozon
+  price: ~400–700 ₽
+  status: selected
+  see: ['1.5', '4.3', '4.8', 6/Этап 1, '9.3']
+  constraints: ['Перегородка (сторона электроники), задняя панель изнутри (отступ 2–3 мм от отверстий), все плоскости отсека (4.3, 6 Этап 1)', 'Окно 50×50 мм без меди на верхней панели; чистое окно под БП (4.2, 6 Этап 1)']
+- id: CMP-copper-braid-pml
+  pos: 32
+  module: shielding
+  name: Медная плетёнка ПМЛ 2×4 мм²
+  qty: ~1 м
+  source: Радиомагазин / Ozon
+  price: ~200–300 ₽
+  status: selected
+  see: ['5.5', 6/Этап 1]
+  constraints: ['Шлейфы ПМЛ с кольцевыми клеммами, обмотка тканевой изолентой (6, Этап 1 п. 7)', От точки слива на дне плетёнка к клемме FG БП (5.5)]
+- id: CMP-copper-foil
+  pos: 33
+  module: shielding
+  name: Неклеевая медная фольга 0.1 мм
+  qty: ~1 м
+  source: Радиомагазин / Ozon
+  price: ~200–300 ₽
+  status: selected
+  see: ['4.8', '10.4']
+  constraints: [Неклеевая; уголки электронного отсека прижимаются к медной ленте через фольгу и плоские шайбы без зубчатых (4.8)]
+- id: CMP-ring-lug-m4
+  pos: 34
+  module: shielding
+  name: Кольцевые клеммы под винт М4
+  qty: 10 шт.
+  source: Радиомагазин / Ozon
+  price: ~50–80 ₽/упак.
+  status: selected
+  see: ['4.3', '9.2', '9.3', '5.5', 6/Этап 1]
+- id: CMP-washer-din9021-m4
+  pos: 35
+  module: shielding
+  name: Шайбы кузовные DIN 9021, М4
+  qty: 10 шт.
+  source: Строймаркет / Ozon
+  price: ~50–80 ₽/упак.
+  status: selected
+  see: ['9.3', '5.5', 6/Этап 1]
+  constraints: [Широкая кузовная шайба прижимает медную ленту в точке контакта (9.3)]
+- id: CMP-washer-din125-m4
+  pos: 36
+  module: shielding
+  name: Шайбы плоские DIN 125, М4
+  qty: 10 шт.
+  source: Строймаркет / Ozon
+  price: ~30–50 ₽/упак.
+  status: selected
+  see: ['4.8']
+  constraints: ['Только плоские, без зубчатых, под уголки электронного отсека (4.8)']
+- id: CMP-dowel-fischer-sx4
+  pos: 37
+  module: shielding
+  name: Нейлоновые дюбели Fischer SX ∅4 мм
+  qty: 10 шт.
+  source: Строймаркет / Ozon
+  price: ~100–150 ₽/упак.
+  status: selected
+  see: ['9.3', 6/Этап 1]
+  constraints: ['В глухое отверстие ∅5 мм, глубина 11 мм (9.3)']
+- id: CMP-tape-tesa-51608
+  pos: 38
+  module: shielding
+  name: Тканевая ворсистая изолента (Tesa 51608)
+  qty: ~1 м
+  source: Автомагазин / Ozon
+  price: ~150–200 ₽
+  status: selected
+  see: ['5.4', 6/Этап 1]
+- id: CMP-shumologia-hide-3
+  pos: 39
+  module: enclosure
+  name: Вспененная резина Шумология Hide 3
+  qty: 1 лист 100×65 см
+  note: Уплотнители
+  source: '[Ozon](https://ozon.ru/t/ivSMKON)'
+  price: 860 ₽
+  status: selected
+  see: ['1.4', 6/Этап 7]
+  constraints: ['Сплошные прокладки из вспененной резины (1.4); при затяжке передней панели «резиновая прокладка» сжимается ~1 мм (6, Этап 7 п. 9)', Толщина и ширина прокладок не указаны (см. «Рабочая зона» в enclosure.md)]
+- id: CMP-futorka-permo-d5
+  pos: 40
+  module: enclosure
+  name: Футорка Permo D5
+  qty: 70 шт.
+  note: Для уголков, БП, пластин, колодок
+  source: '[Ozon](https://ozon.ru/t/5DnoogF)'
+  price: 690 ₽ (за 60 шт.)
+  status: selected
+  see: ['4.5', '4.11', 6/Этап 1, 6/Этап 3, 6/Этап 4, 6/Этап 7]
+  constraints: ['Сверление ∅5.0 мм, глубина 10.5–11 мм, вклеивание на эпоксидный клей (6, Этап 1 п. 5)', 'Назначение: уголки, БП, пластины, колодки (позиция 40); распределение 70 шт. не приведено (OQ-015)']
+- id: CMP-insert-m4-brass
+  pos: 41
+  module: enclosure
+  name: Резьбовые втулки М4 (латунь, длина 10–12 мм)
+  qty: 18 шт.
+  note: В торцы панелей
+  source: Строймаркет / Ozon
+  price: ~150–200 ₽/упак.
+  status: selected
+  see: [6/Этап 1, 6/Этап 7, 6/Этап 8]
+  constraints: ['В торцы панелей: 12 под переднюю панель, 6 под заднюю (позиции 44–45); координаты не приведены (OQ-002)']
+- id: CMP-angle-steel-15
+  pos: 42
+  module: enclosure
+  name: Уголки мебельные 15×15 мм, стальные
+  qty: 18 шт.
+  note: Каркас короба
+  source: Строймаркет / Ozon
+  price: ~300–400 ₽/упак.
+  status: selected
+  see: ['1.5', '4.8', 6/Этап 2, '9.1']
+  constraints: ['Отсек электроники — 4 шт., шины заземления и механика; акустический — 14 шт., только жёсткость (4.8)', Отверстия сверлятся по месту с отступом 5–7 мм от краёв; допуск координат ±2 мм (4.8)]
+- id: CMP-screw-3-5x12
+  pos: 43
+  module: enclosure
+  name: Саморезы 3.5×12 мм (пресс‑шайба)
+  qty: 60 шт.
+  note: Уголки, БП, пластины, колодки
+  source: Строймаркет / Ozon
+  price: ~100–150 ₽/упак.
+  status: selected
+  see: ['4.11', 6/Этап 3, 6/Этап 4, '9.3']
+- id: CMP-screw-m4x20-csk
+  pos: 44
+  module: enclosure
+  name: Винты М4×20 с потайной головкой
+  qty: 12 шт.
+  note: Передняя панель
+  source: Строймаркет / Ozon
+  price: ~100–150 ₽/упак.
+  status: selected
+  see: ['4.6', 6/Этап 7]
+  constraints: ['12 шт., затяжка крест-накрест до сжатия прокладки ~1 мм (6, Этап 7 п. 9)']
+- id: CMP-screw-m4x12-csk
+  pos: 45
+  module: enclosure
+  name: Винты М4×12 или М4×16 с потайной головкой
+  qty: 6 шт.
+  note: Задняя панель
+  source: Строймаркет / Ozon
+  price: ~50–80 ₽/упак.
+  status: selected
+  see: ['4.3', 6/Этап 8]
+  constraints: ['6 шт., потайная головка, в резьбовые втулки задней панели (4.3, 6 Этап 8)']
+- id: CMP-screw-m3x10
+  pos: 46
+  module: electronics
+  name: Винты М3×10 мм с полукруглой головкой
+  qty: 12 шт.
+  note: Крепление рамки JAB4
+  source: Радиомагазин / Ozon
+  price: ~50 ₽
+  status: selected
+  see: ['4.7', 6/Этап 4]
+  constraints: ['Плата на ушки рамки и рамка на алюминиевые уголки: с металлическими шайбами и гайками (4.7)']
+- id: CMP-nut-m3-brass
+  pos: 47
+  module: electronics
+  name: Гайки М3 латунные
+  qty: 4 шт.
+  source: Радиомагазин / Ozon
+  price: копейки
+  status: selected
+  see: ['4.7', 6/Этап 4]
+- id: CMP-nut-m3-nylon
+  pos: 48
+  module: electronics
+  name: Гайки М3 нейлоновые
+  qty: 4 шт.
+  source: Радиомагазин / Ozon
+  price: копейки
+  status: selected
+  see: []
+- id: CMP-washer-m3-nylon
+  pos: 49
+  module: electronics
+  name: Шайбы нейлоновые М3
+  qty: 4 шт.
+  source: Радиомагазин / Ozon
+  price: копейки
+  status: selected
+  see: ['4.7', 6/Этап 4]
+- id: CMP-standoff-nylon-set
+  pos: 50
+  module: electronics
+  name: Набор нейлоновых проставок (200 шт.)
+  qty: '1'
+  source: '[Ozon](https://ozon.ru/t/GAXvuY8)'
+  price: 328 ₽
+  status: selected
+  see: ['4.7', 6/Этап 4]
+- id: CMP-feet-silicone
+  pos: 51
+  module: enclosure
+  name: Силиконовые ножки (4 шт.)
+  qty: 1 компл.
+  source: Строймаркет / Ozon
+  price: ~100–150 ₽
+  status: selected
+  see: [6/Этап 8]
+  constraints: ['Наклеиваются на последнем этапе; размещение 4 шт. не определено (6, Этап 8; enclosure.md «Рабочая зона»)']
+- id: CMP-jack-3-5-panel
+  pos: 52
+  module: electronics
+  name: Гнездо 3.5 мм стерео на панель
+  qty: '1'
+  source: Радиомагазин / Ozon
+  price: ~100–150 ₽
+  status: candidate
+  see: ['4.3', '5.3', 6/Этап 1, 6/Этап 8]
+  params:
+    hole_mm: 6
+    position_mm: {x: 175, y: 80}
+  constraints: ['Сигнал: PolySwitch 0.1 А в разрыв GND → экранированный микрофонный кабель → AUX JAB4 (5.3)', 'Подключается через авторазъёмы при установке задней панели (6, Этап 8)']
+- id: CMP-wire-mgshv-1-5-red
+  pos: 53
+  module: electronics
+  name: Провод МГШВ 1.5 мм² красный
+  qty: 0.5 м
+  note: НЧ (+)
+  source: Радиомагазин / Ozon
+  price: ~20 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-1-5-black
+  pos: 54
+  module: electronics
+  name: Провод МГШВ 1.5 мм² чёрный
+  qty: 0.5 м
+  note: НЧ (−)
+  source: Радиомагазин / Ozon
+  price: ~20 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-1-0-yellow
+  pos: 55
+  module: electronics
+  name: Провод МГШВ 1.0 мм² жёлтый
+  qty: 0.5 м
+  note: Левый твитер (+)
+  source: Радиомагазин / Ozon
+  price: ~15 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-1-0-black-l
+  pos: 56
+  module: electronics
+  name: Провод МГШВ 1.0 мм² чёрный
+  qty: 0.6 м
+  note: Левый твитер (−) с биркой L−
+  source: Радиомагазин / Ozon
+  price: ~15 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-1-0-blue
+  pos: 57
+  module: electronics
+  name: Провод МГШВ 1.0 мм² синий
+  qty: 0.6 м
+  note: Правый твитер (+)
+  source: Радиомагазин / Ozon
+  price: ~15 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-1-0-black-r
+  pos: 58
+  module: electronics
+  name: Провод МГШВ 1.0 мм² чёрный
+  qty: 0.6 м
+  note: Правый твитер (−) с биркой R−
+  source: Радиомагазин / Ozon
+  price: ~15 ₽/м
+  status: selected
+  see: ['4.5', '5.4', '11']
+- id: CMP-wire-mgshv-0-5-orange
+  pos: 59
+  module: electronics
+  name: Провод МГШВ 0.5 мм² оранжевый
+  qty: 0.5 м
+  note: LED (+)
+  source: Радиомагазин / Ozon
+  price: ~10 ₽/м
+  status: selected
+  see: ['4.5', '4.11', '5.4', '11']
+- id: CMP-wire-mgshv-0-5-black
+  pos: 60
+  module: electronics
+  name: Провод МГШВ 0.5 мм² чёрный
+  qty: 0.5 м
+  note: LED (−)
+  source: Радиомагазин / Ozon
+  price: ~10 ₽/м
+  status: selected
+  see: ['4.5', '4.11', '5.4', '11']
+- id: CMP-tb-2504
+  pos: 61
+  module: electronics
+  name: Клеммная колодка ТВ-2504 (4 контакта, М4)
+  qty: 1 шт.
+  note: Для НЧ
+  source: Радиомагазин / Ozon
+  price: ~50–80 ₽
+  status: candidate
+  see: ['4.5', '4.12', '5.4', 6/Этап 7]
+  params: {poles: 4, thread: M4}
+  constraints: ['НЧ; левый нижний угол перегородки, акустическая сторона; футорки Permo D5, фоамиран 1 мм (4.5)', 'Наконечники НВИ 2-4, провода НЧ 1.5 мм² (5.4)']
+- id: CMP-tb-1504
+  pos: 62
+  module: electronics
+  name: Клеммная колодка ТВ-1504 (4 контакта, М3)
+  qty: 3 шт.
+  note: Для ВЧ и сигналов
+  source: Радиомагазин / Ozon
+  price: ~30–50 ₽/шт.
+  status: candidate
+  see: ['4.5', '4.12', '5.4', 6/Этап 7]
+  params: {poles: 4, thread: M3}
+  constraints: [ВЧ — левый нижний угол рядом с ТВ-2504; сигналы LED и резерв — правый нижний угол (4.5), Число колодок в тексте и в спецификации различается (OQ-007)]
+- id: CMP-lug-nvi-2-4
+  pos: 63
+  module: electronics
+  name: Наконечник вилочный НВИ 2-4 (синий)
+  qty: 2 шт.
+  note: НЧ 1.5 мм²
+  source: Радиомагазин / Ozon
+  price: ~5 ₽/шт.
+  status: selected
+  see: [6/Этап 7]
+- id: CMP-lug-nvi-1-25-3
+  pos: 64
+  module: electronics
+  name: Наконечник вилочный НВИ 1.25-3 (красный)
+  qty: 10 шт.
+  note: ВЧ и сигналы
+  source: Радиомагазин / Ozon
+  price: ~3 ₽/шт.
+  status: selected
+  see: [6/Этап 7]
+- id: CMP-heatshrink-glue
+  pos: 65
+  module: electronics
+  name: Термоусадочная трубка с клеевым слоем ∅10–12 мм
+  qty: 0.1 м
+  note: Герметизация жгутов
+  source: Радиомагазин / Ozon
+  price: ~50 ₽/м
+  status: selected
+  see: ['5.4']
+  constraints: [На участках прохода жгутов через перегородку (5.4)]
+- id: CMP-heatshrink-thin
+  pos: 66
+  module: electronics
+  name: Термоусадочная трубка тонкая ∅1.5–2 мм
+  qty: 0.1 м
+  note: Изоляция ножек светодиода
+  source: Радиомагазин / Ozon
+  price: ~20 ₽/м
+  status: selected
+  see: ['4.11']
+- id: CMP-pu40
+  pos: 67
+  module: electronics
+  name: Полиуретановый герметик PU-40
+  qty: 1 туба
+  note: Герметизация переходных отверстий
+  source: Строймаркет / Ozon
+  price: ~300–500 ₽
+  status: selected
+  see: ['5.4']
+  constraints: [Переходные отверстия заливаются со стороны электронного отсека (5.4)]
+- id: CMP-zip-ties
+  pos: 68
+  module: electronics
+  name: Пластиковые стяжки 2.5×100 мм
+  qty: 10 шт.
+  note: Фиксация жгутов
+  source: Строймаркет / Ozon
+  price: ~50–80 ₽/упак.
+  status: selected
+  see: ['4.12', '5.4', 6/Этап 7]
+- id: CMP-zip-pads
+  pos: 69
+  module: electronics
+  name: Самоклеящиеся площадки под стяжки
+  qty: 6 шт.
+  note: Крепление жгутов
+  source: Строймаркет / Ozon
+  price: ~50–80 ₽/упак.
+  status: selected
+  see: ['4.12', '5.4', 6/Этап 7]
+  constraints: ['Жгуты фиксируются на дне акустического отсека до установки нижнего мата (4.12, 5.4)']
+- id: CMP-abs-plate-2
+  pos: 70
+  module: indicator
+  name: ABS-пластина 1.5–2 мм
+  qty: ~40×20 мм
+  note: Основание для держателя светодиода
+  source: Изготовить
+  price: —
+  status: candidate
+  see: ['4.11', 6/Этап 7]
+- id: CMP-epoxy-2k
+  pos: 71
+  module: enclosure
+  name: Эпоксидный клей
+  qty: 1 уп.
+  note: Вклеивание футорок, световода
+  source: Строймаркет / Ozon
+  price: ~100–150 ₽
+  status: selected
+  see: [6/Этап 1]
+- id: CMP-polycarbonate-4
+  pos: 72
+  module: electronics
+  name: Поликарбонат монолитный 4 мм, 120×150 мм
+  qty: '1'
+  note: Рамка JAB4
+  source: '[Ozon](https://ozon.ru/t/bTO5cUS)'
+  price: 309 ₽
+  status: selected
+  see: ['4.7', 6/Этап 4]
+  constraints: ['Рамка 120×120, окно 96×73, четыре внутренних ушка ~12 мм с отверстиями ∅3.2 (4.7)', Лист не менее 120×120; рекомендуется 120×150 (4.7)]
+- id: CMP-angle-alu-15
+  pos: 73
+  module: electronics
+  name: Уголок алюминиевый 15×15×1.5 мм, 500 мм
+  qty: '1'
+  source: '[Ozon](https://ozon.ru/t/1fBvwG4)'
+  price: 209 ₽
+  status: selected
+  see: ['4.7', 6/Этап 4]
+  constraints: [Нужны два уголка по 86 мм (верх и низ); вертикальная полка к перегородке с зазором 1–3 мм (4.7), 'Отверстия ∅7 мм в полках корпуса, ∅3.2 мм в вертикальных (4.7)']
+- id: CMP-grommet-7
+  pos: 74
+  module: electronics
+  name: Втулка резиновая проходная ∅7.0/∅4 мм
+  qty: 10 шт.
+  source: '[Ozon](https://ozon.ru/t/v0ZYuTu)'
+  price: 350 ₽
+  status: selected
+  see: ['4.7', 6/Этап 4]
+  constraints: [Вставляются в отверстия ∅7 мм алюминиевых уголков (4.7)]
+- id: CMP-edge-profile
+  pos: 75
+  module: enclosure
+  name: Полукруглый профиль ПВХ/ABS радиус 8–12 мм
+  qty: ~1 м
+  note: Опционально
+  source: Строймаркет / Ozon
+  price: ~200–300 ₽
+  status: candidate
+  see: ['4.10', 6/Этап 8]
+  constraints: ['Опционально; приоритет: боковые стороны → верх → низ; стыки в ус; клеится после сборки (4.10)']
+- id: CMP-velcro-20
+  pos: 76
+  module: acoustics
+  name: Лента велкро (липучка) шириной 20 мм, петли и крючки отдельно
+  qty: ~2 м
+  note: Для крепления демпфирующих матов
+  source: Швейный магазин / Ozon
+  price: ~150–250 ₽
+  status: selected
+  see: ['4.12', 6/Этап 1]
+  constraints: ['Петли пришиты по периметру мата; крючки 20×20 мм на корпусе, эпоксид малыми каплями по углам (4.12)']
+- id: CMP-spunbond
+  pos: 77
+  module: acoustics
+  name: Ткань спанбонд плотностью 60–80 г/м²
+  qty: 0.5 м²
+  note: Оболочка демпфирующих матов
+  source: Швейный магазин / Ozon
+  price: ~100–150 ₽
+  status: selected
+  see: ['4.12']
+  constraints: ['Оболочка мата с припуском 20 мм, простёжка по краю и 2–3 поперечные строчки (4.12)']
+- id: CMP-thread
+  pos: 78
+  module: acoustics
+  name: Нитки полиэстеровые
+  qty: 1 катушка
+  note: Для сшивания матов
+  source: Швейный магазин
+  price: ~50–100 ₽
+  status: selected
+  see: ['4.12', 6/Этап 1]
+- id: CMP-epoxy-2k-velcro
+  pos: 79
+  module: enclosure
+  name: Клей эпоксидный двухкомпонентный (доп.)
+  qty: 1 тюбик
+  note: Для приклеивания крючков велкро
+  source: Строймаркет / Ozon
+  price: ~150–300 ₽
+  status: selected
+  see: ['4.12', 6/Этап 1]
+- id: CMP-synthetic-batting-reserve
+  pos: 80
+  module: acoustics
+  name: Синтепон плотностью 100–150 г/м² (доп. запас)
+  qty: 0.2 м²
+  note: Резерв
+  source: —
+  price: —
+  status: selected
+  see: ['4.12']
+- id: CMP-stikoseal
+  pos: null
+  module: enclosure
+  name: Пластилин Stik-o-Seal
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §1.4 (принципы), §6 Этап 6
+  price: —
+  status: candidate
+  see: ['1.4', 6/Этап 6]
+- id: CMP-masking-tape
+  pos: null
+  module: enclosure
+  name: Малярный скотч
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §6 Этап 6, п. 3
+  price: —
+  status: candidate
+  see: [6/Этап 6]
+- id: CMP-fiberglass-mesh
+  pos: null
+  module: enclosure
+  name: Стеклосетка для вентиляции задней панели
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §4.3 (вентиляция задней панели)
+  price: —
+  status: candidate
+  see: ['4.3']
+- id: CMP-polyswitch-0-1a
+  pos: null
+  module: electronics
+  name: PolySwitch 0.1 А (в разрыв GND входа 3.5 мм)
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §5.3 (вход 3.5 мм)
+  price: —
+  status: candidate
+  see: ['5.3']
+- id: CMP-mic-cable
+  pos: null
+  module: electronics
+  name: Экранированный микрофонный кабель
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §5.3 (экранированный микрофонный кабель)
+  price: —
+  status: candidate
+  see: ['5.3']
+- id: CMP-led-lightguide
+  pos: null
+  module: indicator
+  name: Световод жёсткий 3 мм BIVAR PLP2-750
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §4.11
+  price: —
+  status: candidate
+  see: ['4.11', 6/Этап 7]
+  constraints: [Вклеивается в отверстие ∅3 мм (МДФ + накладка) заподлицо с наружной поверхностью накладки (4.11); порядок Этапа 7 — OQ-013]
+- id: CMP-led-holder
+  pos: null
+  module: indicator
+  name: Держатель светодиода 3 мм Arlight 3CCI
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §4.11
+  price: —
+  status: candidate
+  see: ['4.11']
+  constraints: ['Металлический, с зажимной гайкой и капроновой втулкой, на пластине ABS 1.5–2 мм (4.11)']
+- id: CMP-led-3mm
+  pos: null
+  module: indicator
+  name: Светодиод 3 мм плоская линза OPTOSUPPLY OSB5SA3NE4A
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §4.11
+  price: —
+  status: candidate
+  see: ['4.11', 6/Этап 7]
+  constraints: ['Вставляется в держатель сзади, плоская линза прижата к внутреннему торцу световода (4.11)', Ножки изолируются тонкой термоусадкой (4.11)]
+- id: CMP-resistor-2k7
+  pos: null
+  module: indicator
+  name: Резистор 2.7 кОм (LED от +24 В)
+  qty: '1'
+  note: OQ-009
+  source: нет в спецификации §5; упомянуто в §4.11 (п. 5 монтажа)
+  price: —
+  status: candidate
+  see: ['4.11']
+  constraints: [Последовательно со светодиодом к +24 В от выхода БП; изолируется тонкой термоусадкой (4.11)]
+- id: CMP-foamiran-1mm
+  pos: null
+  module: enclosure
+  name: Фоамиран 1 мм (прокладки; три слоя = 3 мм под БП и уголки рамки)
+  qty: по месту
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['1.4', '4.5', '4.11', 6/Этап 3, 6/Этап 4, 6/Этап 7]
+  constraints: ['Кольцо под фланец вуфера, подложка под колодки, прокладка между панелью и ABS-пластиной индикатора, 3 мм под БП и уголки рамки']
+- id: CMP-autoconnector-blade
+  pos: null
+  module: shielding
+  name: 'Авторазъём ножевой изолированный: «мама» на кабельном мосту, «папа» на дне отсека'
+  qty: 1 пара
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['1.5', '4.3', 6/Этап 8]
+  constraints: [Подключение экрана задней панели; «папа» закреплена саморезом на дне и соединена с общим экраном (4.3)]
+- id: CMP-bridge-cable-160
+  pos: null
+  module: shielding
+  name: Гибкий провод кабельного моста задней панели, L=160 мм, с кольцевой клеммой
+  qty: '1'
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['4.3', '9.2']
+  constraints: ['Контакт экрана задней панели → точка дна X=170, Y=30 (9.2)']
+- id: CMP-nylon-screw-m3x12
+  pos: null
+  module: shielding
+  name: Нейлоновый винт М3×12 (узел контакта экрана задней панели)
+  qty: '1'
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['4.3', '9.2']
+  constraints: ['Вставляется снаружи, шляпка на лицевой стороне (4.3)']
+- id: CMP-brass-washer-m3
+  pos: null
+  module: shielding
+  name: Латунная шайба М3 (узел контакта экрана задней панели)
+  qty: '1'
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['4.3']
+  constraints: [Надевается изнутри перед кольцевой клеммой; затем латунная гайка М3 (4.3)]
+- id: CMP-washers-steel-rubber
+  pos: null
+  module: power-input
+  name: Стальные и резиновые шайбы (крепление БП саморезами 3.5×12)
+  qty: по числу саморезов
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: [6/Этап 3]
+  constraints: ['Через шайбы, затем фоамиран, в футорки (6, Этап 3 п. 3)']
+- id: CMP-sma-antenna-kit
+  pos: null
+  module: electronics
+  name: 'Антенный комплект SMA: розетка SMA, пластиковая изолирующая шайба и гайка, пигтейл U.FL→SMA, штыревая антенна 2.4 ГГц'
+  qty: опция
+  note: OQ-019
+  source: нет в спецификации §5; упомянуто в тексте (см. see)
+  price: —
+  status: candidate
+  see: ['8.5']
+  constraints: ['Корпус разъёма не должен касаться медного экрана; отверстие ∅6.5 мм, X=175, Y=100 (8.5)']

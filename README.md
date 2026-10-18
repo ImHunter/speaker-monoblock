@@ -8,7 +8,7 @@
 ```
 AGENTS.md            правила для агентов
 params.yaml          числа, на которые ссылается текст (маркеры <!--p:…--> в docs)
-components.yaml      спецификация §5 (80 строк дословно) + паспорта компонентов
+components.yaml      спецификация §5 (80 строк дословно) + 16 недостающих материалов + паспорта (see, params, constraints)
 docs/
   project.md         идея, динамики, усилитель, характеристики, заключение, карта разделов
   enclosure.md       КОНСТРУКЦИЯ КОРПУСА: размеры, детали, панели, перегородка, уголки, бруски
@@ -21,7 +21,7 @@ docs/
   electronics.md     рамка JAB4, индикатор, проводка 24 В и сигналов, цвета
   assembly.md        сборка по этапам 1–8
   commissioning.md   первый запуск
-  open-questions.md  противоречия и пробелы исходника (OQ-001…018)
+  open-questions.md  противоречия и пробелы исходника (OQ-001…020)
   glossary.md        термины
 scripts/             validate.py, audit.py, gen.py
 datasheets/  dsp/sigmastudio/   тяжёлые файлы (Git LFS)
