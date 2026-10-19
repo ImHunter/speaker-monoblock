@@ -1,0 +1,46 @@
+{
+  // Кодировка и переводы строк: документы и скрипты в UTF-8, LF.
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+
+  // В Markdown два пробела в конце строки означают перенос; текст проекта написан с ними.
+  // Автоудаление пробелов испортило бы вёрстку и раздуло бы diff.
+  "files.trimTrailingWhitespace": false,
+
+  // Поиск (человека и агента) не должен находить дубли в исходнике и сгенерированных файлах.
+  "search.exclude": {
+    "archive": true,
+    "build": true,
+    "**/__pycache__": true
+  },
+  "files.watcherExclude": {
+    "**/build/**": true,
+    "**/__pycache__/**": true
+  },
+
+  // Проверка ссылок и якорей между документами прямо в редакторе (как scripts/validate.py).
+  "markdown.validate.enabled": true,
+  "markdown.validate.fileLinks.enabled": "warning",
+  "markdown.validate.fragmentLinks.enabled": "warning",
+  "markdown.validate.fileLinks.markdownFragmentLinks": "warning",
+
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": { "comments": "off", "strings": "off", "other": "off" }
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.wordWrap": "off"
+  },
+
+  // Схема паспортов компонентов (расширение «YAML» от Red Hat): подсветка опечаток в ключах и статусах.
+  "yaml.schemas": {
+    "./schema/components.schema.json": "components.yaml"
+  },
+  // Формат components.yaml зафиксирован; автоформатирование его не трогает.
+  "yaml.format.enable": false,
+
+  "python.analysis.extraPaths": ["./scripts"]
+}

@@ -456,6 +456,7 @@ components:
   price: ~50–80 ₽/упак.
   status: selected
   see: ['4.3', '9.2', '9.3', '5.5', 6/Этап 1]
+  constraints: ["Шлейфы ПМЛ изготавливаются с кольцевыми клеммами (6, Этап 1 п. 7)", "Точка контакта: на саморез с пресс-шайбой надевается кольцевая клемма шлейфа, затем кузовная шайба (9.3)", "Точка слива на дне: две кольцевые клеммы на одном саморезе — от корпуса БП (шлейф ПМЛ) и от минуса JAB4 (чёрный провод) (5.5)", "Узел контакта задней панели: клемма кабельного моста между латунной шайбой и латунной гайкой М3 (4.3)"]
 - id: CMP-washer-din9021-m4
   pos: 35
   module: shielding
@@ -495,6 +496,7 @@ components:
   price: ~150–200 ₽
   status: selected
   see: ['5.4', 6/Этап 1]
+  constraints: ["Обмотка шлейфов ПМЛ (6, Этап 1 п. 7) и каждого из двух жгутов — силового и сигнального (5.4)"]
 - id: CMP-shumologia-hide-3
   pos: 39
   module: enclosure
@@ -549,6 +551,7 @@ components:
   price: ~100–150 ₽/упак.
   status: selected
   see: ['4.11', 6/Этап 3, 6/Этап 4, '9.3']
+  constraints: ["Точки экрана: саморез с пресс-шайбой в нейлоновый дюбель, на него кольцевая клемма и кузовная шайба (9.3)", "БП: через стальные и резиновые шайбы, затем фоамиран; затяжка крест-накрест, фоамиран сжат на треть (6, Этап 3 п. 3)", "Алюминиевые уголки рамки JAB4: через втулки и фоамиран 3 мм в футорки (6, Этап 4 п. 4)", "Пластина индикатора: к панели через футорки D5 и отверстия в пластине (4.11)"]
 - id: CMP-screw-m4x20-csk
   pos: 44
   module: enclosure
@@ -591,6 +594,7 @@ components:
   price: копейки
   status: selected
   see: ['4.7', 6/Этап 4]
+  constraints: ["Латунные гайки: с обратной стороны ушка рамки JAB4 (4.7) и в узле контакта экрана задней панели (4.3); число по тексту больше четырёх (OQ-020)"]
 - id: CMP-nut-m3-nylon
   pos: 48
   module: electronics
@@ -609,6 +613,7 @@ components:
   price: копейки
   status: selected
   see: ['4.7', 6/Этап 4]
+  constraints: ["Нейлоновые шайбы со стороны платы JAB4 (4.7)"]
 - id: CMP-standoff-nylon-set
   pos: 50
   module: electronics
@@ -618,6 +623,7 @@ components:
   price: 328 ₽
   status: selected
   see: ['4.7', 6/Этап 4]
+  constraints: ["Нейлоновые проставки 7 мм между платой и ушками рамки (4.7)"]
 - id: CMP-feet-silicone
   pos: 51
   module: enclosure
@@ -651,6 +657,7 @@ components:
   price: ~20 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут (НЧ + ВЧ) через левое отверстие ∅12 мм в перегородке на колодку ТВ-2504 (4.5, 5.4)"]
 - id: CMP-wire-mgshv-1-5-black
   pos: 54
   module: electronics
@@ -661,6 +668,7 @@ components:
   price: ~20 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут (НЧ + ВЧ) через левое отверстие ∅12 мм в перегородке на колодку ТВ-2504 (4.5, 5.4)"]
 - id: CMP-wire-mgshv-1-0-yellow
   pos: 55
   module: electronics
@@ -671,6 +679,7 @@ components:
   price: ~15 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут через левое отверстие ∅12 мм в перегородке на колодку ТВ-1504 слева (4.5, 5.4)"]
 - id: CMP-wire-mgshv-1-0-black-l
   pos: 56
   module: electronics
@@ -681,6 +690,7 @@ components:
   price: ~15 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут через левое отверстие ∅12 мм в перегородке на колодку ТВ-1504 слева (4.5, 5.4)", "Бирка L− (поз. 56, 11)"]
 - id: CMP-wire-mgshv-1-0-blue
   pos: 57
   module: electronics
@@ -691,6 +701,7 @@ components:
   price: ~15 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут через левое отверстие ∅12 мм в перегородке на колодку ТВ-1504 слева (4.5, 5.4)"]
 - id: CMP-wire-mgshv-1-0-black-r
   pos: 58
   module: electronics
@@ -701,6 +712,7 @@ components:
   price: ~15 ₽/м
   status: selected
   see: ['4.5', '5.4', '11']
+  constraints: ["Силовой жгут через левое отверстие ∅12 мм в перегородке на колодку ТВ-1504 слева (4.5, 5.4)", "Бирка R− (поз. 58, 11)"]
 - id: CMP-wire-mgshv-0-5-orange
   pos: 59
   module: electronics
@@ -711,6 +723,7 @@ components:
   price: ~10 ₽/м
   status: selected
   see: ['4.5', '4.11', '5.4', '11']
+  constraints: ["Сигнальный жгут (LED + резерв) через правое отверстие ∅8–10 мм в перегородке на колодку ТВ-1504 справа (4.5, 5.4)", "Подключается через резистор 2.7 кОм к +24 В от выхода БП (4.11)"]
 - id: CMP-wire-mgshv-0-5-black
   pos: 60
   module: electronics
@@ -721,6 +734,7 @@ components:
   price: ~10 ₽/м
   status: selected
   see: ['4.5', '4.11', '5.4', '11']
+  constraints: ["Сигнальный жгут (LED + резерв) через правое отверстие ∅8–10 мм в перегородке на колодку ТВ-1504 справа (4.5, 5.4)", "Метка LED− (11)"]
 - id: CMP-tb-2504
   pos: 61
   module: electronics
@@ -755,6 +769,7 @@ components:
   price: ~5 ₽/шт.
   status: selected
   see: [6/Этап 7]
+  constraints: ["Провода от усилителя и «хвосты» динамиков подключаются к колодкам вилочными наконечниками (6, Этап 7 п. 3)"]
 - id: CMP-lug-nvi-1-25-3
   pos: 64
   module: electronics
@@ -765,6 +780,7 @@ components:
   price: ~3 ₽/шт.
   status: selected
   see: [6/Этап 7]
+  constraints: ["Провода от усилителя и «хвосты» динамиков подключаются к колодкам вилочными наконечниками (6, Этап 7 п. 3)"]
 - id: CMP-heatshrink-glue
   pos: 65
   module: electronics
@@ -786,6 +802,7 @@ components:
   price: ~20 ₽/м
   status: selected
   see: ['4.11']
+  constraints: ["Ножки светодиода и резистор изолируются тонкой термоусадкой (4.11)"]
 - id: CMP-pu40
   pos: 67
   module: electronics
@@ -807,6 +824,7 @@ components:
   price: ~50–80 ₽/упак.
   status: selected
   see: ['4.12', '5.4', 6/Этап 7]
+  constraints: ["Жгуты фиксируются стяжками с самоклеящимися площадками на дне акустического отсека до установки нижнего мата (5.4, 4.12)"]
 - id: CMP-zip-pads
   pos: 69
   module: electronics
@@ -828,6 +846,7 @@ components:
   price: —
   status: candidate
   see: ['4.11', 6/Этап 7]
+  constraints: ["Основание держателя светодиода; прикручивается к внутренней стороне передней панели через футорки D5, между панелью и пластиной фоамиран 1 мм (4.11)"]
 - id: CMP-epoxy-2k
   pos: 71
   module: enclosure
@@ -838,6 +857,7 @@ components:
   price: ~100–150 ₽
   status: selected
   see: [6/Этап 1]
+  constraints: ["Вклеивание футорок Permo D5 (6, Этап 1 п. 5) и световода (4.11)"]
 - id: CMP-polycarbonate-4
   pos: 72
   module: electronics
@@ -912,6 +932,7 @@ components:
   price: ~50–100 ₽
   status: selected
   see: ['4.12', 6/Этап 1]
+  constraints: ["Для сшивания матов: сшить, вставить синтепон, простегать (4.12, 6 Этап 1 п. 3)"]
 - id: CMP-epoxy-2k-velcro
   pos: 79
   module: enclosure
@@ -922,6 +943,7 @@ components:
   price: ~150–300 ₽
   status: selected
   see: ['4.12', 6/Этап 1]
+  constraints: ["Крючки велкро 20×20 мм: малые капли по углам квадратика (4.12)"]
 - id: CMP-synthetic-batting-reserve
   pos: 80
   module: acoustics
@@ -932,6 +954,7 @@ components:
   price: —
   status: selected
   see: ['4.12']
+  constraints: ["Запас синтепона к поз. 24; демпфирующие маты (4.12)"]
 - id: CMP-stikoseal
   pos: null
   module: enclosure
@@ -942,6 +965,7 @@ components:
   price: —
   status: candidate
   see: ['1.4', 6/Этап 6]
+  constraints: ["Колбаски ∅5–6 мм в углы акустического отсека и на стыки прокладок перегородки; вдавить, разгладить (6, Этап 6 пп. 1–2)"]
 - id: CMP-masking-tape
   pos: null
   module: enclosure
@@ -952,6 +976,7 @@ components:
   price: —
   status: candidate
   see: [6/Этап 6]
+  constraints: ["Наклеивается после укладки пластилина (6, Этап 6 п. 3)"]
 - id: CMP-fiberglass-mesh
   pos: null
   module: enclosure
@@ -962,6 +987,7 @@ components:
   price: —
   status: candidate
   see: ['4.3']
+  constraints: ["Закрывает вентиляционные отверстия задней панели изнутри (4.3)"]
 - id: CMP-polyswitch-0-1a
   pos: null
   module: electronics
@@ -972,6 +998,7 @@ components:
   price: —
   status: candidate
   see: ['5.3']
+  constraints: ["0.1 А, в разрыв GND входа 3.5 мм (5.3)"]
 - id: CMP-mic-cable
   pos: null
   module: electronics
@@ -982,6 +1009,7 @@ components:
   price: —
   status: candidate
   see: ['5.3']
+  constraints: ["Вход 3.5 мм → PolySwitch → экранированный кабель → AUX JAB4; потенциометр → экранированный кабель → ADC0, +3.3 В, GND (5.3)"]
 - id: CMP-led-lightguide
   pos: null
   module: indicator

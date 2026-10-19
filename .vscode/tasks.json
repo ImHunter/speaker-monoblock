@@ -1,0 +1,26 @@
+{
+  // Задачи доступны через Terminal → Run Task. Работают без make (на Windows make обычно нет).
+  "version": "2.0.0",
+  "options": { "cwd": "${workspaceFolder}" },
+  "tasks": [
+    { "label": "validate", "type": "shell", "command": "python3 scripts/validate.py",
+      "windows": { "command": "python scripts/validate.py" },
+      "group": { "kind": "test", "isDefault": true }, "problemMatcher": [] },
+    { "label": "sync (исправить числа и карту разделов)", "type": "shell", "command": "python3 scripts/validate.py --fix",
+      "windows": { "command": "python scripts/validate.py --fix" }, "problemMatcher": [] },
+    { "label": "audit (полнота относительно исходника)", "type": "shell", "command": "python3 scripts/audit.py",
+      "windows": { "command": "python scripts/audit.py" }, "problemMatcher": [] },
+    { "label": "bom", "type": "shell", "command": "python3 scripts/gen.py bom",
+      "windows": { "command": "python scripts/gen.py bom" }, "problemMatcher": [] },
+    { "label": "cutlist", "type": "shell", "command": "python3 scripts/gen.py cutlist",
+      "windows": { "command": "python scripts/gen.py cutlist" }, "problemMatcher": [] },
+    { "label": "q: раздел исходника", "type": "shell", "command": "python3 scripts/q.py section ${input:section}",
+      "windows": { "command": "python scripts/q.py section ${input:section}" }, "problemMatcher": [] },
+    { "label": "q: компонент", "type": "shell", "command": "python3 scripts/q.py comp ${input:comp}",
+      "windows": { "command": "python scripts/q.py comp ${input:comp}" }, "problemMatcher": [] }
+  ],
+  "inputs": [
+    { "id": "section", "type": "promptString", "description": "Номер раздела (4.4.9) или «Этап 5»", "default": "4.1" },
+    { "id": "comp", "type": "promptString", "description": "Позиция §5, ID или часть названия", "default": "1" }
+  ]
+}

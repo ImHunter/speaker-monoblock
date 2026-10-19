@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "components.yaml: спецификация и паспорта компонентов",
+  "description": "Подключена к VS Code через .vscode/settings.json (расширение YAML от Red Hat) и проверяется в scripts/validate.py.",
+  "type": "object",
+  "required": ["components"],
+  "additionalProperties": false,
+  "properties": {
+    "components": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/component" }
+    }
+  },
+  "definitions": {
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "pos", "module", "name", "qty", "source", "price", "status", "see"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CMP-[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Стабильный идентификатор. Не переименовывать без замены всех ссылок."
+        },
+        "pos": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 80,
+          "description": "Номер позиции в таблице §5 исходника. null — компонент упомянут в тексте, но в §5 его нет (OQ-009, OQ-019)."
+        },
+        "module": {
+          "enum": ["acoustics", "dsp", "electronics", "enclosure", "indicator", "power-input", "shielding"],
+          "description": "Узел проекта; совпадает с документом в docs/."
+        },
+        "name": { "type": "string", "description": "Наименование: для pos 1..80 дословно из §5." },
+        "qty": { "type": "string", "description": "Количество: для pos 1..80 дословно из §5." },
+        "note": { "type": "string", "description": "Примечание: для pos 1..80 дословно из §5." },
+        "source": { "type": "string", "description": "Ссылка / источник: для pos 1..80 дословно из §5." },
+        "price": { "type": "string", "description": "Цена (ориентир): для pos 1..80 дословно из §5." },
+        "status": {
+          "enum": ["candidate", "selected", "ordered", "received", "verified"],
+          "description": "Паспортное поле, не из исходника. verified — только после проверки измерением или человеком."
+        },
+        "see": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Разделы исходника, где описан компонент: '4.4.8', '10.2', '6/Этап 1', '7/Шаг 2'. Пустой список — OQ-020."
+        },
+        "params": {
+          "type": "object",
+          "description": "Числовые параметры, названные в тексте проекта (единицы в имени ключа: _mm, _hz, _db)."
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ограничения и правила применения из текста; в скобках раздел исходника."
+        },
+        "rejected_alternatives": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Отвергнутые альтернативы из текста проекта."
+        }
+      }
+    }
+  }
+}

@@ -58,6 +58,18 @@ if sorted(positions) != list(range(1, 81)):
         f"пропущены {sorted(set(range(1, 81)) - set(positions))}, "
         f"повторы {sorted({p for p in positions if positions.count(p) > 1})}")
 
+try:
+    import json
+
+    import jsonschema
+
+    schema = json.loads((ROOT / "schema/components.schema.json").read_text(encoding="utf-8"))
+    for e in jsonschema.Draft7Validator(schema).iter_errors({"components": comps}):
+        where = "/".join(str(x) for x in e.absolute_path)
+        err(f"components.yaml: схема: {where}: {e.message[:140]}")
+except ImportError:
+    warn("jsonschema не установлен: схема components.yaml не проверена (pip install jsonschema)")
+
 # ------------------------------------------------------------------ 2. маркеры параметров
 def lookup(path):
     node = params

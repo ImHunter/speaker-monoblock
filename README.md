@@ -23,7 +23,9 @@ docs/
   commissioning.md   первый запуск
   open-questions.md  противоречия и пробелы исходника (OQ-001…020)
   glossary.md        термины
-scripts/             validate.py, audit.py, gen.py
+scripts/             validate.py, audit.py, gen.py, q.py (быстрые запросы)
+schema/              JSON Schema для components.yaml (VS Code и validate.py)
+.vscode/ .editorconfig   настройки редактора, задачи (Run Task), рекомендуемые расширения
 datasheets/  dsp/sigmastudio/   тяжёлые файлы (Git LFS)
 archive/             исходный монолит (не править)
 ```
@@ -35,8 +37,13 @@ make sync       # исправить числа в тексте по params.yaml
 make audit      # каждая строка исходника есть в репозитории
 make bom        # build/bom.csv
 make cutlist    # build/cutlist.csv (из таблицы 4.1 в docs/enclosure.md)
+make check      # validate + audit
+python3 scripts/q.py section 4.4.9   # найти раздел / comp 12 / param … / oq OQ-004 / find текст
 ```
-Нужен Python 3.10+ и `pip install pyyaml`.
+Нужен Python 3.10+ и `pip install pyyaml jsonschema` (jsonschema необязателен). Без make (Windows): `python scripts/…` или VS Code → Terminal → Run Task.
+
+## Для агентов и VS Code
+Правила — в [AGENTS.md](AGENTS.md) (`CLAUDE.md` и `.github/copilot-instructions.md` лишь ссылаются на него), формат обычный Markdown/YAML, без привязки к конкретному агенту. Папка открывается в VS Code как есть: рекомендованные расширения предложатся автоматически, `components.yaml` проверяется схемой, ссылки между документами — встроенной проверкой Markdown.
 
 ## Как это работает
 - **Текст — источник истины.** Разделы переносятся без пересказа; добавленное при реорганизации помечено «Добавлено при реорганизации» (рабочая зона в `enclosure.md`, `open-questions.md`, `glossary.md`, указатели).

@@ -1,8 +1,10 @@
 PY ?= python3
 
-.PHONY: all validate sync audit bom cutlist
+.PHONY: all check validate sync audit bom cutlist
 
 all: validate audit bom cutlist
+
+check: validate audit   # перед коммитом
 
 validate:        # ссылки, ID, числа в тексте против params.yaml, карта разделов
 	$(PY) scripts/validate.py
