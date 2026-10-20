@@ -38,8 +38,8 @@
         "source": { "type": "string", "description": "Ссылка / источник: для pos 1..80 дословно из §5." },
         "price": { "type": "string", "description": "Цена (ориентир): для pos 1..80 дословно из §5." },
         "status": {
-          "enum": ["candidate", "selected", "ordered", "received", "verified"],
-          "description": "Паспортное поле, не из исходника. verified — только после проверки измерением или человеком."
+          "enum": ["candidate", "selected", "ordered", "received", "verified", "excluded"],
+          "description": "Паспортное поле, не из исходника. verified — только после проверки измерением или человеком; excluded — в этой версии не применяется."
         },
         "see": {
           "type": "array",

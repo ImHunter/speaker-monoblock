@@ -99,3 +99,45 @@ power:
   pe_extra_cm_min: 2
   pe_extra_cm_max: 3
   psu_voltage_set: 24.0
+
+# Размерная модель: базовые (независимые) размеры.
+# Производные считает scripts/dims.py; правила — docs/dimensions.md.
+dimensions:
+  v8:
+    h_total: 236
+    w_total: 356
+    h_base: 10
+    w_mdf: 16
+    w_glue: 0
+    w_back_abs: 5
+    w_ribbon: 0.5
+    w_overlay: 3
+    d_acoustic: 110
+    d_electric: 58
+    woofer_hole: 143
+    tweeter_hole: 48.4
+    flange_w: 58
+    flange_h: 53
+    flange_t: 3
+    rebate_gap: 0.2
+    tweeter_edge: 50
+    woofer_shift_up: 5
+  v9:
+    h_total: 240
+    w_total: 360
+    h_base: 10
+    w_mdf: 16
+    w_glue: 0.5
+    w_back_abs: 5
+    w_ribbon: 1.5
+    w_overlay: 0
+    d_acoustic: 110
+    d_electric: 60
+    woofer_hole: 144
+    tweeter_hole: 50
+    flange_w: 58
+    flange_h: 53
+    flange_t: 3
+    rebate_gap: 0.2
+    tweeter_edge: 50
+    woofer_shift_up: 5

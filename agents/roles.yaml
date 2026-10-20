@@ -1,0 +1,43 @@
+version: 1
+
+# Команды гейта; выполняет интегратор и роль перед отчётом.
+gate: ["python scripts/validate.py", "python scripts/audit.py"]
+
+roles:
+  integrator:
+    title: Интегратор и реестры
+    write:
+      - params.yaml
+      - components.yaml
+      - docs/open-questions.md
+      - CHANGELOG.md
+      - docs/project.md
+      - docs/glossary.md
+    ids: [OQ, CMP, T]
+    gate: true
+
+  enclosure:
+    title: Конструкция корпуса
+    write:
+      - docs/enclosure.md
+      - docs/dimensions.md
+    sections: ["3", "4.1", "4.2", "4.3", "4.5", "4.6", "4.8", "4.9", "4.10"]
+    modules: [enclosure]
+    reads:
+      - docs/acoustics.md
+      - docs/power-input.md
+      - docs/shielding.md
+      - docs/assembly.md
+
+shared:
+  cross_cutting:
+    - params.yaml
+    - components.yaml
+    - docs/open-questions.md
+    - CHANGELOG.md
+    - docs/project.md
+  read_only:
+    - "archive/**"
+    - "build/**"
+    - "datasheets/**"
+    - "dsp/sigmastudio/**"

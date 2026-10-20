@@ -13,6 +13,8 @@ docs/
   project.md         идея, динамики, усилитель, характеристики, заключение, карта разделов
   enclosure.md       КОНСТРУКЦИЯ КОРПУСА: размеры, детали, панели, перегородка, уголки, бруски
                      (в начале — «Рабочая зона»: проверка размерной цепи и пробелы)
+  dimensions.md      размерная модель: базы, формулы, производные (v8.0 и v9)
+  enclosure-v9.md    конструкция v9: неразборный корпус, клей, евровинты, шканты
   acoustics.md       закрытый ящик, демпфирующие маты
   dsp.md             SigmaStudio, схема, программирование
   techniques.md      приёмы монтажа (раздел 10)
@@ -25,8 +27,10 @@ docs/
   glossary.md        термины
 scripts/             validate.py, audit.py, gen.py, q.py (быстрые запросы)
 schema/              JSON Schema для components.yaml (VS Code и validate.py)
+components/          паспорта и даташиты (PDF: C14, JAB4, БП, Sica, Wavecor)
 .vscode/ .editorconfig   настройки редактора, задачи (Run Task), рекомендуемые расширения
-datasheets/  dsp/sigmastudio/   тяжёлые файлы (Git LFS)
+datasheets/          прочие тяжёлые файлы (пока пусто)
+dsp/sigmastudio/     проекты SigmaStudio (Git LFS)
 archive/             исходный монолит (не править)
 ```
 
@@ -37,6 +41,7 @@ make sync       # исправить числа в тексте по params.yaml
 make audit      # каждая строка исходника есть в репозитории
 make bom        # build/bom.csv
 make cutlist    # build/cutlist.csv (из таблицы 4.1 в docs/enclosure.md)
+make dims       # пересчёт размерной модели (docs/dimensions.md)
 make check      # validate + audit
 python3 scripts/q.py section 4.4.9   # найти раздел / comp 12 / param … / oq OQ-004 / find текст
 ```
@@ -46,6 +51,8 @@ python3 scripts/q.py section 4.4.9   # найти раздел / comp 12 / param
 Правила — в [AGENTS.md](AGENTS.md) (`CLAUDE.md` и `.github/copilot-instructions.md` лишь ссылаются на него), формат обычный Markdown/YAML, без привязки к конкретному агенту. Папка открывается в VS Code как есть: рекомендованные расширения предложатся автоматически, `components.yaml` проверяется схемой, ссылки между документами — встроенной проверкой Markdown.
 
 ## Как это работает
+- **Паспорта компонентов.** Спецификация и паспортные поля — `components.yaml`; даташиты и описания — `components/` (PDF, Git LFS).
+- **Размерная модель.** Базовые размеры — в `params.yaml` (`dimensions`), производные считает `scripts/dims.py`; правила — `docs/dimensions.md`.
 - **Текст — источник истины.** Разделы переносятся без пересказа; добавленное при реорганизации помечено «Добавлено при реорганизации» (рабочая зона в `enclosure.md`, `open-questions.md`, `glossary.md`, указатели).
 - **Числа с маркерами.** Ключевые размеры, координаты и параметры DSP в тексте стоят как `178<!--p:panels.front.woofer_x-->`. `make validate` сравнивает их с `params.yaml`.
 - **Полнота.** `make audit` проверяет, что ни одна строка исходника не пропала: прозу построчно, спецификацию по ячейкам, ссылки по URL.

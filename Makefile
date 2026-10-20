@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: all check validate sync audit bom cutlist
+.PHONY: all check validate sync audit bom cutlist dims
 
 all: validate audit bom cutlist
 
@@ -20,3 +20,6 @@ bom:             # build/bom.csv из components.yaml
 
 cutlist:         # build/cutlist.csv из таблицы 4.1 в docs/enclosure.md
 	$(PY) scripts/gen.py cutlist
+
+dims:            # пересчёт размерной модели из params.yaml
+	$(PY) scripts/dims.py
