@@ -50,10 +50,16 @@ def derive(b):
     d["fc_hz"] = FS * sqrt(1 + VAS / d["v_eff_l"])
     d["d_rebate"] = b["flange_t"] + b["rebate_gap"]
     d["woofer_x"] = b["w_total"] / 2
-    d["woofer_y"] = d["h_front"] / 2 + b["woofer_shift_up"]
+    d["woofer_y"] = d["h_front"] / 2 + b["dy_wavecor"]
     d["tweeter_y"] = d["h_front"] / 2
-    d["tweeter_left_x"] = b["tweeter_edge"]
-    d["tweeter_right_x"] = b["w_total"] - b["tweeter_edge"]
+    d["tweeter_left_x"] = d["woofer_x"] - b["dx_sica"]
+    d["tweeter_right_x"] = d["woofer_x"] + b["dx_sica"]
+    if "dd_divider" in b:
+        d["divider_len"] = b["d_electric"] - b["dd_divider"]
+        d["divider_h"] = d["h_baffle"]
+        d["divider_x"] = b["w_total"] / 2
+    else:
+        d["divider_len"] = d["divider_h"] = d["divider_x"] = None
     return d
 
 
@@ -84,6 +90,7 @@ FIELDS = [
     ("d_rebate", "цековка, мм"), ("woofer_x", "вуфер X"), ("woofer_y", "вуфер Y"),
     ("tweeter_left_x", "твитер L X"), ("tweeter_right_x", "твитер R X"),
     ("tweeter_y", "твитер Y"),
+    ("divider_len", "разделитель L"), ("divider_h", "разделитель H"), ("divider_x", "разделитель X"),
 ]
 
 
@@ -95,7 +102,11 @@ def main(argv):
         check(b, d)
         print(f"\n== {ver} ==")
         for key, label in FIELDS:
-            print(f"  {label:14} {d[key]:8.1f}")
+            val = d[key]
+            if val is None:
+                print(f"  {label:14} {'—':>8}")
+            else:
+                print(f"  {label:14} {val:8.1f}")
     return 0
 
 

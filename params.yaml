@@ -120,18 +120,19 @@ dimensions:
     flange_h: 53
     flange_t: 3
     rebate_gap: 0.2
-    tweeter_edge: 50
-    woofer_shift_up: 5
+    dx_sica: 128
+    dy_wavecor: 5
+    dy_c14: 81.5
   v9:
-    h_total: 240
-    w_total: 360
+    h_total: 200
+    w_total: 392
     h_base: 10
     w_mdf: 16
     w_glue: 0.5
     w_back_abs: 5
     w_ribbon: 1.5
     w_overlay: 0
-    d_acoustic: 110
+    d_acoustic: 120
     d_electric: 60
     woofer_hole: 144
     tweeter_hole: 50
@@ -139,5 +140,8 @@ dimensions:
     flange_h: 53
     flange_t: 3
     rebate_gap: 0.2
-    tweeter_edge: 50
-    woofer_shift_up: 5
+    dx_sica: 141
+    dy_wavecor: 5
+    dy_c14: 80
+    dz_c14: 10
+    dd_divider: 10
