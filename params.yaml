@@ -25,8 +25,8 @@ dsp:
   tweeter_gain_db: -8.0
   subsonic_hz: 60
   peq_hz: 95
-  peq_gain_db: -4.0
-  peq_q: 1.2
+  peq_gain_db: -0.8
+  peq_q: 1.1
   shelf_hz: 300
   shelf_gain_db: 3.0
   shelf_q: 0.7
