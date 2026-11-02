@@ -34,10 +34,18 @@ dsp:
   limiter_tweeter_release_ms: 50
   limiter_bass_threshold_db: -3.0
   limiter_bass_release_ms: 150
+jab:
+  dx_mm: 40
+  dy_mm: 35.2
+  standoff_mm: 15
+  bt_window_x_mm: 61
+psu:
+  x_from_vv_mm: 60
 panels:
   front:
     width: 356
     height: 226
+    edge_radius: 8
     woofer_hole: 143
     woofer_x: 178
     woofer_y: 118
