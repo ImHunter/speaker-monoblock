@@ -50,8 +50,32 @@ def cutlist():
     print(f"{out.relative_to(ROOT)}: {len(rows)} деталей")
 
 
+def cutlist_v9():
+    """Раскрой v9 — из таблицы «Детали» в docs/enclosure-v9.md."""
+    text = (ROOT / "docs/enclosure-v9.md").read_text(encoding="utf-8")
+    start = text.index("## Детали")
+    rows = []
+    for line in text[start:].split("\n")[1:]:
+        if line.startswith("##") and not line.startswith("## Детали"):
+            break
+        if not line.startswith("|") or re.match(r"\|[\s:|-]+\|", line):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if cells[0] == "Деталь":
+            continue
+        name, size, qty = cells
+        size = re.sub(r"<!--.*?-->|\*", "", size).strip()
+        rows.append([name, size, qty])
+    out = ROOT / "build/cutlist-v9.csv"
+    with open(out, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["part", "size_mm", "qty"])
+        w.writerows(rows)
+    print(f"{out.relative_to(ROOT)}: {len(rows)} деталей")
+
+
 if __name__ == "__main__":
-    cmds = {"bom": bom, "cutlist": cutlist}
+    cmds = {"bom": bom, "cutlist": cutlist, "cutlist-v9": cutlist_v9}
     if len(sys.argv) != 2 or sys.argv[1] not in cmds:
-        sys.exit("usage: gen.py bom|cutlist")
+        sys.exit("usage: gen.py bom|cutlist|cutlist-v9")
     cmds[sys.argv[1]]()

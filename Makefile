@@ -19,8 +19,9 @@ audit:           # полнота: каждая строка исходника 
 bom:             # build/bom.csv из components.yaml
 	$(PY) scripts/gen.py bom
 
-cutlist:         # build/cutlist.csv из таблицы 4.1 в docs/enclosure.md
+cutlist:         # build/cutlist.csv (v8.0) + build/cutlist-v9.csv (v9)
 	$(PY) scripts/gen.py cutlist
+	$(PY) scripts/gen.py cutlist-v9
 
 dims:            # пересчёт размерной модели из params.yaml
 	$(PY) scripts/dims.py
