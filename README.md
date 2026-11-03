@@ -23,8 +23,10 @@ docs/
   electronics.md     рамка JAB4, индикатор, проводка 24 В и сигналов, цвета
   assembly.md        сборка по этапам 1–8
   commissioning.md   первый запуск
-  open-questions.md  противоречия и пробелы исходника (OQ-001…020)
+  open-questions.md  противоречия и пробелы исходника (OQ-001…022)
   glossary.md        термины
+concepts/            концепты и черновики для обсуждения (не входят в docs/)
+models/              FreeCAD-модели v9 (STEP/STL/FCStd, генерируются)
 scripts/             validate.py, audit.py, gen.py, q.py (быстрые запросы)
 schema/              JSON Schema для components.yaml (VS Code и validate.py)
 components/          паспорта и даташиты (PDF: C14, JAB4, БП, Sica, Wavecor)
@@ -40,8 +42,9 @@ make validate   # ссылки, ID, числа в тексте против para
 make sync       # исправить числа в тексте по params.yaml, обновить карту разделов
 make audit      # каждая строка исходника есть в репозитории
 make bom        # build/bom.csv
-make cutlist    # build/cutlist.csv (из таблицы 4.1 в docs/enclosure.md)
+make cutlist    # build/cutlist.csv (v8.0) + build/cutlist-v9.csv (v9)
 make dims       # пересчёт размерной модели (docs/dimensions.md)
+make model      # FreeCAD v9: models/v9/ (STEP/STL/FCStd)
 make check      # validate + audit
 python3 scripts/q.py section 4.4.9   # найти раздел / comp 12 / param … / oq OQ-004 / find текст
 ```
