@@ -1,6 +1,7 @@
 PY ?= python3
+FREECADCMD ?= C:/Users/Пользователь/AppData/Local/Programs/FreeCAD 1.1/bin/freecadcmd.exe
 
-.PHONY: all check validate sync audit bom cutlist dims
+.PHONY: all check validate sync audit bom cutlist dims model
 
 all: validate audit bom cutlist
 
@@ -23,3 +24,6 @@ cutlist:         # build/cutlist.csv из таблицы 4.1 в docs/enclosure.m
 
 dims:            # пересчёт размерной модели из params.yaml
 	$(PY) scripts/dims.py
+
+model:           # FreeCAD v9: STEP/STL/FCStd в models/v9/
+	"$(FREECADCMD)" scripts/freecad_v9.py
