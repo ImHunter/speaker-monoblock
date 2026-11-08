@@ -19,6 +19,17 @@
 - FreeCAD: `scripts/freecad_v9.py` — параметрическая модель v9 (панели, C14, динамики, цековка, R8, разделитель, втулки JAB4, окно BT); STEP/STL/FCStd в `models/v9/`; `make model`.
 - По замечаниям коллеги: OQ-003 (2 каскада 4-го порядка), OQ-004 (v8.0-арифметика; v9 392×200×220; v9-раскрой cutlist-v9), OQ-007 (3 колодки; 4-я запас), OQ-017 (LT не используется), OQ-022 (БП 100 Вт/120 Вт пик; буфер 10–22 мФ или 150 Вт); битум 2–3 мм (`CMP-bitumen`); Xmax/тепло/измерения; `CMP-cap-buffer`.
 - Добавлена папка `concepts/` (черновики «подумать и свериться») и `concepts/fm-integration.md` — концепт FM-тракта; `AGENTS.md`/`README.md`/`CHANGELOG.md`.
+- `concepts/fm-placement.md` — задача размещения FM (отсеки, окна, кандидаты, вопросы); `concepts/README.md`.
+- `params.yaml`: блок `c14` — окно 30×62, фланец 40×65 (маркеры в `docs/dimensions.md`); `concepts/fm-placement.md` — размеры окна C14.
+- `CMP-banana-jack` (415 ₽/2, штырь 42 мм, Ozon) — гнездо ввода динамиков; `concepts/banana-feedthrough.md`; `docs/dimensions.md` — расшифровка производных размеров.
+- BAFFLE_E: `DX_BAFFLE_E` (0; + к JAB, вид сзади), `X_BAFFLE_E`, `W_BAY_JAB`/`W_BAY_EL`; `scripts/dims.py`, `docs/dimensions.md`, `docs/enclosure-v9.md`.
+- `docs/dimensions.md`: «Формулы» и «Производные» слиты в одну таблицу `переменная | значение | смысл | формула` (v9, без v8).
+- C14: `DY_c14`/`DZ_c14` → `C14_window_bottom`/`C14_window_front_offset`; `C14_flange_front/rear/bottom/top`, `C14_window_front/rear/top`; в `CMP-dl-1dz2kr` — только паспорт; `C14_window_to_side` оставлен.
+- `H_inner` без клея: 200 − 32 − 10 = **158**; `H_baffle` **157**, `V_geom` **6.91**, `V_eff` **5.96**, `Fc` **95.1**; `D_total` — формула через `D_side`; docs/`dims.py`.
+- `X_MEAN_DIV` 60 → **55**: БП X 224…321; до C14 — 5, до BAFFLE_E — 20; `params.yaml`, `components.yaml`, `docs/dimensions.md`, `docs/enclosure-v9.md`, `concepts/fm-placement.md`.
+- C14: глубина 50 — от **наружной** плоскости боковины (X 392), не от внутренней; тело **342…392** (в отсек 34 из 50, 16 — в МДФ); клеммы до 337; зазор БП→C14 **21** (16 до клемм); паспорт, `docs/`, `concepts/fm-placement.md`.
+- BAFFLE_E сдвинут к JAB на 15 (`DX_BAFFLE_E` 0 → 15): X **173…189**, центр 181; BAY_JAB 157, BAY_EL 187; зазор BAFFLE_E–БП **35** (FM 15 + 20 до БП); `params.yaml`, `docs/dimensions.md`, `docs/enclosure-v9.md`, `concepts/fm-placement.md`.
+- JAB4: ландшафт 92 × 69, по центру отсека — X **48.5…140.5** (`DX_JAB` 32.5), Y **70.5…139.5** (`DY_JAB` 44); разъёмы — низ, антенна BT — левый верхний угол (окно BT сдвинуть к X ≈ 48, OQ-021); `params.yaml`, `components.yaml`, docs, `concepts/`.
 
 ## [8.0] — 2026-09-22 (исходный документ)
 Журнал ревизии силового ввода 3 → 4 — раздел 4.4.12 в `docs/power-input.md`.

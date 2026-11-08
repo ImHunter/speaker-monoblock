@@ -28,11 +28,10 @@ V_WIRES = G["v_wires_l"]
 def derive(b):
     d = {}
     d["w_inner"] = b["w_total"] - 2 * b["w_mdf"]
-    d["h_inner"] = b["h_total"] - 2 * b["w_mdf"] - 2 * b["w_glue"] - b["h_base"]
+    d["h_inner"] = b["h_total"] - 2 * b["w_mdf"] - b["h_base"]
     d["d_side"] = b["d_acoustic"] + b["w_mdf"] + b["d_electric"]
     d["d_total"] = (b["w_overlay"] + b["w_mdf"] + b["w_ribbon"]
-                    + b["d_acoustic"] + b["w_mdf"] + b["d_electric"]
-                    + b["w_ribbon"] + b["w_back_abs"])
+                    + d["d_side"] + b["w_ribbon"] + b["w_back_abs"])
     d["h_side"] = b["h_total"] - b["w_mdf"] - b["w_glue"]
     d["h_front"] = b["h_total"] - b["h_base"]
     d["w_front"] = b["w_total"]
@@ -55,11 +54,25 @@ def derive(b):
     d["tweeter_left_x"] = d["woofer_x"] - b["dx_sica"]
     d["tweeter_right_x"] = d["woofer_x"] + b["dx_sica"]
     if "dd_divider" in b:
-        d["divider_len"] = b["d_electric"] - b["dd_divider"]
-        d["divider_h"] = d["h_baffle"]
-        d["divider_x"] = b["w_total"] / 2
+        d["x_baffle_e"] = b["w_total"] / 2 - b["w_mdf"] / 2 - b.get("dx_baffle_e", 0)
+        d["baffle_e_x0"] = d["x_baffle_e"]
+        d["baffle_e_x1"] = d["x_baffle_e"] + b["w_mdf"]
+        d["baffle_e_len"] = b["d_electric"] - b["dd_divider"]
+        d["baffle_e_h"] = d["h_baffle"]
+        d["bay_jab_x0"] = b["w_mdf"]
+        d["bay_jab_x1"] = d["baffle_e_x0"]
+        d["bay_jab_w"] = d["bay_jab_x1"] - d["bay_jab_x0"]
+        d["bay_el_x0"] = d["baffle_e_x1"]
+        d["bay_el_x1"] = b["w_total"] - b["w_mdf"]
+        d["bay_el_w"] = d["bay_el_x1"] - d["bay_el_x0"]
+        d["w_bay_jab"] = b["w_total"] / 2 - b.get("dx_baffle_e", 0) - 3 * b["w_mdf"] / 2
+        d["w_bay_el"] = b["w_total"] / 2 + b.get("dx_baffle_e", 0) - 3 * b["w_mdf"] / 2
     else:
-        d["divider_len"] = d["divider_h"] = d["divider_x"] = None
+        d["x_baffle_e"] = d["baffle_e_x0"] = d["baffle_e_x1"] = None
+        d["baffle_e_len"] = d["baffle_e_h"] = None
+        d["bay_jab_x0"] = d["bay_jab_x1"] = d["bay_jab_w"] = None
+        d["bay_el_x0"] = d["bay_el_x1"] = d["bay_el_w"] = None
+        d["w_bay_jab"] = d["w_bay_el"] = None
     return d
 
 
@@ -90,7 +103,10 @@ FIELDS = [
     ("d_rebate", "цековка, мм"), ("woofer_x", "вуфер X"), ("woofer_y", "вуфер Y"),
     ("tweeter_left_x", "твитер L X"), ("tweeter_right_x", "твитер R X"),
     ("tweeter_y", "твитер Y"),
-    ("divider_len", "разделитель L"), ("divider_h", "разделитель H"), ("divider_x", "разделитель X"),
+    ("x_baffle_e", "X_BAFFLE_E"), ("baffle_e_x0", "BAFFLE_E x0"), ("baffle_e_x1", "BAFFLE_E x1"),
+    ("baffle_e_len", "BAFFLE_E L"), ("baffle_e_h", "BAFFLE_E H"),
+    ("bay_jab_x0", "BAY_JAB x0"), ("bay_jab_x1", "BAY_JAB x1"), ("w_bay_jab", "W_BAY_JAB"),
+    ("bay_el_x0", "BAY_EL x0"), ("bay_el_x1", "BAY_EL x1"), ("w_bay_el", "W_BAY_EL"),
 ]
 
 
