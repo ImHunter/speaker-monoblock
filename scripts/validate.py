@@ -250,6 +250,7 @@ TITLES = {
     "techniques": "Приёмы монтажа",
     "assembly": "Пошаговая сборка (этапы 1–8; 5.1–5.5 вынесены к узлам)",
     "commissioning": "Первый запуск и проверка",
+    "fm": "FM-тракт (Si4836): размещение, питание, аудио, антенна — новый раздел",
 }
 
 
@@ -260,7 +261,7 @@ def num_key(s):
 rows = []
 for name, title in TITLES.items():
     nums = sorted({n for n, files in doc_heads.items() if f"{name}.md" in files}, key=num_key)
-    rows.append(f"| [{name}.md]({name}.md) | {title} | {', '.join(nums)} |")
+    rows.append(f"| [{name}.md]({name}.md) | {title} | {', '.join(nums) or '—'} |")
 rows.append("| [../components.yaml](../components.yaml) | Спецификация и паспорта компонентов (80 позиций + недостающие) | 5 |")
 index = "\n".join(rows)
 pj = ROOT / "docs/project.md"

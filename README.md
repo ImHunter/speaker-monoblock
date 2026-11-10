@@ -21,9 +21,10 @@ docs/
   power-input.md     сетевой ввод C14 → WAGO → БП
   shielding.md       экранирование и заземление
   electronics.md     рамка JAB4, индикатор, проводка 24 В и сигналов, цвета
+  fm.md              FM-тракт Si4836: размещение, питание, аудио, антенна
   assembly.md        сборка по этапам 1–8
   commissioning.md   первый запуск
-  open-questions.md  противоречия и пробелы исходника (OQ-001…022)
+  open-questions.md  противоречия и пробелы исходника (OQ-001…026)
   glossary.md        термины
 concepts/            концепты и черновики для обсуждения (не входят в docs/)
 models/              FreeCAD-модели v9 (STEP/STL/FCStd, генерируются)
