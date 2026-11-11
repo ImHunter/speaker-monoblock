@@ -198,8 +198,8 @@ if len(re.findall(r"^### Этап \d", doc_text[ROOT / "docs/assembly.md"], re.M
     err("docs/assembly.md: должно быть 8 этапов сборки")
 
 KNOWN_BAD = {  # (файл, ссылка): OQ — заведомо битые ссылки исходника
-    ("enclosure.md", "8.2"): "OQ-002", ("assembly.md", "5.3"): "OQ-002", ("assembly.md", "6.4"): "OQ-016",
-    ("enclosure.md", "6.4"): "OQ-016",
+    ("assembly.md", "6.4"): "OQ-016 (закрыт)",
+    ("enclosure.md", "6.4"): "OQ-016 (закрыт)",
 }
 ref_re = re.compile(r"(?:см\.|раздел[а-я]*|п\.|таблиц[аеыи]|разделу)\s+(\d+(?:\.\d+)+|\d+)\b")
 for p, text in doc_text.items():
