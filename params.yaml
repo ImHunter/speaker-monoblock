@@ -160,3 +160,16 @@ c14:
   flange_w_mm: 40
   window_bottom_from_floor_mm: 80
   window_front_offset_mm: 10
+
+vent:
+  exhaust_d: 35
+  z_center: 178.5
+  plate_w: 45
+  plate_h: 22.5
+  intake_d: 10
+  intake_pitch: 15
+  intake_z: 171.5
+  intake_count: 5
+  frame_w: 86
+  frame_h: 26
+  frame_strip: 6

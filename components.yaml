@@ -1018,6 +1018,40 @@ components:
   see: ['4.3']
   params: {material: AISI304, mesh_mm: '0.5–1'}
   constraints: ['Оттоки: 45 × 22.5 — полукруг Ø35 в верхнем торце боковин У и ВВ; притоки: 86 × 26 — 5 × Ø10 в дне под БП и JAB4', 'В BAY_JAB прижимается к меди вокруг выреза (проверить прозвонкой)', 'Артикул, ссылка, цена — после заказа']
+- id: CMP-grille-vent
+  pos: null
+  module: enclosure
+  name: Решётка вентиляционная пластиковая чёрная, комплект 4 шт. (гардеробная система)
+  qty: 1 компл.
+  note: Вытяжки; Ø40/35/33
+  source: '[ozon.ru](https://ozon.ru/t/Uu8iT07)'
+  price: 160 ₽
+  status: candidate
+  see: ['4.3']
+  params: {flange_d: 40, body_d: 35, inner_d: 33}
+  constraints: ['Половинка на каждый отток: фланец Ø40, тело Ø35, внутреннее Ø33', 'Защёлки срезать; посадка на клей/силикон или 2 винта', 'Подтверждено 2026-11-13: Ø40/35/33, чёрная (OQ-032 закрыт)']
+- id: CMP-abs-vent
+  pos: null
+  module: enclosure
+  name: 'ABS 3 мм: пластины оттока и рамки притока'
+  qty: '2 × 45×22.5 (отток) + 2 × 86×26 (приток)'
+  note: Вентиляция v9
+  source: Изготовить
+  price: —
+  status: candidate
+  see: ['4.3']
+  constraints: ['Пластины оттока 45×22.5, окно Ø35, полка 5–6 мм; винты в нижних углах', 'Рамки притока 86×26, окно 74×14, полка 6 мм; 6 × M2×8']
+- id: CMP-screw-m2x8
+  pos: null
+  module: enclosure
+  name: Саморез M2×8 потай
+  qty: 16 шт.
+  note: 'Вентиляция: 4 отток + 12 приток'
+  source: Строймаркет / Ozon
+  price: —
+  status: candidate
+  see: ['4.3']
+  constraints: ['Пластины оттока — 2 на каждую; рамки притока — 6 на каждую', 'В МДФ 16 мм: 3 мм рамка + 5 мм в МДФ']
 - id: CMP-polyswitch-0-1a
   pos: null
   module: electronics
